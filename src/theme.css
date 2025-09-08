@@ -1,0 +1,117 @@
+:root {
+    /* Main - Purple & Teal */
+    --main-primary: #6C63FF;  /* Vibrant purple */
+    --main-secondary: #2EC4B6; /* Fresh teal */
+
+    /* Border - Cool grays */
+    --border-primary: #a1a1a1;
+    --border-secondary: #cbcbcb;
+    --border-tertiary: #F5F5F5;
+
+    /* Background - Soft neutrals */
+    --background-primary: #FFFFFF;
+    --background-secondary: #f8f9faf2;
+    --background-tertiary: #F1F3F5;
+    --background-accent: #F3F0FF;
+
+    /* Text - High contrast */
+    --text-primary: #2D3436;
+    --text-secondary: #636e72d7;
+    --text-tertiary: #B2BEC3;
+    --text-inverse: #ffffffdd;
+
+    /* States - Modern alert colors */
+    --state-danger: #FF4757;
+    --state-warning: #FFA502;
+    --state-info: #2D82E8;
+    --state-success: #2ED573;
+    
+    /* Blue shades used throughout the app */
+    --blue-dark: #1a2e4a;
+    --blue-primary: #2a3f5a;
+    --blue-light: #3a5070;
+    --blue-lighter: #4a6080;
+    
+    /* Grayscale palette */
+    --gray-50: #f9fafb;
+    --gray-100: #f0f0f0;
+    --gray-200: #e0e0e0;
+    --gray-300: #d0d0d0;
+    --gray-400: #a0a0a0;
+    --gray-500: #808080;
+    --gray-600: #666666;
+    --gray-700: #555555;
+    --gray-800: #333333;
+    --gray-900: #1a1a1a;
+    
+    /* Transparent colors */
+    --black-5: rgba(0, 0, 0, 0.05);
+    --black-10: rgba(0, 0, 0, 0.1);
+    --black-15: rgba(0, 0, 0, 0.15);
+    --black-20: rgba(0, 0, 0, 0.2);
+    --black-30: rgba(0, 0, 0, 0.3);
+    --black-50: rgba(0, 0, 0, 0.5);
+    --black-70: rgba(0, 0, 0, 0.7);
+    --white-5: rgba(255, 255, 255, 0.05);
+    --white-10: rgba(255, 255, 255, 0.1);
+    --white-20: rgba(255, 255, 255, 0.2);
+    --white-30: rgba(255, 255, 255, 0.3);
+    --white-50: rgba(255, 255, 255, 0.5);
+    --white-70: rgba(255, 255, 255, 0.7);
+    --white-90: rgba(255, 255, 255, 0.9);
+    --white-95: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+    /* Main - Saturated versions */
+    --main-primary: #7D73FF;
+    --main-secondary: #32D3C3;
+
+    /* Border - Deep contrasts */
+    --border-primary: #2D3436;
+    --border-secondary: #3B4346;
+    --border-tertiary: #444D50;
+
+    /* Background - Rich dark tones */
+    --background-primary: #1A1E24;
+    --background-secondary: #242A30;
+    --background-tertiary: #2D3436;
+    --background-accent: #2B2540;
+
+    /* Text - Soft contrasts */
+    --text-primary: #ECF0F1;
+    --text-secondary: #BDC3C7;
+    --text-tertiary: #95A5A6;
+    --text-inverse: #2D3436;
+
+    /* States - Dark theme optimized */
+    --state-danger: #FF6B81;
+    --state-warning: #FFB142;
+    --state-info: #4B9EFF;
+    --state-success: #3DD68C;
+    
+    /* Project-specific dark colors */
+    --blue-dark: #2a4060;
+    --blue-primary: #3a5070;
+    --blue-light: #4a6080;
+    --blue-lighter: #5a7090;
+    
+    /* Dark mode grayscale */
+    --gray-50: #2e3235;
+    --gray-100: #3e4245;
+    --gray-200: #4e5255;
+    --gray-300: #5e6265;
+    --gray-400: #7e8285;
+    --gray-500: #9e9fa2;
+    --gray-600: #bdbebf;
+    --gray-700: #cdcecf;
+    --gray-800: #e5e5e5;
+    --gray-900: #f8f8f8;
+    
+    /* Dark transparent colors adjustments */
+    --black-5: rgba(0, 0, 0, 0.1);
+    --black-10: rgba(0, 0, 0, 0.2);
+    --black-15: rgba(0, 0, 0, 0.25);
+    --black-20: rgba(0, 0, 0, 0.3);
+    --black-30: rgba(0, 0, 0, 0.4);
+}

@@ -1,0 +1,15 @@
+.table-header-cont {
+    color: var(--text-primary);
+}
+
+.table-header-row {
+    background-color: var(--background-secondary);
+}
+
+.table-header-row th:first-child {
+    border-radius: var(--table-radius, 10px) 0 0 var(--table-radius, 10px);
+}
+
+.table-header-row th:last-child {
+    border-radius: 0 var(--table-radius, 10px) var(--table-radius, 10px) 0;
+}

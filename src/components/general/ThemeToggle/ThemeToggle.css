@@ -1,0 +1,64 @@
+
+.theme-toggle {
+    --track-width: calc(var(--size-xs) * 2);
+    --track-height: var(--size-xs);
+    --ball-size: calc(var(--size-xs) - 4px);
+    
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.theme-toggle.size-sm {
+    --track-width: calc(var(--size-xxs) * 2);
+    --track-height: var(--size-xxs);
+    --ball-size: calc(var(--size-xxs) - 4px);
+}
+
+.theme-toggle.size-lg {
+    --track-width: calc(var(--size-sm) * 2);
+    --track-height: var(--size-sm);
+    --ball-size: calc(var(--size-sm) - 4px);
+}
+
+.theme-toggle-track {
+    width: var(--track-width);
+    height: var(--track-height);
+    background-color: var(--background-secondary);
+    border-radius: var(--radius-full);
+    position: relative;
+    transition: background-color 0.3s ease;
+    border: 1px solid var(--border-primary);
+}
+
+.theme-toggle-ball {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: var(--ball-size);
+    height: var(--ball-size);
+    background-color: var(--text-primary);
+    border-radius: var(--radius-full);
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-icon {
+    width: 60%;
+    height: 60%;
+    color: var(--text-inverse);
+}
+
+.theme-toggle[aria-checked="true"] .theme-toggle-ball {
+    transform: translateX(calc(var(--track-width) - var(--ball-size) - 4px));
+}
+
+.theme-toggle:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

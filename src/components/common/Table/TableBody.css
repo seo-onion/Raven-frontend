@@ -1,0 +1,44 @@
+.table-body-main-cont {
+    background-color: var(--background-primary);
+}
+  
+.table-body-empty-row {
+    text-align: center;
+}
+  
+.table-body-empty-cell {
+    padding: 2rem 1rem;
+    border-bottom: none !important;
+}
+  
+.table-body-centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.table-body-loading,
+.table-body-empty {
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    min-width: 100%;
+}
+
+td.table-body-loading,
+td.table-body-empty {
+    width: 100%;
+    color: var(--text-secondary);
+    min-width: 100%;
+    font-size: 0.8rem;
+}
+
+td.table-body-loading > div,
+td.table-body-empty > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}

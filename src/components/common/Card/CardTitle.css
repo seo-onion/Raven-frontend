@@ -1,0 +1,14 @@
+
+.card-title-cont {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    color: var(--text-primary);
+    background-color: var(--background-secondary);
+    min-height: 42px;
+    padding: 0 1rem;
+    border-radius: 8px;
+    margin: 0;
+}

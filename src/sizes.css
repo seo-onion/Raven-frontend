@@ -1,0 +1,36 @@
+:root {
+    /* Sizes */
+    --size-xxs: 16px;
+    --size-xs: 32px;
+    --size-sm: 48px;
+    --size-md: 56px;
+    --size-lg: 64px;
+    
+    /* Text sizes */
+    --text-xs: 0.5rem;
+    --text-sm: 0.75rem;
+    --text-md: 0.875rem;
+    --text-lg: 1rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.75rem;
+    --text-3xl: 2rem;
+    
+    /* Radius */
+    --radius-none: 0;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+    /* Spacing */
+    --spacing-xxs: 0.1rem;
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.25rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 1.75rem;
+}
+

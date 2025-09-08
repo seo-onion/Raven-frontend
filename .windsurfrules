@@ -1,0 +1,461 @@
+# Frontend Development Rules
+
+## Project Overview
+This is a React Vite crowdfunding platform with TypeScript, React Router, React Query, and Zustand for state management. Follow these rules strictly when modifying or extending the codebase.
+
+## Code Formatting & Structure
+
+### Indentation
+- **ALWAYS use 4 spaces for indentation** - never tabs or 2 spaces
+- Apply consistently across all files (.tsx, .css, .ts, .json)
+
+### File Organization
+- **Pages**: `src/pages/PageName/PageName.tsx` + `src/pages/PageName/PageName.css`
+- **Components**: `src/components/ComponentName/ComponentName.tsx` + `src/components/ComponentName/ComponentName.css`
+- **Page-specific components**: `src/components/pagename/ComponentName/ComponentName.tsx`
+- **Types**: Organize in `src/types/` folder by domain (e.g., `auth.ts`, `projects.ts`)
+- **Hooks**: `src/hooks/useFeatureName.tsx` with clear interfaces
+- **Stores**: `src/stores/FeatureStore.tsx` following AuthStore pattern
+
+### Naming Conventions
+- **Files**: PascalCase for components/pages (Home.tsx, CreateProject.tsx)
+- **CSS Classes**: `pagename_classname` or `componentname_classname` format
+- **Variables**: camelCase for JS/TS, kebab-case for CSS custom properties
+- **Constants**: UPPER_SNAKE_CASE
+
+## CSS & Styling
+
+### CSS Variables
+- **ALWAYS use CSS variables** from `src/theme.css` for colors, spacing, and common values
+- **Never hardcode colors** - use theme variables like `var(--main-primary)`, `var(--text-primary)`
+- Support both light and dark themes using the existing variable system
+
+### CSS Class Naming
+- **Unique class names**: Each CSS class must be unique across the entire project
+- **Format**: `pagename_element` or `componentname_element`
+- **Examples**: `home_banner`, `login_form`, `button_primary`
+- **Only declare classes** in the component's neighboring .css file
+
+### Reusable Styles
+- Utilize common classes from `index.css` and `App.css` when appropriate
+- Extend base component styles rather than recreating them
+
+## Component Architecture
+
+### Pre-built Components
+- **ALWAYS use existing components** from `src/components/common/` or `src/components/forms/` (Button, Input, Select, etc.)
+- **Small modifications allowed** for compatibility, but keep changes minimal and smart
+- **New common components** must follow the style and layout of existing base components
+
+### Component Structure
+```
+src/components/ComponentName/
+├── ComponentName.tsx
+├── ComponentName.css
+└── README.md (if complex or reusable)
+```
+
+### Page-specific Components
+```
+src/components/pagename/
+├── ComponentName/
+│   ├── ComponentName.tsx
+│   ├── ComponentName.css
+│   └── README.md (optional)
+```
+
+### Modal System
+
+#### Modal Architecture
+- **Global modal system** using `ModalStore` with Zustand for state management
+- **Single modal display** - only one modal can be open at a time
+- **Base modal component** (`ModalBase`) handles overlay, close button, and content rendering
+- **Automatic route cleanup** - modals close when navigating to different pages
+
+#### Modal Store Usage
+```typescript
+// Import the store
+import useModalStore from '@/stores/ModalStore';
+
+// In your component
+const { setModalContent, closeModal } = useModalStore();
+
+// Open a modal
+setModalContent(<YourModalComponent prop1={value1} prop2={value2} />);
+
+// Close modal (usually handled automatically)
+closeModal();
+```
+
+#### Creating New Modals
+
+##### File Structure
+```
+src/modals/ModalName/
+├── ModalName.tsx
+├── ModalName.css
+└── README.md (optional)
+```
+
+##### Modal Component Rules
+- **Import modal store**: Always import `useModalStore` for `closeModal` functionality
+- **Handle close events**: Accept optional `handleClose` prop that executes before modal closes
+- **No overlay/backdrop**: `ModalBase` handles all overlay functionality
+- **Focus on content**: Modal components only contain the inner modal content
+- **Consistent styling**: Use the same CSS class naming conventions (`modalname_element`)
+
+##### Modal Component Template
+```typescript
+import useModalStore from '@/stores/ModalStore';
+import { useTranslation } from 'react-i18next';
+import Button from '@/components/common/Button/Button';
+import './ModalName.css';
+
+interface ModalNameProps {
+    // Your modal props
+    data?: any;
+    onSubmit?: (data: any) => void;
+    handleClose?: () => void; // Optional cleanup function
+}
+
+const ModalName = ({ data, onSubmit, handleClose }: ModalNameProps) => {
+    const { t } = useTranslation('common');
+    const { closeModal } = useModalStore();
+
+    const handleSubmit = () => {
+        // Your submit logic
+        onSubmit?.(data);
+        closeModal();
+    };
+
+    return (
+        <div className="modalname-content">
+            <h3>{t('modal_title')}</h3>
+            {/* Your modal content */}
+            
+            <div className="modalname-actions">
+                <Button variant="secondary" onClick={closeModal}>
+                    {t('cancel')}
+                </Button>
+                <Button variant="primary" onClick={handleSubmit}>
+                    {t('save')}
+                </Button>
+            </div>
+        </div>
+    );
+};
+
+export default ModalName;
+```
+
+#### Opening Modals from Components
+```typescript
+import useModalStore from '@/stores/ModalStore';
+import YourModalComponent from '@/modals/YourModal/YourModal';
+
+const YourPage = () => {
+    const { setModalContent } = useModalStore();
+
+    const handleOpenModal = () => {
+        setModalContent(
+            <YourModalComponent
+                data={someData}
+                onSubmit={handleModalSubmit}
+                handleClose={handleModalClose} // Optional cleanup
+            />
+        );
+    };
+
+    const handleModalSubmit = (data: any) => {
+        // Handle the submitted data
+        console.log('Modal submitted:', data);
+    };
+
+    const handleModalClose = () => {
+        // Optional: cleanup before modal closes
+        console.log('Modal is closing');
+    };
+
+    return (
+        <div>
+            <button onClick={handleOpenModal}>Open Modal</button>
+        </div>
+    );
+};
+```
+
+#### Modal Best Practices
+- **Always use translations** for all modal text content
+- **Implement proper form validation** before allowing modal submission
+- **Handle loading states** during async operations within modals
+- **Use consistent button layouts** with cancel/save actions
+- **Provide clear visual feedback** for required fields and validation errors
+- **Test keyboard navigation** and accessibility within modals
+- **Clean up resources** using the optional `handleClose` prop when needed
+
+#### Modal CSS Guidelines
+- **Use modal-specific prefixes** for CSS classes (e.g., `addmember_form`, `deleteconfirm_actions`)
+- **Consistent spacing** using CSS variables from `theme.css`
+- **Responsive design** for mobile and desktop viewports
+- **Accessible focus states** for interactive elements
+- **Dark/light theme support** using existing CSS variables
+
+
+## Routing
+
+### Route Management
+- **ALL routes** must be defined in `src/routes/routes.tsx`
+- **Never hardcode routes** - always import and use route constants
+- **Register all routes** in `App.tsx` following the existing pattern
+
+### Route Structure
+```typescript
+const routes = {
+    main: "/",
+    featureName: "/feature-name",
+    featureDetail: "/feature/:id",
+};
+```
+
+## State Management
+
+### AuthStore
+- **NEVER modify AuthStore** - it's configured and working
+- Use `useAuthStore()` for authentication state and methods
+- Access user details with `getUserDetails()`
+
+### New Stores
+- Follow the **exact pattern** of AuthStore using Zustand
+- **Clear interfaces** for store state and methods
+- **Readable and organized** structure for easy maintenance
+- **Efficient updates** and proper state management
+
+### Store Structure
+```typescript
+interface FeatureStore {
+    // State
+    data: FeatureData[];
+    isLoading: boolean;
+    
+    // Methods
+    fetchData: () => Promise<void>;
+    updateItem: (id: string, data: Partial<FeatureData>) => Promise<void>;
+}
+```
+
+## API Integration
+
+### Axios Instance
+- **ALWAYS use** the configured `axiosInstance` from `src/api/axiosInstance.ts`
+- **DO NOT modify** unless absolutely necessary
+- Automatic token management and error handling included
+
+### React Query Hooks
+
+#### Query Hooks (GET requests)
+- **Structure**: Separate fetch function + useQuery hook
+- **Query keys**: Descriptive and consistent
+- **Interfaces**: Clear payload and response types
+- **Error handling**: Built into the hook
+
+```typescript
+// Fetch function
+const fetchFeatures = async (): Promise<Feature[]> => {
+    const response = await axiosInstance.get("/features/");
+    return response.data.results;
+};
+
+// Hook
+export const useFeatures = () => {
+    return useQuery({
+        queryKey: ['features'],
+        queryFn: fetchFeatures,
+        staleTime: 5 * 60 * 1000,
+        gcTime: 10 * 60 * 1000,
+    });
+};
+```
+
+#### Mutation Hooks (POST/PUT/DELETE)
+- **Use useMutation** for all data modifications
+- **Invalidate queries** on success for cache consistency
+- **Proper error handling** and loading states
+
+```typescript
+const createFeature = async (data: FeatureCreateRequest): Promise<Feature> => {
+    const response = await axiosInstance.post("/features/create/", data);
+    return response.data;
+};
+
+export const useCreateFeature = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: createFeature,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['features'] });
+        }
+    });
+};
+```
+
+### Hook Documentation
+- **README files** for complex hooks explaining usage
+- **Clear interfaces** for all request/response types
+- **Examples** of how to use the hooks in components
+
+## Internationalization (i18n)
+
+### Translation Usage
+- **ALWAYS use** `t('key_name')` for any user-facing text
+- **Never hardcode text** in components
+
+### Translation Keys
+- **Add keys** to `src/locales/common.tsx` for ALL languages
+- **Edit with caution** - this file is large and shared
+- **Descriptive key names** that indicate context
+- **Organize keys** logically within the translation object
+- **Use camelCase** for key names
+- **Reuse existing keys** when possible
+
+### Key Naming Convention
+```typescript
+// Good examples
+t('login_button')
+t('project_create_success')
+t('error_invalid_email')
+t('navigation_home')
+```
+
+## Toast Notifications
+
+### Usage
+- Import `toast` from `react-hot-toast`
+- **Always use translation keys**: `toast.success(t('success_key'))`
+- **Available methods**: `toast.success()`, `toast.error()`, `toast.loading()`
+
+### Examples
+```typescript
+toast.success(t('project_created_successfully'));
+toast.error(t('login_failed'));
+toast.loading(t('saving_changes'));
+```
+
+## TypeScript & Types
+
+### Type Organization
+- **Domain-based files** in `src/types/` folder
+- **Clear interfaces** for all API requests and responses
+- **Export types** properly for reuse across components
+
+### Type Structure
+```typescript
+// src/types/projects.ts
+export interface Project {
+    id: string;
+    title: string;
+    description: string;
+    // ... other fields
+}
+
+export interface ProjectCreateRequest {
+    title: string;
+    description: string;
+    // ... required fields
+}
+
+export interface ProjectResponse {
+    results: Project[];
+    count: number;
+    next: string | null;
+    previous: string | null;
+}
+```
+
+## Environment Variables
+
+### Configuration
+- **ALL environment variables** must be documented in `.env.template`
+- **Use VITE_ prefix** for client-side variables
+- **Never commit** actual `.env` files
+
+### Template Structure
+```
+# API Configuration
+VITE_API_URL=http://localhost:8000
+
+# External Services
+VITE_GOOGLE_CLIENT_ID=your_google_client_id
+```
+
+## Best Practices
+
+### Performance
+- **Lazy load** pages and heavy components
+- **Memoize** expensive calculations
+- **Optimize re-renders** with proper dependency arrays
+
+### Error Handling
+- **Try-catch blocks** for async operations
+- **Meaningful error messages** using translations
+- **Fallback UI** for error states
+
+### Accessibility
+- **Semantic HTML** elements
+- **ARIA labels** where necessary
+- **Keyboard navigation** support
+- **Screen reader** compatibility
+
+### Code Quality
+- **Single responsibility** principle for components
+- **Pure functions** where possible
+- **Consistent naming** throughout the project
+- **Comment complex logic** but prefer self-documenting code
+
+## Testing Considerations
+
+### Component Testing
+- **Test user interactions** and state changes
+- **Mock API calls** appropriately
+- **Test error states** and edge cases
+
+### Hook Testing
+- **Test custom hooks** in isolation
+- **Verify API integration** with proper mocking
+- **Test loading and error states**
+
+## Documentation
+
+### README Files
+- **Component READMEs** for complex or highly reusable components
+- **Hook READMEs** explaining usage patterns and examples
+- **API documentation** for custom endpoints
+
+### Code Comments
+- **Explain WHY** not what
+- **Document complex business logic**
+- **API integration notes** where helpful
+
+## Security
+
+### Authentication
+- **Use AuthStore methods** for all auth operations
+- **Never store sensitive data** in localStorage without encryption
+- **Validate user permissions** before sensitive operations
+
+### API Security
+- **Validate all inputs** before sending to API
+- **Handle authentication errors** gracefully
+- **Sanitize user inputs** to prevent XSS
+
+## Deployment
+
+### Build Optimization
+- **Tree shaking** for unused code
+- **Code splitting** for better loading performance
+- **Asset optimization** for images and fonts
+
+### Environment Setup
+- **Separate configs** for development, staging, and production
+- **Environment-specific** API URLs and settings
+
+Remember: These rules ensure consistency, maintainability, and scalability of the frontend. Always prioritize code readability and follow the established patterns.

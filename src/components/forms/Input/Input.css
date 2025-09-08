@@ -1,0 +1,267 @@
+/* Base styles */
+.basic-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxs);
+}
+
+.basic-input-group.full-width {
+    width: 100%;
+}
+
+/* Label placement */
+.basic-input-group.label-placement-outside {
+    flex-direction: column;
+}
+
+.basic-input-group.label-placement-outside-left {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Handle the floating outside label container height */
+.basic-input-group.has-floating-outside-label {
+    position: relative;
+    /* Add top margin to maintain the same height as if the label was outside */
+    padding-top: calc(var(--text-md) + var(--spacing-md));
+}
+
+@media (max-width: 768px) {
+    .basic-input-group.label-placement-outside-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+}
+
+.basic-input-label {
+    color: var(--text-primary);
+    font-size: var(--text-sm);
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+
+.basic-input-field {
+    width: 100%;
+    padding: var(--spacing-sm);
+    outline: none;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+    border-width: 1px;
+    border-style: solid;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+/* Inside label styling */
+.input-label {
+    position: absolute;
+    color: var(--text-primary);
+    left: var(--spacing-sm);
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 1;
+    margin: 0;
+}
+
+.inside-label {
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-primary);
+    font-size: var(--text-md);
+}
+
+.inside-label.floating {
+    top: calc(var(--spacing-xs));
+    transform: translateY(0);
+    font-size: var(--text-xs);
+}
+
+/* Floating outside label styles */
+.floating-outside-label {
+    /* color: var(--text-secondary); */
+    font-size: var(--text-md);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.2s ease;
+}
+
+.floating-outside-label.float-above {
+    top: calc(-1 * (var(--text-md) + var(--spacing-md)));
+    left: 0;
+    transform: translateY(0);
+    font-size: var(--text-sm);
+    background-color: var(--background-primary);
+    padding: 0 var(--spacing-xxs);
+}
+
+.basic-input-field.has-inside-label {
+    padding-top: calc(var(--spacing-md) + var(--spacing-xs));
+    padding-bottom: 0;
+}
+
+/* Content positioning */
+.input-start-content {
+    position: absolute;
+    left: var(--spacing-sm);
+    z-index: 2;
+}
+
+.input-end-content {
+    position: absolute;
+    right: var(--spacing-sm);
+    z-index: 2;
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.basic-input-field.has-start {
+    padding-left: calc(var(--spacing-md) + 1.25rem) !important;
+}
+
+.basic-input-field.has-end {
+    padding-right: calc(var(--spacing-md) + 1.25rem) !important;
+}
+
+/* Password toggle */
+.password-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+
+/* Variants */
+.basic-input-field.variant-bordered {
+    border-width: 1px;
+}
+
+.basic-input-field.variant-faded {
+    border-width: 1px;
+}
+
+.basic-input-field.variant-underlined {
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+}
+
+/* Sizes */
+.basic-input-field.size-sm {
+    height: var(--size-sm);
+    font-size: var(--text-sm);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+}
+
+.basic-input-field.size-md {
+    height: var(--size-md);
+    font-size: var(--text-md);
+}
+
+.basic-input-field.size-lg {
+    height: var(--size-lg);
+    font-size: var(--text-lg);
+}
+
+/* Radius */
+.basic-input-field.radius-none { border-radius: var(--radius-none) }
+.basic-input-field.radius-sm { border-radius: var(--radius-sm) }
+.basic-input-field.radius-md { border-radius: var(--radius-md) }
+.basic-input-field.radius-lg { border-radius: var(--radius-lg) }
+.basic-input-field.radius-full { border-radius: var(--radius-full) }
+
+/* Focus state */
+.basic-input-field:focus {
+    box-shadow: 0 0 0 2px var(--main-primary);
+}
+
+/* Disabled state */
+.basic-input-field:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Error states */
+.basic-input-field.input-invalid,
+.basic-input-field.input-invalid:focus {
+    border-color: var(--state-danger) !important;
+    color: var(--state-danger);
+}
+
+.input-error {
+    color: var(--state-danger);
+    font-size: var(--text-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.required-mark {
+    color: var(--state-danger);
+}
+
+/* Clear button */
+.input-clear {
+    position: absolute;
+    font-size: 1.2rem;
+    right: var(--spacing-sm);
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+}
+
+.input-clear:hover {
+    color: var(--text-secondary);
+}
+
+
+/* Multiline textarea styles */
+.basic-input-field.multiline-textarea {
+    resize: vertical;
+    min-height: 3rem;
+    height: auto;
+    padding: var(--spacing-sm);
+    line-height: 1.5;
+    font-family: inherit;
+}
+
+.basic-input-field.multiline-textarea.has-inside-label {
+    padding-top: calc(var(--spacing-md) + var(--spacing-xs));
+}
+
+/* Content positioning */
+.input-start-content,
+.input-end-content {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.input-start-content.has-inside-label,
+.input-end-content.has-inside-label {
+    padding-top: calc(var(--spacing-md) + var(--spacing-xs));
+    padding-bottom: 0;
+}

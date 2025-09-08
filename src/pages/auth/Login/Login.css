@@ -1,0 +1,106 @@
+
+
+
+.login-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--black-10);
+}
+
+.login-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.login-tab.active {
+    color: var(--blue-primary);
+}
+
+.login-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #7928ca, #ff0080);
+}
+
+.wallet-login-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wallet-info {
+    background-color: var(--black-03);
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.wallet-info p {
+    margin: 0 0 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.wallet-info p:last-child {
+    margin-bottom: 0;
+}
+
+.wallet-support {
+    font-size: 0.9rem;
+    color: var(--text-tertiary) !important;
+}
+
+.wallet-connect-btn {
+    margin-top: 1rem;
+}
+
+
+
+
+
+.login-submit-button {
+    cursor: pointer;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--main-primary);
+    color: var(--text-inverse);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+  
+.login-submit-button:hover {
+    background-color: var(--main-secondary);
+}
+
+/* SMALL SCREENS */
+@media (max-width: 480px) {
+    /* Slightly reduce spacing */
+    .login-main-cont {
+        gap: 10px;
+    }
+  
+    .login-admin-btn {
+        top: 10px;
+        left: 10px;
+        padding: 0.4rem 0.8rem;
+    }
+  
+    .login-ransa-logo {
+        width: 120px;
+    }
+  }
+  

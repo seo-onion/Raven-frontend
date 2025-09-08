@@ -1,0 +1,66 @@
+.basic-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 0.8rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: none;
+    color: var(--text-inverse);
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.basic-button:hover {
+    opacity: 0.8;
+}
+
+/* Sizes */
+.basic-button-sm {
+    height: 32px;
+    font-size: 0.8rem;
+    padding: 0 0.6rem;
+}
+
+.basic-button-md {
+    height: 42px;
+    font-size: 0.9rem;
+}
+
+.basic-button-lg {
+    height: 52px;
+    font-size: 1rem;
+    padding: 0 1rem;
+}
+
+.basic-button-xl {
+    height: 62px;
+    font-size: 1.1rem;
+    padding: 0 1.2rem;
+}
+
+/* Variants */
+.basic-button-primary {
+    background-color: var(--main-primary);
+}
+
+.basic-button-secondary {
+    background-color: var(--main-secondary);
+}
+
+.basic-button-danger {
+    background-color: var(--state-danger);
+}
+
+.basic-button-warning {
+    background-color: var(--state-warning);
+}
+
+.basic-button-info {
+    background-color: var(--state-info);
+}
+
+.basic-button-success {
+    background-color: var(--state-success);
+}

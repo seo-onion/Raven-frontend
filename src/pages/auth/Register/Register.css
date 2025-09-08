@@ -1,0 +1,98 @@
+
+.register-header {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.back-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--black-50);
+  color: var(--text-inverse);
+  border: 1px solid var(--white-20);
+  border-radius: 25px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.back-button:hover {
+  background: var(--black-60);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px var(--black-30);
+}
+
+.register-logo {
+  width: 120px;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 4px 10px var(--black-20));
+  animation: float 6s ease-in-out infinite;
+}
+
+.register-card-cont {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0px 10px 30px var(--black-15);
+  background-color: var(--white-90);
+  backdrop-filter: blur(10px);
+}
+
+.register-card-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.register-card-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: var(--section-accent);
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+.register-form-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.register-switch {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--blue-primary);
+  cursor: pointer;
+}

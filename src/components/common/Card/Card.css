@@ -1,0 +1,39 @@
+.common-card-container {
+    background-color: var(--background-primary);
+    /* border: 1px solid var(--border-primary); */
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: all 0.2s ease;
+    /* min-height: 100px;  */
+    height: 100%; /* Ensure all cards are the same height */
+    width: 100%; /* Ensure card takes full width of its container */
+}
+
+.common-card-container.hoverable {
+    cursor: pointer;
+}
+
+.common-card-container.hoverable:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: var(--border-hover);
+}
+
+.common-card-container.hoverable:active:not(.disabled) {
+    transform: translateY(0);
+}
+
+.common-card-container:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--main-primary-15);
+    border-color: var(--main-primary);
+}
+
+.common-card-container.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: var(--background-secondary);
+}

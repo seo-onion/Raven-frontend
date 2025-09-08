@@ -1,0 +1,180 @@
+.paginator-container {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    padding: 0.5rem;
+    background: var(--background-primary);
+}
+
+.paginator-numbers {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    position: relative;
+}
+
+.paginator-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    border: 1.5px solid var(--border-primary);
+    background: var(--background-primary);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    will-change: transform, opacity, color, background-color, border-color;
+}
+
+/* Variants */
+.paginator-item.rounded {
+    border-radius: 0.5rem;
+}
+
+.paginator-item.circle {
+    border-radius: 50%;
+    padding: 0;
+}
+
+/* States */
+.paginator-item:hover:not(.disabled):not(.active):not(.dots) {
+    background: var(--background-secondary);
+    border-color: var(--main-secondary);
+    color: var(--main-secondary);
+    transform: translateY(-1px);
+}
+
+.paginator-item.active {
+    background: var(--main-secondary);
+    border-color: var(--main-secondary);
+    color: var(--text-inverse);
+    font-weight: 600;
+    transform: scale(1.05);
+    z-index: 2;
+    animation: activateButton 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@keyframes activateButton {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+}
+
+.paginator-item.active::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--main-secondary);
+    opacity: 0.1;
+    transform: scale(0);
+    animation: rippleEffect 0.4s ease-out;
+}
+
+@keyframes rippleEffect {
+    0% {
+        transform: scale(0);
+        opacity: 0.15;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.paginator-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+}
+
+.paginator-item.dots {
+    border: none;
+    background: transparent;
+    cursor: default;
+    width: 1.5rem;
+    min-width: 1.5rem !important;
+    font-weight: bold;
+    color: var(--text-secondary);
+    transform: none;
+    margin: 0 -0.25rem;
+}
+
+/* Sizes */
+.size-sm .paginator-item {
+    min-width: 1.75rem;
+    height: 1.75rem;
+    font-size: 0.75rem;
+}
+
+.size-lg .paginator-item {
+    min-width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1rem;
+}
+
+/* Double arrows for first/last page */
+.paginator-double-arrow {
+    font-size: 1.1em;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.paginator-double-arrow.negative-margin {
+    margin-left: -0.75em;
+}
+
+/* Focus styles for accessibility */
+.paginator-item:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--background-primary), 0 0 0 4px var(--main-secondary);
+}
+
+/* Navigation arrows hover effect */
+.paginator-item:not(.disabled):hover .paginator-double-arrow {
+    transform: scale(1.05) translateX(var(--arrow-direction, 0));
+}
+
+.paginator-item:first-child:hover .paginator-double-arrow {
+    --arrow-direction: -1px;
+}
+
+.paginator-item:last-child:hover .paginator-double-arrow {
+    --arrow-direction: 1px;
+}
+
+/* Add subtle hover glow effect */
+.paginator-item:not(.disabled):not(.dots):hover::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    background: var(--main-secondary);
+    opacity: 0.05;
+    border-radius: inherit;
+    z-index: -1;
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.05;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.08;
+        transform: scale(1.02);
+    }
+}

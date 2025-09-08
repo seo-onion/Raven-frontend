@@ -1,0 +1,14 @@
+/* VerifyEmail specific styles */
+.verify-email-code-input {
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    font-weight: 600;
+}
+
+.verify-email-description {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.5;
+}

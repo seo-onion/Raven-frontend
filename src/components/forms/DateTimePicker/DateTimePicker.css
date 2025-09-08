@@ -1,0 +1,340 @@
+/* DateTimePicker Component Styles */
+.datetime-picker-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxs);
+}
+
+.datetime-picker-group.full-width {
+    width: 100%;
+}
+
+/* Label placement */
+.datetime-picker-group.label-placement-outside {
+    flex-direction: column;
+}
+
+.datetime-picker-group.label-placement-outside-left {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+/* Handle the floating outside label container height */
+.datetime-picker-group.has-floating-outside-label {
+    position: relative;
+    /* Add top margin to maintain the same height as if the label was outside */
+    padding-top: calc(var(--text-md) + var(--spacing-md));
+}
+
+@media (max-width: 768px) {
+    .datetime-picker-group.label-placement-outside-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+}
+
+.datetime-picker-label {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.datetime-picker-field {
+    width: 100%;
+    padding: var(--spacing-sm);
+    outline: none;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+    border-width: 1px;
+    border-style: solid;
+    line-height: 1.5;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-weight: inherit;
+}
+
+/* Variant Styles - Match Input component */
+.datetime-picker-field.variant-flat {
+    border-color: var(--background-secondary);
+    background-color: var(--background-secondary);
+}
+
+.datetime-picker-field.variant-bordered {
+    border: 1px solid var(--border-primary);
+    background-color: transparent;
+}
+
+.datetime-picker-field.variant-faded {
+    border: 1px solid var(--border-primary);
+    background-color: var(--background-secondary);
+}
+
+.datetime-picker-field.variant-underlined {
+    border: none;
+    border-bottom: 1px solid var(--border-primary);
+    background-color: transparent;
+    border-radius: 0;
+}
+
+/* Sizes - Match Input component exactly */
+.datetime-picker-field.size-xs {
+    height: var(--size-sm);
+    font-size: var(--text-sm);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+}
+
+.datetime-picker-field.size-sm {
+    height: var(--size-sm);
+    font-size: var(--text-sm);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+}
+
+.datetime-picker-field.size-md {
+    height: var(--size-md);
+    font-size: var(--text-md);
+}
+
+.datetime-picker-field.size-lg {
+    height: var(--size-lg);
+    font-size: var(--text-lg);
+}
+
+/* Radius */
+.datetime-picker-field.radius-none { border-radius: var(--radius-none) }
+.datetime-picker-field.radius-sm { border-radius: var(--radius-sm) }
+.datetime-picker-field.radius-md { border-radius: var(--radius-md) }
+.datetime-picker-field.radius-lg { border-radius: var(--radius-lg) }
+.datetime-picker-field.radius-full { border-radius: var(--radius-full) }
+
+/* Focus state */
+.datetime-picker-field:focus {
+    border-color: var(--border-secondary);
+    box-shadow: 0 0 0 2px var(--main-primary);
+}
+
+/* Disabled state */
+.datetime-picker-field:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Error states */
+.datetime-picker-field.input-invalid,
+.datetime-picker-field.input-invalid:focus {
+    border-color: var(--state-danger) !important;
+    color: var(--state-danger);
+}
+
+/* Container with floating label */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+}
+
+.input-container.with-floating-label {
+    margin-top: var(--spacing-sm);
+}
+
+/* Inside label styling */
+.input-label {
+    position: absolute;
+    color: var(--text-primary);
+    left: var(--spacing-sm);
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 1;
+    margin: 0;
+}
+
+.inside-label {
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-primary);
+    font-size: var(--text-md);
+}
+
+.inside-label.floating {
+    top: calc(var(--spacing-xs));
+    transform: translateY(0);
+    font-size: var(--text-xs);
+}
+
+/* Floating outside label styles */
+.floating-outside-label {
+    font-size: var(--text-md);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.2s ease;
+}
+
+.floating-outside-label.float-above {
+    top: calc(-1 * (var(--text-md) + var(--spacing-md)));
+    left: 0;
+    transform: translateY(0);
+    font-size: var(--text-sm);
+    background-color: var(--background-primary);
+    padding: 0 var(--spacing-xxs);
+}
+
+/* Padding adjustments for inside labels */
+.datetime-picker-field.has-inside-label {
+    padding-top: calc(var(--spacing-md) + var(--spacing-xs));
+    padding-bottom: 0;
+}
+
+/* Content positioning */
+.input-start-content {
+    position: absolute;
+    left: var(--spacing-sm);
+    z-index: 2;
+}
+
+.input-end-content {
+    position: absolute;
+    right: var(--spacing-sm);
+    z-index: 2;
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.datetime-picker-field.has-start {
+    padding-left: calc(var(--spacing-md) + 1.25rem) !important;
+}
+
+.datetime-picker-field.has-end {
+    padding-right: calc(var(--spacing-md) + 1.25rem) !important;
+}
+
+/* Clear button */
+.input-clear {
+    position: absolute;
+    font-size: 1.2rem;
+    right: var(--spacing-sm);
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 2;
+}
+
+.input-clear:hover {
+    color: var(--text-secondary);
+}
+
+.input-error {
+    color: var(--state-danger);
+    font-size: var(--text-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.required-mark {
+    color: var(--state-danger);
+}
+
+/* Content positioning */
+.input-start-content,
+.input-end-content {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.input-start-content.has-inside-label,
+.input-end-content.has-inside-label {
+    padding-top: calc(var(--spacing-md) + var(--spacing-xs));
+    padding-bottom: 0;
+}
+
+/* DateTime specific styles */
+.datetime-picker-field::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.datetime-picker-field::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Dark mode support for calendar icon */
+@media (prefers-color-scheme: dark) {
+    .datetime-picker-field::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+}
+
+/* Ensure icon visibility */
+.input-end-content {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+/* Keep native calendar icon functional but visually transparent */
+.datetime-picker-field::-webkit-calendar-picker-indicator {
+    opacity: 0.01;
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    z-index: 10;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+/* Custom calendar icon overlay - positioned behind the invisible native icon */
+.datetime-picker-field {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-sm) center;
+    background-size: 1rem 1rem;
+    position: relative;
+}
+
+.datetime-picker-field:hover {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007bff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+}
+
+/* Dark mode support for custom icon */
+@media (prefers-color-scheme: dark) {
+    .datetime-picker-field {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+    }
+    
+    .datetime-picker-field:hover {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2366b3ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+    }
+}
+
+/* Disabled state */
+.datetime-picker-field:disabled {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3e%3c/rect%3e%3cline x1='16' y1='2' x2='16' y2='6'%3e%3c/line%3e%3cline x1='8' y1='2' x2='8' y2='6'%3e%3c/line%3e%3cline x1='3' y1='10' x2='21' y2='10'%3e%3c/line%3e%3c/svg%3e");
+    cursor: not-allowed;
+}
+
+/* Remove absolute positioning that might be hiding the icon */
+.datetime-picker-field {
+    position: relative;
+}

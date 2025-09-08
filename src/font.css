@@ -1,0 +1,706 @@
+
+/********************************************************
+  HELVETIVA
+**********************************************************/
+
+/* Light */
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica-LightOblique.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica-Oblique.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('./fonts/helvetica/Helvetica-BoldOblique.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/********************************************************
+  MONTSERRAT
+**********************************************************/
+
+/* Thin */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Thinitalic.woff2') format('woff2');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Extra Light */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-ExtraLightltalic.woff2') format('woff2');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Mediumltalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Semi Bold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-SemiBoldltalic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Boldltalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Extra Bold */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-ExtraBoldltalic.woff2') format('woff2');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('./fonts/montserrat/Montserrat-Blackltalic.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/********************************************************
+  RUBIK
+**********************************************************/
+
+/* Light */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Lightltalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Mediumltalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Boldltalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('./fonts/rubik/Rubik-Blackltalic.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/********************************************************
+  MANROPE
+**********************************************************/
+
+/* Thin */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Light */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Semibold */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Extra Bold */
+@font-face {
+    font-family: 'Manrope';
+    src: url('./fonts/manrope/Manrope-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/********************************************************
+  SOURCESANSPRO
+**********************************************************/
+
+/* Extra Light */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-ExtraLightItalic.woff2') format('woff2');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Light */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-LightItalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Semi Bold */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-SemiBoldItalic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-BoldItalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('./fonts/sourcesanspro/SourceSansPro-BlackItalic.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/********************************************************
+  POPPINS
+**********************************************************/
+
+/* Thin */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Thinitalic.woff2') format('woff2');
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Extra Light */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-ExtraLightltalic.woff2') format('woff2');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Light */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Lightltalic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Mediumltalic.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Semi Bold */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-SemiBoldltalic.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Boldltalic.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Extra Bold */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-ExtraBoldltalic.woff2') format('woff2');
+    font-weight: 800;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('./fonts/poppins/Poppins-Blackltalic.woff2') format('woff2');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/********************************************************
+  SOURCE CODE PRO
+**********************************************************/
+
+/* Extra Light */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-ExtraLight.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Light */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Semibold */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Black */
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('./fonts/sourcecodepro/SourceCodePro-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/********************************************************
+  CONFIGURATION
+**********************************************************/
+
+:root {
+    /* Define font family variables */
+    --font-helvetica: Helvetica, Arial, sans-serif;
+    --font-montserrat: Montserrat, Arial, sans-serif;
+    --font-rubik: Rubik, Arial, sans-serif;
+    --font-manrope: Manrope, Arial, sans-serif;
+    --font-source-sans: 'Source Sans Pro', Arial, sans-serif;
+    --font-poppins: Poppins, Arial, sans-serif;
+    --font-code: 'Source Code Pro', monospace;
+  
+    /* Set default font */
+    --font-primary: var(--font-manrope);
+    --line-height-base: 1;
+}
+
+* {
+    font-family: var(--font-primary);
+    line-height: var(--line-height-base);
+}
