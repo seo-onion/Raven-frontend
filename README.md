@@ -3,7 +3,7 @@
 </div>
 
 
-# Mommy Django
+# Mommy React
 
 A modern, production-ready React template built with TypeScript, Vite, and a comprehensive component library. This template provides a complete foundation for building scalable web applications with best practices, internationalization, state management, and a beautiful UI system.
 
