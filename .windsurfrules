@@ -1,4 +1,4 @@
-# Frontend Development Rules
+    # Frontend Development Rules
 
 ## Project Overview
 This is a React Vite crowdfunding platform with TypeScript, React Router, React Query, and Zustand for state management. Follow these rules strictly when modifying or extending the codebase.
