@@ -161,6 +161,20 @@ const common = {
         login_forgot_password: "¿Olvidaste tu contraseña?",
         login_reset_password: "Enivar solicitud",
 
+        // Raven CRM Login
+        raven_crm_title: "Raven CRM",
+        raven_crm_subtitle: "Plataforma de Gestión de Incubación y Escalamiento Comercial",
+        im_a_startup: "Soy una Startup",
+        im_an_incubator: "Soy una Incubadora",
+        startup_description: "Gestiona tu proceso de incubación y escalamiento con herramientas especializadas.",
+        incubator_description: "Supervisa y acompaña tu portafolio de startups con análisis consolidados.",
+        login_as_startup: "Ingresar como Startup",
+        login_as_incubator: "Ingresar como Incubadora",
+        no_account: "¿No tienes cuenta?",
+        register_here: "Regístrate aquí",
+        back_to_type_selection: "Volver a selección de tipo",
+        demo_note: "Demo: usa cualquier email y contraseña",
+
         login_verify_email: "Verificar correo electrónico",
         login_verify_email_message: "Hemos enviado un link de confirmación a: {{email}}. Por favor ingrese a ese link para confirmar su correo electrónico.",
         login_verify_email_loading: "Verificando su cuenta...",
@@ -182,6 +196,25 @@ const common = {
         // Signup Page
         signup_success: "Registro exitoso",
         signup_error: "Ocurrió un error durante el registro",
+        create_your_account: "Crea tu cuenta",
+        select_account_type: "Selecciona el tipo de cuenta",
+        startup: "Startup",
+        incubator: "Incubadora",
+        back_to_login: "Volver al inicio de sesión",
+
+        // Email Verification
+        verify_your_email: "Verifica tu correo electrónico",
+        email_verification: "Verificación de Email",
+        verify_email_description: "Ingresa el código de 6 dígitos que enviamos a tu correo electrónico.",
+        verification_code_label: "Código de Verificación",
+        verify_email_button: "Verificar Email",
+        verify_code_6_digits: "Por favor ingresa un código de 6 dígitos",
+        verify_code_numbers_only: "El código debe contener solo números",
+        email_verified_success: "Email verificado exitosamente",
+        verification_failed: "Verificación fallida",
+        verification_email_resent: "Email de verificación reenviado",
+        sending: "Enviando...",
+        resend_verification_code: "Reenviar código de verificación",
 
         
 
@@ -381,6 +414,20 @@ const common = {
         login_forgot_password: "Forgot your password?",
         login_reset_password: "Send request",
 
+        // Raven CRM Login
+        raven_crm_title: "Raven CRM",
+        raven_crm_subtitle: "Incubation and Commercial Scaling Management Platform",
+        im_a_startup: "I'm a Startup",
+        im_an_incubator: "I'm an Incubator",
+        startup_description: "Manage your incubation and scaling process with specialized tools.",
+        incubator_description: "Monitor and support your startup portfolio with consolidated analytics.",
+        login_as_startup: "Login as Startup",
+        login_as_incubator: "Login as Incubator",
+        no_account: "Don't have an account?",
+        register_here: "Register here",
+        back_to_type_selection: "Back to type selection",
+        demo_note: "Demo: use any email and password",
+
         login_verify_email: "Verify email",
         login_verify_email_message: "We have sent a confirmation link to: {{email}}. Please click on that link to confirm your email.",
         login_verify_email_loading: "Verifying your account...",
@@ -402,8 +449,27 @@ const common = {
         // Signup Page
         signup_success: "Registration successful",
         signup_error: "An error occurred during registration",
+        create_your_account: "Create your account",
+        select_account_type: "Select account type",
+        startup: "Startup",
+        incubator: "Incubator",
+        back_to_login: "Back to login",
 
-        
+        // Email Verification
+        verify_your_email: "Verify your email",
+        email_verification: "Email Verification",
+        verify_email_description: "Enter the 6-digit code we sent to your email address.",
+        verification_code_label: "Verification Code",
+        verify_email_button: "Verify Email",
+        verify_code_6_digits: "Please enter a 6-digit code",
+        verify_code_numbers_only: "Code must contain only numbers",
+        email_verified_success: "Email verified successfully",
+        verification_failed: "Verification failed",
+        verification_email_resent: "Verification email resent",
+        sending: "Sending...",
+        resend_verification_code: "Resend verification code",
+
+
 
         /**
          * COMPONENTS

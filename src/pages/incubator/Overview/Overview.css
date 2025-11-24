@@ -1,0 +1,465 @@
+.incubator-overview {
+    padding: 30px;
+    background-color: #f8f8f8;
+}
+
+.incubator-overview-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 5px 0;
+}
+
+.incubator-overview-subtitle {
+    color: #888;
+    margin: 0 0 30px 0;
+    font-size: 1rem;
+}
+
+/* Metrics Grid */
+.incubator-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Charts Section */
+.incubator-charts-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.incubator-chart-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.incubator-chart-card h2 {
+    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.incubator-evolution-chart {
+    flex: 2;
+}
+
+.incubator-distribution-chart {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.incubator-chart-container {
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.incubator-distribution-chart .incubator-chart-container {
+    height: 250px;
+    width: 250px;
+    margin: 20px auto;
+}
+
+.incubator-chart-placeholder,
+.incubator-pie-placeholder {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #999;
+    width: 100%;
+}
+
+.incubator-pie-placeholder {
+    height: 200px;
+    width: 200px;
+    margin: 20px 0 30px 0;
+}
+
+.incubator-legend {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    font-size: 0.9rem;
+    padding: 0 10px;
+}
+
+.incubator-legend p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.incubator-color-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.incubation { background-color: var(--main-primary); }
+.pre-incubation { background-color: #2ec1ac; }
+.acceleration { background-color: #ffaa33; }
+.graduated { background-color: #4b89ff; }
+
+/* Alerts Section */
+.incubator-alerts-section {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.incubator-alerts-header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.incubator-alerts-section h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.incubator-alerts-count {
+    background-color: var(--main-primary);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.incubator-alert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0 15px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.incubator-alert-item:last-child {
+    border-bottom: none;
+}
+
+.incubator-alert-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.incubator-alert-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.incubator-alert-detail {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.incubator-alert-critical { border-left: 5px solid #dc3545; }
+.incubator-alert-warning { border-left: 5px solid #ffc107; }
+.incubator-alert-success { border-left: 5px solid #2ec1ac; }
+
+.incubator-alert-critical .incubator-alert-title { color: #dc3545; }
+.incubator-alert-warning .incubator-alert-title { color: #cc9900; }
+.incubator-alert-success .incubator-alert-title { color: #2ec1ac; }
+
+.incubator-alert-detail-btn {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.incubator-alert-detail-btn:hover {
+    background-color: #f0e6ff;
+    color: var(--main-primary);
+    border-color: var(--main-primary);
+}
+
+/* Bottom Section: Activity and Quick Actions */
+.incubator-bottom-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.incubator-activity-card {
+    flex: 2;
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.incubator-quick-actions-card {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.incubator-activity-card h2,
+.incubator-quick-actions-card h2 {
+    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.incubator-activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.incubator-activity-item {
+    padding: 10px 0 10px 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    position: relative;
+}
+
+.incubator-activity-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #999;
+    font-size: 1.5rem;
+    line-height: 0.8;
+}
+
+.incubator-activity-item:last-child {
+    border-bottom: none;
+}
+
+.incubator-activity-startup {
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.incubator-activity-time {
+    display: block;
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 2px;
+}
+
+.incubator-quick-action-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.incubator-quick-action-btn:hover {
+    background-color: #f0e6ff;
+    border-color: var(--main-primary);
+    color: var(--main-primary);
+}
+
+.incubator-quick-action-btn span {
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.incubator-graduation-block {
+    margin-top: auto;
+    padding: 20px;
+    background-color: #f0e6ff;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--main-primary);
+}
+
+.incubator-graduation-block p {
+    font-size: 0.95rem;
+    margin: 0 0 10px 0;
+}
+
+.incubator-graduation-block strong {
+    color: var(--main-primary);
+    font-weight: 700;
+}
+
+.incubator-grad-btn {
+    width: 100%;
+    background-color: var(--main-primary);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.incubator-grad-btn:hover {
+    opacity: 0.9;
+}
+
+/* Summary Table */
+.incubator-summary-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+.incubator-summary-card h2 {
+    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.incubator-table-container {
+    overflow-x: auto;
+}
+
+.incubator-startup-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+.incubator-startup-table th,
+.incubator-startup-table td {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.incubator-startup-table th {
+    font-weight: 600;
+    color: #888;
+    border-bottom: 2px solid #eee;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.incubator-startup-table td {
+    border-bottom: 1px solid #eee;
+}
+
+.incubator-startup-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Badges */
+.incubator-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.incubator-incubación-stage {
+    background-color: #f0e6ff;
+    color: var(--main-primary);
+    border: 1px solid var(--main-primary);
+}
+
+.incubator-aceleración-stage {
+    background-color: #ffecc6;
+    color: #ffaa33;
+    border: 1px solid #ffaa33;
+}
+
+.incubator-graduado-stage {
+    background-color: #e0f7fa;
+    color: #4b89ff;
+    border: 1px solid #4b89ff;
+}
+
+.incubator-critical-status {
+    background-color: #f8d7da;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.incubator-warning-status {
+    background-color: #fff3cd;
+    color: #cc9900;
+    border: 1px solid #ffc107;
+}
+
+.incubator-healthy-status,
+.incubator-excellent-status {
+    background-color: #d4edda;
+    color: #2ec1ac;
+    border: 1px solid #2ec1ac;
+}
+
+.incubator-graduated-status {
+    background-color: #f0e6ff;
+    color: var(--main-primary);
+    border: 1px solid var(--main-primary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .incubator-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .incubator-charts-section {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .incubator-overview {
+        padding: 20px;
+    }
+
+    .incubator-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .incubator-legend {
+        grid-template-columns: 1fr;
+    }
+
+    .incubator-bottom-section {
+        flex-direction: column;
+    }
+
+    .incubator-summary-card {
+        padding: 15px;
+    }
+}

@@ -1,0 +1,30 @@
+.incubadora-dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+.incubadora-dashboard-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+}
+
+.incubadora-dashboard-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .incubadora-dashboard-main {
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .incubadora-dashboard-main {
+        margin-left: 0;
+    }
+}

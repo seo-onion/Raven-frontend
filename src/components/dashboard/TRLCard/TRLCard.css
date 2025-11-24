@@ -1,0 +1,85 @@
+.trl-card {
+    background-color: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.trl-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.trl-card.completed {
+    background-color: #f0fdf4;
+    border-color: #86efac;
+}
+
+.trl-card.current {
+    border-color: var(--main-secondary);
+    border-width: 3px;
+    background-color: #f0f9ff;
+}
+
+.trl-card-header {
+    margin-bottom: 1rem;
+}
+
+.trl-level {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.level-number {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--main-secondary);
+}
+
+.level-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: #22c55e;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.level-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--main-secondary);
+    color: white;
+    border-radius: 0.25rem;
+}
+
+.trl-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.4;
+}
+
+.trl-description {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .trl-card {
+        padding: 1rem;
+    }
+
+    .trl-title {
+        font-size: 1rem;
+    }
+}

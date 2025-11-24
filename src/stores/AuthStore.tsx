@@ -29,6 +29,7 @@ export interface UserDetails {
     first_name: string;
     last_name: string;
     actions_freezed_till?: string;
+    user_type?: 'startup' | 'incubator';
 }
 
 /**
@@ -99,6 +100,7 @@ export interface SignupRequest {
     email: string;
     password1: string;
     password2: string;
+    user_type: 'startup' | 'incubator';
     username?: string;
     captcha_response?: string;
 }
@@ -381,7 +383,17 @@ const useAuthStore = create<AuthStore>()((set, get) => {
          */
         getUserDetails: (): UserDetails | undefined => {
             const user_details = localStorage.getItem(USER_KEY);
-            return user_details ? JSON.parse(user_details) : undefined;
+            if (!user_details) return undefined;
+
+            const parsed = JSON.parse(user_details);
+
+            // Migration: Update old 'incubadora' to 'incubator'
+            if (parsed.user_type === 'incubadora') {
+                parsed.user_type = 'incubator';
+                localStorage.setItem(USER_KEY, JSON.stringify(parsed));
+            }
+
+            return parsed;
         },
         
         /**
@@ -401,8 +413,12 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return true;
             } catch (error: any) {
                 const res_payload: SignupErrorResponse = error?.response?.data;
-                if ('email' in res_payload) toast.error(i18n.t('bad_email'));
-                if ('non_field_errors' in res_payload) toast.error(i18n.t('bad_data'));
+
+                if (res_payload) {
+                    if ('email' in res_payload) toast.error(i18n.t('bad_email'));
+                    if ('non_field_errors' in res_payload) toast.error(i18n.t('bad_data'));
+                }
+
                 console.error("Registration failed", error);
                 set({ isLoading: false });
                 return false;

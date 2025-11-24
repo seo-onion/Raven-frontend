@@ -23,11 +23,12 @@ const ForgotPassword = () => {
         email: '',
     })
 
-    useEffect(() => {
-        if (isLogged) {
-            navigate(routes.home);
-        }
-    }, [isLogged]);
+    // Comentado para desarrollo - permite acceder aunque estés logueado
+    // useEffect(() => {
+    //     if (isLogged) {
+    //         navigate(routes.home);
+    //     }
+    // }, [isLogged]);
 
     const handleFormDataChange = (key: string, value: string) => {
         setFormData((prevState) => ({

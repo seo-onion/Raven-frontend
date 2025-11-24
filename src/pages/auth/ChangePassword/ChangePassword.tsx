@@ -26,11 +26,12 @@ const ChangePassword = () => {
         new_password2: '',
     })
 
-    useEffect(() => {
-        if (!isLogged) {
-            navigate(routes.login)
-        }
-    }, [isLogged])
+    // Comentado para desarrollo - permite acceder aunque no estés logueado
+    // useEffect(() => {
+    //     if (!isLogged) {
+    //         navigate(routes.login)
+    //     }
+    // }, [isLogged])
 
     const handleFormDataChange = (key: string, value: string) => {
         setFormData((prevState) => ({

@@ -83,3 +83,13 @@
 .login-register-color-text {
     color: var(--main-primary);
 }
+
+.animated-gradient-background {
+    background: linear-gradient(135deg, #1e3a8a 0%, #5b21b6 50%, #6b21a8 100%);
+}
+
+/* Smooth font rendering on gradient backgrounds */
+.animated-gradient-background * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

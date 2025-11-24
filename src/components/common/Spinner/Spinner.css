@@ -8,11 +8,11 @@
 }
 
 .spinner-primary {
-    border-top-color: var(--main-primary);
+    border-top-color: white;
 }
 
 .spinner-secondary {
-    border-top-color: var(--main-secondary);
+    border-top-color: white;
 }
 
 @keyframes spin {

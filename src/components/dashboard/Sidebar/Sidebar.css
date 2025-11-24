@@ -1,0 +1,223 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid #eee;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.sidebar-top {
+    padding: 24px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.sidebar-logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: black;
+    margin: 0 0 5px 0;
+}
+
+.logo-container{
+    background-color: var(--main-secondary);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+.sidebar-subtitle {
+    font-size: 0.85rem;
+    color: #999;
+    margin: 0;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 10px 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 8px;
+}
+
+.sidebar-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: black;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.95rem;
+    width: 85%;
+    border-radius: 15px;
+    gap: 4px;
+}
+
+.sidebar-nav-item:hover {
+    background-color: #f1f1f1;
+}
+
+.sidebar-nav-item.active {
+    background-color: var(--main-secondary);
+    color: white;
+    font-weight: 600;
+}
+
+.sidebar-nav-item.active .sidebar-nav-label {
+    color: white;
+    
+}
+
+.sidebar-nav-icon {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+    color: black;
+}
+
+.sidebar-nav-item.active .sidebar-nav-icon {
+    color: white;
+}
+
+.sidebar-nav-label {
+    font-size: 0.95rem;
+    color: black;
+    margin-left: 10px;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.sidebar-logout-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.sidebar-logout-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.sidebar-toggle {
+    display: none;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-logo,
+    .sidebar-subtitle {
+        display: none;
+    }
+
+    .sidebar-nav-item {
+        padding: 15px 0;
+        justify-content: center;
+        border-left: none;
+    }
+
+    .sidebar-nav-item.active {
+        border-radius: 8px;
+        margin: 0 10px;
+        background-color: #fff5e6;
+    }
+
+    .sidebar-nav-icon {
+        margin-right: 0;
+    }
+
+    .sidebar-nav-label {
+        display: none;
+    }
+
+    .sidebar-logout-btn .sidebar-nav-label {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+    }
+
+    .sidebar-open {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        display: flex;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background-color: var(--main-secondary);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        font-size: 1.25rem;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-nav-label {
+        display: inline;
+    }
+
+    .sidebar-logout-btn .sidebar-nav-label {
+        display: inline;
+    }
+}
+
+.aside-text-active{
+    color: white !important;
+}

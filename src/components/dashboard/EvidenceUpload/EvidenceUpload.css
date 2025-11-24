@@ -1,0 +1,134 @@
+.evidence-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.upload-area {
+    position: relative;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    border: 2px dashed #cbd5e0;
+    border-radius: 0.75rem;
+    background-color: #f7fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upload-label:hover {
+    border-color: var(--main-secondary);
+    background-color: #edf2f7;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.upload-text {
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+}
+
+.upload-link {
+    color: var(--main-secondary);
+    text-decoration: underline;
+}
+
+.upload-hint {
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.6;
+}
+
+.evidences-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.evidences-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+}
+
+.evidence-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.evidence-item:hover {
+    background-color: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.evidence-icon {
+    font-size: 1.75rem;
+    flex-shrink: 0;
+}
+
+.evidence-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.evidence-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.evidence-meta {
+    font-size: 0.8rem;
+    margin: 0;
+    opacity: 0.7;
+}
+
+.evidence-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease;
+    font-size: 1.25rem;
+}
+
+.evidence-delete:hover {
+    background-color: #fed7d7;
+}
+
+@media (max-width: 768px) {
+    .upload-label {
+        padding: 2rem 1rem;
+    }
+
+    .evidence-item {
+        padding: 0.75rem;
+    }
+
+    .evidence-name {
+        font-size: 0.875rem;
+    }
+}

@@ -1,0 +1,30 @@
+.dashboard-unified-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+}
+
+.dashboard-unified-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px;
+}
+
+.dashboard-unified-content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .dashboard-unified-main {
+        margin-left: 70px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-unified-main {
+        margin-left: 0;
+    }
+}

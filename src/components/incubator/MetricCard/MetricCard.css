@@ -1,0 +1,62 @@
+.incubator-metric-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+    transition: transform 0.2s;
+}
+
+.incubator-metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.incubator-metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.incubator-metric-title {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.incubator-metric-icon {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.incubator-metric-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.incubator-metric-detail {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Colored borders for each metric type */
+.incubator-metric-startup {
+    border-top: 5px solid var(--main-primary);
+}
+
+.incubator-metric-revenue {
+    border-top: 5px solid #2ec1ac;
+}
+
+.incubator-metric-capital {
+    border-top: 5px solid #4b89ff;
+}
+
+.incubator-metric-success {
+    border-top: 5px solid #ffaa33;
+}

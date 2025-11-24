@@ -1,0 +1,96 @@
+.usertypeselection-main-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    color: white;
+    background: linear-gradient(135deg, var(--main-primary), var(--main-secondary));
+
+}
+
+.usertypeselection-logo-container {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.usertypeselection-logo {
+    width: 72px;
+    height: 72px;
+    background: var(--background-primary);
+    border-radius: var(--radius-xl);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+    box-shadow: 0 4px 12px var(--black-10);
+}
+
+.usertypeselection-logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--main-primary) 0%, var(--state-info) 100%);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.usertypeselection-logo-container h1 {
+    font-size: 48px;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.5px;
+}
+
+.usertypeselection-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.95;
+    letter-spacing: 0.2px;
+}
+
+.usertypeselection-cards-container {
+    display: flex;
+    gap: 24px;
+    max-width: 920px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.usertypeselection-register-link {
+    text-align: center;
+    font-size: 14px;
+}
+
+.usertypeselection-register-link span {
+    color: var(--text-inverse);
+}
+
+.usertypeselection-register-button {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.usertypeselection-register-button:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .usertypeselection-main-container {
+        padding: var(--spacing-lg);
+    }
+
+    .usertypeselection-logo-container h1 {
+        font-size: 36px;
+        color: white;
+    }
+
+    .usertypeselection-cards-container {
+        flex-direction: column;
+        max-width: 420px;
+        gap: var(--spacing-lg);
+    }
+}
