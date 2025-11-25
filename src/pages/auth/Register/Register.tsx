@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -17,7 +17,7 @@ import '@/styles/Auth.css'
 
 const Register = () => {
     const navigate = useNavigate()
-    const { registerAccount, isLoading, isLogged } = useAuthStore()
+    const { registerAccount, isLoading } = useAuthStore()
     const { t } = useTranslation('common')
 
     const [formData, setFormData] = useState<SignupRequest>({

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ import '@/styles/Auth.css'
 
 const VerifyEmail = () => {
     const navigate = useNavigate()
-    const { verifyConfirmationCode, resendConfirmationCode, isLoading, isLogged, getUserDetails } = useAuthStore()
+    const { verifyConfirmationCode, isLoading } = useAuthStore()
     const { t } = useTranslation('common')
 
     const [code, setCode] = useState('')

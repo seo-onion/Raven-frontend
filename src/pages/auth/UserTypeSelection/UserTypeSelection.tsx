@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import TypeSelectionCard from '@/components/auth/TypeSelectionCard/TypeSelectionCard'
-import useAuthStore from '@/stores/AuthStore'
 import routes from '@/routes/routes'
 import { GrDeploy } from "react-icons/gr";
 import './UserTypeSelection.css'
@@ -11,7 +9,6 @@ import '@/styles/Auth.css'
 const UserTypeSelection = () => {
     const navigate = useNavigate()
     const { t } = useTranslation('common')
-    const { isLogged } = useAuthStore()
 
     // Comentado para desarrollo - permite acceder al login aunque estés logueado
     // useEffect(() => {
@@ -69,8 +66,8 @@ const UserTypeSelection = () => {
                         textDecoration: "none"
                     }}
                     href="/register"
-                    onMouseEnter={(e) => e.target.style.color = "#d1d5db"}
-                    onMouseLeave={(e) => e.target.style.color = "white"}
+                    onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = "#d1d5db"}
+                    onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = "white"}
                 >
                     {t('register_here')}
                 </a>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import IncubadoraSidebar from '../../components/incubadora/Sidebar/Sidebar';
-import IncubadoraHeader from '../../components/incubadora/Header/Header';
+import IncubadoraSidebar from '../../components/incubator/Sidebar/Sidebar';
+import IncubadoraHeader from '../../components/incubator/Header/Header';
 import './IncubadoraDashboard.css';
 
 const IncubadoraDashboard: React.FC = () => {

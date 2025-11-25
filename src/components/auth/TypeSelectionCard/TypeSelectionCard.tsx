@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from '@/components/common/Button/Button';
 import './TypeSelectionCard.css';
 import { GrDeploy } from 'react-icons/gr';
@@ -13,7 +12,6 @@ interface TypeSelectionCardProps {
 }
 
 const TypeSelectionCard = ({
-    icon,
     title,
     description,
     buttonText,

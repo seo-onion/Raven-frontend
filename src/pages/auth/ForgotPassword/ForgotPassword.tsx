@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -17,7 +17,7 @@ import '@/styles/General.css'
 const ForgotPassword = () => {
     const { t } = useTranslation('common')
     const navigate = useNavigate()
-    const { sendResetPasswordRequest, isLoading, isLogged } = useAuthStore()
+    const { sendResetPasswordRequest, isLoading } = useAuthStore()
 
     const [formData, setFormData] = useState<ResetPasswordRequest>({
         email: '',

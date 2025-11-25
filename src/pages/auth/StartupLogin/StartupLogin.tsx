@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -19,7 +19,7 @@ import '@/styles/Auth.css'
 
 const StartupLogin = () => {
     const navigate = useNavigate()
-    const { logIn, isLoading, isLogged, getUserDetails } = useAuthStore()
+    const { logIn, isLoading } = useAuthStore()
     const { t } = useTranslation('common')
 
     const [formData, setFormData] = useState<LoginRequest>({

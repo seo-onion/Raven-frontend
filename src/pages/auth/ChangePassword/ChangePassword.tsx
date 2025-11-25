@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
@@ -18,7 +18,7 @@ import '@/styles/General.css'
 const ChangePassword = () => {
     const navigate = useNavigate()
     const { t } = useTranslation('common')
-    const { changePasswordLogged, isLoading, isLogged } = useAuthStore()
+    const { changePasswordLogged, isLoading } = useAuthStore()
 
     const [formData, setFormData] = useState<ChangePasswordRequest>({
         old_password: '',
