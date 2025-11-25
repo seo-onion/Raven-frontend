@@ -441,25 +441,25 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                         }
                         toast.error(`Email: ${emailErrors}`);
                     }
-                    if ('password1' in res_payload) {
+                    if ('password1' in res_payload && res_payload.password1) {
                         const pwErrors = Array.isArray(res_payload.password1)
                             ? res_payload.password1.join(', ')
                             : res_payload.password1;
                         toast.error(`Password: ${pwErrors}`);
                     }
-                    if ('password2' in res_payload) {
+                    if ('password2' in res_payload && res_payload.password2) {
                         const pw2Errors = Array.isArray(res_payload.password2)
                             ? res_payload.password2.join(', ')
                             : res_payload.password2;
                         toast.error(`Password confirmation: ${pw2Errors}`);
                     }
-                    if ('user_type' in res_payload) {
+                    if ('user_type' in res_payload && res_payload.user_type) {
                         const userTypeErrors = Array.isArray(res_payload.user_type)
                             ? res_payload.user_type.join(', ')
                             : res_payload.user_type;
                         toast.error(`User type: ${userTypeErrors}`);
                     }
-                    if ('non_field_errors' in res_payload) {
+                    if ('non_field_errors' in res_payload && res_payload.non_field_errors) {
                         const nfErrors = Array.isArray(res_payload.non_field_errors)
                             ? res_payload.non_field_errors.join(', ')
                             : res_payload.non_field_errors;
