@@ -2,13 +2,11 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { Toaster, ToastBar, toast } from "react-hot-toast"
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
-import routes from "./routes/routes"
-import Main from "./pages/Main/Main"
+import routes from "./routes/routes" 
 import Home from "./pages/Home/Home"
 import ModalBase from "./modals/ModalBase/ModalBase"
 
-import NotFound from "./pages/NotFound/NotFound"
-import Profile from "./pages/Profile/Profile"
+import NotFound from "./pages/NotFound/NotFound" 
 
 import UserTypeSelection from "./pages/auth/UserTypeSelection/UserTypeSelection"
 import StartupLogin from "./pages/auth/StartupLogin/StartupLogin"
