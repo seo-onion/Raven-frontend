@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { IoChevronBack } from 'react-icons/io5'
@@ -17,15 +17,27 @@ import '@/styles/Auth.css'
 
 const Register = () => {
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     const { registerAccount, isLoading } = useAuthStore()
     const { t } = useTranslation('common')
+
+    const userTypeFromUrl = searchParams.get('type') as 'startup' | 'incubator' | null
 
     const [formData, setFormData] = useState<SignupRequest>({
         email: '',
         password1: '',
         password2: '',
-        user_type: 'startup',
+        user_type: userTypeFromUrl || 'startup',
     })
+
+    useEffect(() => {
+        if (userTypeFromUrl && (userTypeFromUrl === 'startup' || userTypeFromUrl === 'incubator')) {
+            setFormData(prevState => ({
+                ...prevState,
+                user_type: userTypeFromUrl
+            }))
+        }
+    }, [userTypeFromUrl])
 
     // Comentado para desarrollo - permite acceder al registro aunque estés logueado
     // useEffect(() => {
@@ -163,9 +175,6 @@ const Register = () => {
                 </Card>
             </div>
 
-            <div className="register-demo-note text-white">
-                {t('demo_note')}
-            </div>
         </div>
     )
 }

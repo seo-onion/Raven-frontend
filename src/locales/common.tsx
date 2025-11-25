@@ -173,7 +173,7 @@ const common = {
         no_account: "¿No tienes cuenta?",
         register_here: "Regístrate aquí",
         back_to_type_selection: "Volver a selección de tipo",
-        demo_note: "Demo: usa cualquier email y contraseña",
+        demo_note: "¿Ya tienes una cuenta?",
 
         login_verify_email: "Verificar correo electrónico",
         login_verify_email_message: "Hemos enviado un link de confirmación a: {{email}}. Por favor ingrese a ese link para confirmar su correo electrónico.",
@@ -426,7 +426,7 @@ const common = {
         no_account: "Don't have an account?",
         register_here: "Register here",
         back_to_type_selection: "Back to type selection",
-        demo_note: "Demo: use any email and password",
+        demo_note: "Do you already have an account?",
 
         login_verify_email: "Verify email",
         login_verify_email_message: "We have sent a confirmation link to: {{email}}. Please click on that link to confirm your email.",

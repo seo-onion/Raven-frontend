@@ -73,6 +73,7 @@ function App() {
             <Routes>
                 {/* Auth endpoints - Public routes */}
                 <Route path={routes.home} element={<Home />} />
+                <Route path={routes.main} element={<UserTypeSelection />} />
                 <Route path={routes.login} element={<UserTypeSelection />} />
                 <Route path={routes.startupLogin} element={<StartupLogin />} />
                 <Route path={routes.incubatorLogin} element={<IncubatorLogin />} />
@@ -98,9 +99,9 @@ function App() {
                 </Route>
 
                 {/* Other Protected routes - Require authentication */}
-                <Route path={routes.main} element={<ProtectedRoute><Main /></ProtectedRoute>}>
+                {/* <Route path={routes.main} element={<ProtectedRoute><Main /></ProtectedRoute>}>
                     <Route path={routes.profile} element={<Profile />} />
-                </Route>
+                </Route> */}
 
                 <Route path={routes.notFound} element={<NotFound />} />
             </Routes>

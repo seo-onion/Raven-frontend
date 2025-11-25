@@ -18,11 +18,11 @@ const UserTypeSelection = () => {
     // }, [isLogged, navigate])
 
     const handleStartupSelect = () => {
-        navigate(routes.startupLogin)
+        navigate(`${routes.register}?type=startup`)
     }
 
     const handleIncubatorSelect = () => {
-        navigate(routes.incubatorLogin)
+        navigate(`${routes.register}?type=incubator`)
     }
 
     return (
