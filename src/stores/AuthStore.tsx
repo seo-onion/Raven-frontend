@@ -102,7 +102,7 @@ export interface SignupRequest {
     password2: string;
     user_type: 'startup' | 'incubator';
     username?: string;
-    captcha_response?: string;
+    captchaResponse?: string;
 }
 
 interface SignupSuccessResponse {
@@ -110,12 +110,17 @@ interface SignupSuccessResponse {
 }
 interface SignupErrorResponse {
     // For registering with invalid email
-    email?: {
+    email?: string[] | string | {
         message?: string;
         type?: string;
     };
-    // For password mismatch
-    non_field_errors?: string[];
+    // Password errors
+    password1?: string[] | string;
+    password2?: string[] | string;
+    // User type errors
+    user_type?: string[] | string;
+    // For password mismatch and other general errors
+    non_field_errors?: string[] | string;
 }
 
 /**
@@ -403,9 +408,15 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             if (data.password1 !== data.password2) throw new Error('Passwords do not match');
             toast.dismiss();
             set({ isLoading: true });
-            
+
+            // Asegurar que captchaResponse esté presente (aunque vacío si no se usa)
+            const requestData = {
+                ...data,
+                captchaResponse: data.captchaResponse || ''
+            };
+
             try {
-                const res = await axiosInstance.post(SIGNUP_PATH, data);
+                const res = await axiosInstance.post(SIGNUP_PATH, requestData);
                 const res_payload: SignupSuccessResponse = res.data;
                 if (!('detail' in res_payload)) throw Error("Invalid response format")
                 toast.success(i18n.t('register_success'));
@@ -414,12 +425,50 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             } catch (error: any) {
                 const res_payload: SignupErrorResponse = error?.response?.data;
 
+                console.error("Registration failed - Full error:", error);
+                console.error("Response data:", res_payload);
+                console.error("Request payload:", data);
+
                 if (res_payload) {
-                    if ('email' in res_payload) toast.error(i18n.t('bad_email'));
-                    if ('non_field_errors' in res_payload) toast.error(i18n.t('bad_data'));
+                    if ('email' in res_payload && res_payload.email) {
+                        let emailErrors: string;
+                        if (Array.isArray(res_payload.email)) {
+                            emailErrors = res_payload.email.join(', ');
+                        } else if (typeof res_payload.email === 'object') {
+                            emailErrors = res_payload.email.message || 'Invalid email';
+                        } else {
+                            emailErrors = res_payload.email;
+                        }
+                        toast.error(`Email: ${emailErrors}`);
+                    }
+                    if ('password1' in res_payload) {
+                        const pwErrors = Array.isArray(res_payload.password1)
+                            ? res_payload.password1.join(', ')
+                            : res_payload.password1;
+                        toast.error(`Password: ${pwErrors}`);
+                    }
+                    if ('password2' in res_payload) {
+                        const pw2Errors = Array.isArray(res_payload.password2)
+                            ? res_payload.password2.join(', ')
+                            : res_payload.password2;
+                        toast.error(`Password confirmation: ${pw2Errors}`);
+                    }
+                    if ('user_type' in res_payload) {
+                        const userTypeErrors = Array.isArray(res_payload.user_type)
+                            ? res_payload.user_type.join(', ')
+                            : res_payload.user_type;
+                        toast.error(`User type: ${userTypeErrors}`);
+                    }
+                    if ('non_field_errors' in res_payload) {
+                        const nfErrors = Array.isArray(res_payload.non_field_errors)
+                            ? res_payload.non_field_errors.join(', ')
+                            : res_payload.non_field_errors;
+                        toast.error(nfErrors);
+                    }
+                } else {
+                    toast.error(i18n.t('error'));
                 }
 
-                console.error("Registration failed", error);
                 set({ isLoading: false });
                 return false;
             }
