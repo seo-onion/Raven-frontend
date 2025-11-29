@@ -1,0 +1,93 @@
+/* CashFlowTable Container - Exact copy from HTML */
+.cashflowtable-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    border: 1px solid #f3f4f6;
+}
+
+.cashflowtable-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.cashflowtable-wrapper {
+    overflow-x: auto;
+}
+
+.cashflowtable-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cashflowtable-table thead tr {
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.cashflowtable-table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+.cashflowtable-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cashflowtable-table tbody tr:hover {
+    background-color: #f9fafb;
+}
+
+.cashflowtable-table td {
+    padding: 1rem;
+    font-size: 0.875rem;
+}
+
+.cashflowtable-quarter {
+    font-weight: 500;
+    color: #374151;
+}
+
+.cashflowtable-revenue {
+    color: #059669;
+    font-weight: 500;
+}
+
+.cashflowtable-costs {
+    color: #dc2626;
+    font-weight: 500;
+}
+
+.cashflowtable-netflow {
+    color: #111827;
+    font-weight: 600;
+}
+
+.cashflowtable-table tfoot tr {
+    border-top: 2px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.cashflowtable-total-label {
+    font-weight: 700;
+    color: #111827;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.cashflowtable-total-value {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.cashflowtable-total-highlight {
+    color: var(--main-secondary);
+    font-size: 1rem;
+}

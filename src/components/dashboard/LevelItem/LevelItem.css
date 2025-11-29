@@ -1,0 +1,199 @@
+/* Variables (siguiendo el patrón del HTML) */
+/* Las variables globales ya están definidas en theme.css, pero definimos las específicas aquí */
+
+/* Estilo de la tarjeta TRL/CRL */
+.levelitem-container {
+    max-width: 100%;
+    width: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.75rem;
+}
+
+.levelitem-completed {
+    border: 1px solid #34d399;
+    background-color: #f7fffb;
+}
+
+.levelitem-in-progress {
+    border: 1px solid #3b82f6;
+    background-color: #eff6ff;
+}
+
+.levelitem-pending {
+    border: 1px solid #e5e7eb;
+    background-color: white;
+}
+
+/* Header */
+.levelitem-header {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.levelitem-title-group {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.levelitem-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+}
+
+.levelitem-icon-completed {
+    color: #10b981;
+}
+
+.levelitem-icon-in-progress {
+    color: #3b82f6;
+}
+
+.levelitem-icon-pending {
+    color: #9ca3af;
+}
+
+.levelitem-text-content {
+    flex-grow: 1;
+}
+
+.levelitem-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.levelitem-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.levelitem-last-update {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+.levelitem-badge {
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.levelitem-badge-completed {
+    color: #10b981;
+}
+
+.levelitem-badge-progress {
+    color: #3b82f6;
+}
+
+.levelitem-badge-pending {
+    color: #6b7280;
+}
+
+/* Línea divisora */
+.levelitem-divider {
+    width: 80%;
+    height: 1px;
+    background-color: #34d399;
+    margin: 0 auto;
+    margin-bottom: 0.5rem;
+}
+
+/* Sección de evidencias */
+.levelitem-evidence {
+    padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.levelitem-evidence-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.levelitem-note-area {
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    min-height: 2.5rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+    display: flex;
+    align-items: center;
+}
+
+/* Botones de subida de evidencia */
+.levelitem-upload-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.levelitem-upload-btn {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.levelitem-upload-btn:hover:not(:disabled) {
+    background-color: #f3f4f6;
+}
+
+.levelitem-upload-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.levelitem-upload-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.375rem;
+    color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .levelitem-container {
+        margin: 0 0.625rem;
+    }
+
+    .levelitem-header,
+    .levelitem-evidence {
+        padding: 1rem;
+    }
+
+    .levelitem-divider {
+        width: 90%;
+    }
+
+    .levelitem-upload-buttons {
+        flex-direction: column;
+        gap: 0.625rem;
+    }
+
+    .levelitem-upload-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -1,15 +1,145 @@
+/* Mentoring Container - Following MiProgreso pattern */
 .mentoring-container {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 80rem;
+    max-width: 100%;
+    margin: 20px;
+    margin-top: 4px;
 }
 
-.mentoring-container h1 {
+.mentoring-container > * + * {
+    margin-top: 1.5rem;
+}
+
+/* Header */
+.mentoring-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.mentoring-main-title {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     margin: 0 0 1rem 0;
 }
 
-.mentoring-container p {
-    font-size: 1rem;
-    opacity: 0.7;
+.mentoring-btn-primary {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    color: white;
+    background-color: var(--main-secondary);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.mentoring-btn-primary:hover {
+    opacity: 0.9;
+}
+
+.mentoring-btn-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Metrics Grid */
+.mentoring-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .mentoring-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .mentoring-metrics-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Sections */
+.mentoring-section {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.mentoring-section:last-child {
+    border-bottom: none;
+}
+
+.mentoring-section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 1.5rem 0;
+}
+
+/* Filter Tabs */
+.mentoring-tabs {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 0.125rem;
+    flex-wrap: wrap;
+}
+
+.mentoring-tab {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #6b7280;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-bottom-color 0.15s;
+}
+
+.mentoring-tab-active {
+    color: var(--main-secondary);
+    border-bottom-color: var(--main-secondary);
+    font-weight: 600;
+}
+
+.mentoring-tab:hover:not(.mentoring-tab-active) {
+    color: #1f2937;
+}
+
+/* Mentor List */
+.mentoring-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mentoring-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .mentoring-tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .mentoring-tab {
+        flex-grow: 1;
+        text-align: center;
+        padding: 0.375rem 0.625rem;
+    }
 }

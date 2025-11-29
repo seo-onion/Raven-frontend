@@ -1,0 +1,161 @@
+/* InvestorPipelineCard Container - Exact copy from HTML */
+.investorpipeline-container {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+}
+
+.investorpipeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.investorpipeline-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.investorpipeline-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.investorpipeline-details h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.investorpipeline-details p {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0.125rem 0 0;
+}
+
+.investorpipeline-stage {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    align-self: flex-start;
+}
+
+.investorpipeline-stage-active {
+    color: #10b981;
+    background-color: #dcfce7;
+}
+
+.investorpipeline-stage-progress {
+    color: #1f2937;
+    background-color: #f3f4f6;
+}
+
+.investorpipeline-stage-discarded {
+    color: #dc2626;
+    background-color: #fee2e2;
+}
+
+.investorpipeline-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+@media (min-width: 768px) {
+    .investorpipeline-metrics {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.investorpipeline-metric-item {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+}
+
+.investorpipeline-metric-label {
+    color: #9ca3af;
+    margin-bottom: 0.125rem;
+}
+
+.investorpipeline-metric-value {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.investorpipeline-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+}
+
+.investorpipeline-contact {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+}
+
+.investorpipeline-contact a {
+    color: #4f46e5;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.15s;
+}
+
+.investorpipeline-contact a:hover {
+    color: #375ac9;
+}
+
+.investorpipeline-contact-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.investorpipeline-button {
+    padding: 0.375rem 0.875rem;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.investorpipeline-button:hover {
+    background-color: #e5e7eb;
+}
+
+.investorpipeline-button-complete {
+    background-color: #10b981;
+    color: white;
+}
+
+.investorpipeline-button-complete:hover {
+    background-color: #059669;
+}

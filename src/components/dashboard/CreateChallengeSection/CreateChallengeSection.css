@@ -1,0 +1,52 @@
+/* CreateChallengeSection Container - Exact copy from HTML */
+.createchallenge-container {
+    padding: 2.5rem 1.5rem;
+    background-color: #f7f3ff;
+    border-radius: 0.75rem;
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+.createchallenge-icon {
+    color: var(--main-secondary);
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.createchallenge-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+}
+
+.createchallenge-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0 0 1.5rem 0;
+}
+
+.createchallenge-button {
+    background-color: var(--main-secondary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.createchallenge-button:hover {
+    opacity: 0.9;
+}
+
+.createchallenge-button-icon {
+    width: 1rem;
+    height: 1rem;
+}

@@ -1,0 +1,92 @@
+/* CrowdfundingBar Container - Exact copy from HTML */
+.crowdfundingbar-container {
+    background: linear-gradient(135deg, var(--main-primary), var(--main-secondary));
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3), 0 4px 6px -4px rgba(139, 92, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.crowdfundingbar-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(135deg, var(--main-primary), var(--main-secondary));
+    border-radius: 0.75rem;
+}
+
+.crowdfundingbar-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    position: relative;
+}
+
+.crowdfundingbar-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.crowdfundingbar-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.crowdfundingbar-status {
+    font-weight: 500;
+}
+
+.crowdfundingbar-current {
+    font-weight: 500;
+}
+
+.crowdfundingbar-progress-container {
+    height: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 0.25rem;
+    margin-top: 0.75rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.crowdfundingbar-progress-fill {
+    height: 100%;
+    background-color: white;
+    border-radius: 0.25rem;
+}
+
+.crowdfundingbar-button {
+    background-color: white;
+    color: var(--main-secondary);
+    border: none;
+    padding: 0.375rem 0.875rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    position: relative;
+}
+
+.crowdfundingbar-button:hover {
+    background-color: #f3f4f6;
+}
+
+.crowdfundingbar-button-icon {
+    width: 1rem;
+    height: 1rem;
+}

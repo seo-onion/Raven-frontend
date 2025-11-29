@@ -1,15 +1,75 @@
+/* Desafios Container - Following MiProgreso pattern */
 .desafios-container {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 80rem;
+    max-width: 100%;
+    margin: 20px;
+    margin-top: 4px;
 }
 
-.desafios-container h1 {
+.desafios-container > * + * {
+    margin-top: 1.5rem;
+}
+
+/* Header */
+.desafios-header {
+    margin-bottom: 1.5rem;
+}
+
+.desafios-main-title {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     margin: 0 0 1rem 0;
 }
 
-.desafios-container p {
-    font-size: 1rem;
-    opacity: 0.7;
+/* Metrics Grid */
+.desafios-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .desafios-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 769px) {
+    .desafios-metrics-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Tabs */
+.desafios-tabs {
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 1.5rem;
+}
+
+.desafios-tab {
+    padding: 0.625rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-bottom-color 0.15s;
+}
+
+.desafios-tab-active {
+    color: var(--main-secondary);
+    border-bottom-color: var(--main-secondary);
+}
+
+.desafios-tab:hover:not(.desafios-tab-active) {
+    color: #1f2937;
+}
+
+/* Challenges List */
+.desafios-list {
+    margin-top: 1.5rem;
 }

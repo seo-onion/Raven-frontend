@@ -1,0 +1,49 @@
+/* MetricItem Container - Exact copy from HTML */
+.metricitem-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.metricitem-icon-container {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.metricitem-icon-container svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.metricitem-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.metricitem-content h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.metricitem-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.metricitem-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+}

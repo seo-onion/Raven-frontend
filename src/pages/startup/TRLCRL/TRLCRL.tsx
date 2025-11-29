@@ -1,170 +1,191 @@
 import React, { useState } from 'react';
-import TRLCard from '../../../components/dashboard/TRLCard/TRLCard';
-import EvidenceUpload from '../../../components/dashboard/EvidenceUpload/EvidenceUpload';
+import { useTranslation } from 'react-i18next';
+import ReadinessIndicator from '../../../components/dashboard/ReadinessIndicator/ReadinessIndicator';
+import { LevelItem, type LevelStatus } from '../../../components/dashboard/LevelItem/LevelItem';
 import './TRLCRL.css';
 
 const TRLCRL: React.FC = () => {
+    const { t } = useTranslation('common');
     const [activeTab, setActiveTab] = useState<'trl' | 'crl'>('trl');
+    const [openLevelIndex, setOpenLevelIndex] = useState<number | null>(null);
 
-    const trlLevels = [
+    interface LevelData {
+        level: number;
+        title: string;
+        description: string;
+        status: LevelStatus;
+        lastUpdate?: string;
+        updatedBy?: string;
+    }
+
+    const trlLevels: LevelData[] = [
         {
             level: 1,
             title: 'Principios básicos observados',
-            description: 'Investigación científica básica comienza a traducirse en investigación y desarrollo aplicado',
-            current: false,
-            completed: true,
+            description: 'Investigación científica básica, referencias en literatura y/o artículos aplicados',
+            status: 'completed',
+            lastUpdate: '14/01/2024',
+            updatedBy: 'Elena Ríos',
         },
         {
             level: 2,
-            title: 'Concepto de tecnología formulado',
-            description: 'Aplicaciones prácticas de características observadas son identificadas',
-            current: false,
-            completed: true,
+            title: 'Concepto tecnológico formulado',
+            description: 'Aplicación práctica pensada y organizacional.',
+            status: 'completed',
+            lastUpdate: '16/02/2024',
+            updatedBy: 'Luis Ruiz',
         },
         {
             level: 3,
             title: 'Prueba de concepto experimental',
-            description: 'Validación experimental de concepto en laboratorio',
-            current: false,
-            completed: true,
+            description: 'Investigación activa de I+D iniciales con estudios analíticos y de laboratorio.',
+            status: 'completed',
+            lastUpdate: '04/03/2024',
+            updatedBy: 'Mario González',
         },
         {
             level: 4,
-            title: 'Validación de componentes en laboratorio',
-            description: 'Componentes básicos validados en entorno de laboratorio',
-            current: true,
-            completed: false,
+            title: 'Validación en laboratorio',
+            description: 'Tecnología componente básica y sus elementos integrados para establecer que funcionan juntos.',
+            status: 'in-progress',
+            lastUpdate: '30/10/2024',
+            updatedBy: 'Carla Ruiz',
         },
         {
             level: 5,
-            title: 'Validación de componentes en entorno relevante',
-            description: 'Componentes validados en entorno relevante al uso final',
-            current: false,
-            completed: false,
+            title: 'Validación en entorno relevante',
+            description: 'Tecnología componente básica y sus elementos integrados probados en un entorno simulado.',
+            status: 'pending',
         },
         {
             level: 6,
             title: 'Demostración del sistema en entorno relevante',
             description: 'Sistema o prototipo demostrado en ambiente operacional relevante',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 7,
             title: 'Demostración del sistema en entorno operacional',
             description: 'Prototipo del sistema demostrado en ambiente operacional',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 8,
             title: 'Sistema completo y calificado',
             description: 'Tecnología ha sido probada y calificada en su forma final',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 9,
             title: 'Sistema probado en misión exitosa',
             description: 'Sistema operando en condiciones reales del mercado',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
     ];
 
-    const crlLevels = [
+    const crlLevels: LevelData[] = [
         {
             level: 1,
             title: 'Idea de negocio',
             description: 'Concepto inicial de negocio identificado',
-            current: false,
-            completed: true,
+            status: 'completed',
+            lastUpdate: '10/01/2024',
+            updatedBy: 'Ana Torres',
         },
         {
             level: 2,
             title: 'Formulación del modelo de negocio',
             description: 'Modelo de negocio básico definido',
-            current: false,
-            completed: true,
+            status: 'completed',
+            lastUpdate: '15/02/2024',
+            updatedBy: 'Pedro Sánchez',
         },
         {
             level: 3,
             title: 'Validación con clientes potenciales',
             description: 'Primeras validaciones con mercado objetivo',
-            current: true,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 4,
             title: 'Demostración con primeros clientes',
             description: 'Primeras ventas o usuarios piloto',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 5,
             title: 'Comercialización inicial',
             description: 'Primeras operaciones comerciales activas',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
         {
             level: 6,
             title: 'Operaciones comerciales establecidas',
             description: 'Operaciones comerciales regulares y repetibles',
-            current: false,
-            completed: false,
+            status: 'pending',
         },
     ];
 
     const currentLevels = activeTab === 'trl' ? trlLevels : crlLevels;
+    const currentTRLLevel = trlLevels.filter(l => l.status === 'completed').length;
+    const currentCRLLevel = crlLevels.filter(l => l.status === 'completed').length;
 
     return (
         <div className="trl-crl-container">
-            <div className="trl-crl-header">
-                <h1 className="text-black">Evaluación TRL/CRL</h1>
-                <p className="text-black">Nivel de Madurez Tecnológica y Comercial</p>
+            <h1 className="trl-crl-main-title">
+                {t('trl_crl_maturity_levels')}
+            </h1>
+            <p className="trl-crl-subtitle">
+                {t('manage_tech_commercial_evidence')}
+            </p>
+
+            {/* Readiness Indicators Grid */}
+            <div className="trl-crl-indicators-grid">
+                <ReadinessIndicator
+                    type="TRL"
+                    currentLevel={currentTRLLevel}
+                    totalLevels={9}
+                    label={t('technology_readiness_level')}
+                />
+                <ReadinessIndicator
+                    type="CRL"
+                    currentLevel={currentCRLLevel}
+                    totalLevels={9}
+                    label={t('commercial_readiness_level')}
+                />
             </div>
 
+            {/* Tabs */}
             <div className="trl-crl-tabs">
                 <button
-                    className={`tab-btn ${activeTab === 'trl' ? 'active' : ''}`}
+                    className={`trl-crl-tab-btn ${activeTab === 'trl' ? 'trl-crl-tab-active' : ''}`}
                     onClick={() => setActiveTab('trl')}
                 >
-                    <span className="tab-icon">🔬</span>
-                    <span className="text-black">TRL - Madurez Tecnológica</span>
+                    {t('trl_technology_readiness')}
                 </button>
                 <button
-                    className={`tab-btn ${activeTab === 'crl' ? 'active' : ''}`}
+                    className={`trl-crl-tab-btn ${activeTab === 'crl' ? 'trl-crl-tab-active' : ''}`}
                     onClick={() => setActiveTab('crl')}
                 >
-                    <span className="tab-icon">💼</span>
-                    <span className="text-black">CRL - Madurez Comercial</span>
+                    {t('crl_commercial_readiness')}
                 </button>
             </div>
 
-            <div className="trl-crl-content">
-                <div className="levels-grid">
-                    {currentLevels.map((level) => (
-                        <TRLCard
-                            key={level.level}
-                            level={level.level}
-                            title={level.title}
-                            description={level.description}
-                            current={level.current}
-                            completed={level.completed}
-                        />
-                    ))}
-                </div>
-
-                <div className="evidence-section">
-                    <h2 className="section-title text-black">Evidencias</h2>
-                    <p className="section-description text-black">
-                        Sube documentos que respalden tu nivel actual de madurez{' '}
-                        {activeTab === 'trl' ? 'tecnológica' : 'comercial'}
-                    </p>
-                    <EvidenceUpload />
-                </div>
+            {/* Levels List */}
+            <div className="trl-crl-levels-list">
+                {currentLevels.map((level, index) => (
+                    <LevelItem
+                        key={level.level}
+                        level={level.level}
+                        title={level.title}
+                        description={level.description}
+                        status={level.status}
+                        lastUpdate={level.lastUpdate}
+                        updatedBy={level.updatedBy}
+                        isOpen={openLevelIndex === index}
+                        onToggle={() => setOpenLevelIndex(openLevelIndex === index ? null : index)}
+                    />
+                ))}
             </div>
         </div>
     );

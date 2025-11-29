@@ -1,0 +1,220 @@
+/* ChallengeCard Container - Exact copy from HTML */
+.challengecard-container {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.challengecard-container:hover {
+    border-color: var(--main-secondary);
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.1);
+}
+
+.challengecard-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.challengecard-content {
+    flex-grow: 1;
+}
+
+.challengecard-title-group h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.challengecard-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.challengecard-source {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 500;
+}
+
+.challengecard-status {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.challengecard-status-new {
+    background-color: #fef3c7;
+    color: #f59e0b;
+}
+
+.challengecard-status-applied {
+    background-color: #dbeafe;
+    color: #4f46e5;
+}
+
+.challengecard-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0.5rem 0;
+    line-height: 1.4;
+}
+
+.challengecard-tech-section {
+    margin-top: 0.5rem;
+}
+
+.challengecard-tech-label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.challengecard-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.challengecard-tech-tag {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--main-secondary);
+    background-color: #ede9fe;
+}
+
+.challengecard-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px dashed #e5e7eb;
+    font-size: 0.875rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.challengecard-details-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.challengecard-detail-item {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+.challengecard-detail-label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-bottom: 0.125rem;
+}
+
+.challengecard-detail-value {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.challengecard-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.challengecard-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.15s, opacity 0.15s;
+    border: 1px solid #e5e7eb;
+}
+
+.challengecard-button-primary {
+    background-color: var(--main-secondary);
+    color: white;
+    border-color: var(--main-secondary);
+}
+
+.challengecard-button-primary:hover {
+    opacity: 0.9;
+}
+
+.challengecard-button-secondary {
+    background-color: transparent;
+    color: #6b7280;
+    border-color: #e5e7eb;
+}
+
+.challengecard-button-secondary:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.challengecard-applications {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-top: 0.625rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .challengecard-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .challengecard-details {
+        flex-direction: column;
+        gap: 1rem;
+        border-top: none;
+        padding-top: 0;
+    }
+
+    .challengecard-details-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .challengecard-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .challengecard-button {
+        flex-grow: 1;
+    }
+}

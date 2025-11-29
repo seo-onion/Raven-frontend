@@ -1,0 +1,53 @@
+/* ReadinessIndicator Container - New design from HTML */
+.readinessindicator-container {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.readinessindicator-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6b7280;
+    margin: 0 0 0.25rem 0;
+}
+
+.readinessindicator-value-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.readinessindicator-level {
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+
+}
+
+.readinessindicator-percentage {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.readinessindicator-bar-container {
+    width: 100%;
+    height: 0.5rem;
+    background-color: #e5e7eb;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.readinessindicator-bar {
+    height: 100%;
+    border-radius: 0.25rem;
+    transition: width 0.5s ease-in-out;
+}
