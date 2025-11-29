@@ -147,7 +147,7 @@ const StartupLogin = () => {
                         <button
                             type="button"
                             className="text-btn startuplogin-back-link"
-                            onClick={() => navigate(routes.login)}
+                            onClick={() => navigate(routes.main)}
                         >
                             <IoChevronBack /> {t('back_to_type_selection')}
                         </button>

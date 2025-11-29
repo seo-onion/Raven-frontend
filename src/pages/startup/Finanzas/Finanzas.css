@@ -12,15 +12,15 @@
 
 /* Header */
 .finanzas-main-title {
-    font-size: 2rem;
+    font-size: var(--text-2xl);
     font-weight: 500;
     margin: 0 0 1rem 0;
 }
 
 .finanzas-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 2rem;
-    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.7;
+    font-size: 1rem;
 }
 
 /* Action Buttons */
@@ -86,4 +86,20 @@
     .finanzas-charts-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+.finanzas-header-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.typeselectioncard-button{
+    height: 40px;
+}
+
+.button-container{
+    
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }

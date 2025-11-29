@@ -34,23 +34,25 @@ const Welcome = () => {
                 </div>
 
                 <div className="welcome-actions">
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        onClick={handleLoginStartup}
-                        className="welcome-btn"
-                    >
-                        Iniciar Sesion como StartUp
-                    </Button>
+                    <div className='login-buttons'>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            onClick={handleLoginStartup}
+                            className="welcome-btn"
+                        >
+                            Iniciar Sesion como StartUp
+                        </Button>
 
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        onClick={handleLoginIncuvator}
-                        className="welcome-btn"
-                    >
-                        Iniciar Sesion como incuvadora
-                    </Button>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            onClick={handleLoginIncuvator}
+                            className="welcome-btn"
+                        >
+                            Iniciar Sesion como incuvadora
+                        </Button>
+                    </div>
 
                     <Button
                         variant="secondary"

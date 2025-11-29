@@ -1,54 +1,93 @@
-/* MetricCard Container - Exact copy from HTML */
+/* ------------------------------------------------------------------- */
+/* 1. LAYOUT PRINCIPAL */
+/* ------------------------------------------------------------------- */
+
 .metriccard-container {
-    padding: 1rem;
+    /* Estilo general de la tarjeta */
+    width: 94%; /* Ancho fijo o max-width para desktop */
+    padding: 24px;
     background-color: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    border: 1px solid #f3f4f6;
+    border-radius: 12px; /* Esquinas más redondeadas */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05); /* Sombra suave */
+    border: none; /* No hay borde visible en la imagen */
+    font-family: 'Inter', sans-serif;
 }
+
+/* ------------------------------------------------------------------- */
+/* 2. ENCABEZADO Y SÍMBOLOS */
+/* ------------------------------------------------------------------- */
 
 .metriccard-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center; /* Alineación vertical centrada */
+    margin-bottom: 44px;
 }
 
-.metriccard-title {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #6b7280;
-}
-
-.metriccard-value {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #111827;
-    margin-top: 0.5rem;
-}
-
-.metriccard-subtext {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin-top: 0.25rem;
-}
-
-.metriccard-trend {
-    display: inline-flex;
+/* Contenedor del ícono principal (el círculo verde) */
+.metriccard-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 0.25rem;
-    font-size: 0.75rem;
+    background-color: #ecfdf5; /* Color verde muy claro */
+    border-radius: 8px; /* Esquinas ligeramente redondeadas */
+    
+}
+
+/* Ícono principal dentro del círculo */
+.metriccard-icon {
+    width: 20px;
+    height: 20px;
+    color: #10b981; /* Color verde éxito */
+    stroke-width: 2.5px; /* Un poco más grueso */
+}
+
+/* Ícono de tendencia superior derecho (pequeño) */
+.metriccard-trend-icon-top {
+    width: 16px;
+    height: 16px;
+    color: #10b981; /* Color verde éxito */
+    stroke-width: 2.5px;
+}
+
+/* ------------------------------------------------------------------- */
+/* 3. TEXTOS Y VALORES */
+/* ------------------------------------------------------------------- */
+
+/* Título de la métrica, ej: Utilidad Bruta */
+.metriccard-title {
+    font-size: 16px;
     font-weight: 500;
+    color: #4b5563; /* Gris oscuro para el título */
+    margin-bottom: 44px;
+
 }
 
-.metriccard-trend-up {
-    color: #059669;
+/* Valor Principal, ej: 68% */
+.metriccard-value {
+    font-size: 36px; /* Muy grande, negrita */
+    line-height: 1; /* Eliminar espacio de línea excesivo */
+    font-weight: 700;
+    color: #111827; /* Casi negro */
+    margin-top: 0;
+     /* Espacio antes del valor secundario */
+    margin-bottom: 44px;
 }
 
-.metriccard-trend-down {
-    color: #dc2626;
+/* Valor Secundario, ej: $340K */
+.metriccard-secondary-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280; /* Gris medio */
+    margin-top: 0;
 }
 
-.metriccard-trend svg {
-    width: 0.75rem;
-    height: 0.75rem;
-}
+/* ------------------------------------------------------------------- */
+/* 4. Estilos no usados pero mantenidos para referencia si se desea añadir la flecha de tendencia */
+/* ------------------------------------------------------------------- */
+
+/* Estos estilos se eliminaron del HTML pero se mantendrían si se reintroduce la lógica de flecha.
+.metriccard-subtext { display: none; } 
+*/

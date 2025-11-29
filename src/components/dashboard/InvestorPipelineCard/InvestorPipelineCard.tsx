@@ -114,11 +114,11 @@ const InvestorPipelineCard: React.FC<InvestorPipelineCardProps> = ({
                         {phone}
                     </a>
                 </div>
-                <button
+                {/* <button
                     className={`investorpipeline-button ${isComplete ? 'investorpipeline-button-complete' : ''}`}
                 >
                     {isComplete ? t('mark_complete') : t('view_full_profile')}
-                </button>
+                </button> */}
             </div>
         </div>
     );

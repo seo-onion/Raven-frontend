@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaCheckCircle } from 'react-icons/fa';
 import './CrowdfundingBar.css';
 
 interface CrowdfundingBarProps {
@@ -32,10 +31,10 @@ const CrowdfundingBar: React.FC<CrowdfundingBarProps> = ({ goal, current, percen
                     style={{ width: `${percentage}%` }}
                 ></div>
             </div>
-            <button className="crowdfundingbar-button">
+            {/* <button className="crowdfundingbar-button">
                 <FaCheckCircle className="crowdfundingbar-button-icon" />
                 {t('mark_complete')}
-            </button>
+            </button> */}
         </div>
     );
 };

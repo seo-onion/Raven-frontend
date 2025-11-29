@@ -64,14 +64,6 @@ const FundingProgress = ({
                     <FaSearch className="fundingprogress-icon" />
                     {t('search_investors')}
                 </Button>
-                <Button
-                    
-                    size="md"
-                    onClick={onViewDetails}
-                    className="fundingprogress-action-secondary"
-                >
-                    {t('view_details')}
-                </Button>
             </div>
         </div>
     );

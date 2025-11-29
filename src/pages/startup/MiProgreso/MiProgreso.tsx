@@ -8,11 +8,15 @@ import AlertsNotifications from '../../../components/dashboard/AlertsNotificatio
 import MentoringSessions from '../../../components/dashboard/MentoringSessions/MentoringSessions';
 import FundingProgress from '../../../components/dashboard/FundingProgress/FundingProgress';
 import QuickActions from '../../../components/dashboard/QuickActions/QuickActions';
+import { useNavigate } from 'react-router-dom';
 import './MiProgreso.css';
 
 const MiProgreso: React.FC = () => {
     const { t } = useTranslation('common');
 
+
+        const navigate = useNavigate()
+    
     const [requirements] = useState([
         {
             id: 1,
@@ -94,25 +98,25 @@ const MiProgreso: React.FC = () => {
             id: '1',
             icon: 'upload-evidence' as const,
             label: t('upload_evidence_trl'),
-            onClick: () => console.log('Upload TRL Evidence'),
+            onClick: () => navigate('/dashboard/trl-crl'),
         },
         {
             id: '2',
             icon: 'update-finances' as const,
             label: t('update_finances'),
-            onClick: () => console.log('Update Finances'),
+            onClick: () => navigate('/dashboard/finanzas'),
         },
         {
             id: '3',
             icon: 'request-mentoring' as const,
             label: t('request_mentoring'),
-            onClick: () => console.log('Request Mentoring'),
+            onClick: () => navigate('/dashboard/mentoring'),
         },
         {
             id: '4',
             icon: 'apply-challenge' as const,
             label: t('apply_to_challenge'),
-            onClick: () => console.log('Apply to Challenge'),
+            onClick: () => navigate('/dashboard/desafios'),
         },
     ];
 
@@ -169,7 +173,7 @@ const MiProgreso: React.FC = () => {
                     <AlertsNotifications alerts={alerts} />
                     <MentoringSessions
                         sessions={mentoringSessions}
-                        onViewAll={() => console.log('View all mentoring sessions')}
+                        onViewAll={() => navigate("/dashboard/mentoring")}
                     />
                 </div>
 
@@ -178,7 +182,7 @@ const MiProgreso: React.FC = () => {
                     currentAmount={45000}
                     targetAmount={150000}
                     roundName="Ronda Seed"
-                    onSearchInvestors={() => console.log('Search investors')}
+                    onSearchInvestors={() => navigate("/dashboard/inversores")}
                     onViewDetails={() => console.log('View funding details')}
                 />
 

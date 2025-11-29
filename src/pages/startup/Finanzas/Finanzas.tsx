@@ -5,71 +5,81 @@ import CashFlowChart from '../../../components/dashboard/CashFlowChart/CashFlowC
 import RevenueVsCostsChart from '../../../components/dashboard/RevenueVsCostsChart/RevenueVsCostsChart';
 import SensitivityAnalysis from '../../../components/dashboard/SensitivityAnalysis/SensitivityAnalysis';
 import CashFlowTable from '../../../components/dashboard/CashFlowTable/CashFlowTable';
+import Button from '@/components/common/Button/Button';
 import './Finanzas.css';
+import { FiDownload } from "react-icons/fi";
+
+const mockMetrics = [
+    { title: "Utilidad Bruta", value: "68%", secondaryValue: "$340K", trend: "up", },
+    { title: "Utilidad Operativa", value: "45%", secondaryValue: "$120K", trend: "up", },
+    { title: "Utilidad Neta", value: "32%", secondaryValue: "$50K", trend: "down", },
+    { title: "Costos Fijos", value: "52%", secondaryValue: "$85K", trend: "up", },
+    { title: "ARR (12 meses)", value: "$2.4M", secondaryValue: "vs PMG 17%", trend: "up", },
+    { title: "Churn", value: "26%", secondaryValue: "10K usuarios", trend: "down", },
+    { title: "Punto de Equilibrio", value: "18 meses", secondaryValue: "2.5M unidades", trend: "up", },
+    { title: "ROE", value: "24 meses", secondaryValue: "Retorno accionistas", trend: "up", }
+];
 
 const Finanzas: React.FC = () => {
     const { t } = useTranslation('common');
 
+    // Manejador de clic para descargar el archivo de Excel
+    const handleDownloadExcel = () => {
+        // Define la URL del archivo de Excel que quieres descargar
+        // Este es un ejemplo público de un archivo de Excel de prueba. 
+        // Reemplázalo con la URL real de tu archivo.
+        const excelUrl = 'go.microsoft.com';
+
+        // Crea un enlace temporal
+        const link = document.createElement('a');
+        link.href = excelUrl;
+        // Asigna un nombre de archivo sugerido para la descarga
+        link.setAttribute('download', 'Reporte_Finanzas.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="finanzas-container">
-            <h1 className="finanzas-main-title">
-                {t('financial_dashboard')}
-            </h1>
-            <p className="finanzas-subtitle">
-                {t('manage_financial_projections')}
-            </p>
+            <div className='finanzas-header-container'>
+                <div>
+                    <h1 className="finanzas-main-title">
+                        {t('financial_dashboard')}
+                    </h1>
+                    <p className="finanzas-subtitle">
+                        {t('manage_financial_projections')}
+                    </p>
+                </div>
+
+
+                <div className='button-container'>
+                    <Button
+                        variant={'secondary'}
+                        size="lg"
+                        // Llama a la función handleDownloadExcel en el evento onClick
+                        onClick={handleDownloadExcel}
+                        className="typeselectioncard-button"
+                    >
+                        <FiDownload size={20} /> Exportar Excel
+                    </Button>
+
+                </div>
+            </div>
 
 
             {/* Metrics Grid */}
             <div className="finanzas-metrics-grid">
-                <MetricCard
-                    title={t('gross_profit')}
-                    value="$125,000"
-                    subtext="+15% vs mes anterior"
-                    trend="up"
-                />
-                <MetricCard
-                    title={t('operating_profit')}
-                    value="$89,500"
-                    subtext="+8% vs mes anterior"
-                    trend="up"
-                />
-                <MetricCard
-                    title={t('net_profit')}
-                    value="$65,000"
-                    subtext="+12% vs mes anterior"
-                    trend="up"
-                />
-                <MetricCard
-                    title={t('costs')}
-                    value="$60,000"
-                    subtext="-3% vs mes anterior"
-                    trend="down"
-                />
-                <MetricCard
-                    title={t('annual_recurring_revenue')}
-                    value="$450,000"
-                    subtext="+22% vs año anterior"
-                    trend="up"
-                />
-                <MetricCard
-                    title={t('churn_rate')}
-                    value="2.5%"
-                    subtext="-0.5% vs mes anterior"
-                    trend="down"
-                />
-                <MetricCard
-                    title={t('break_even_point')}
-                    value="8 meses"
-                    subtext="Proyectado Q3 2024"
-                    trend="up"
-                />
-                <MetricCard
-                    title={t('burn_rate')}
-                    value="$15,000/mes"
-                    subtext="18 meses de runway"
-                    trend="up"
-                />
+
+                {mockMetrics.map((metric, index) => (
+                    <MetricCard
+                        key={index}
+                        title={metric.title}
+                        value={metric.value}
+                        secondaryValue={metric.secondaryValue}
+                        trend={metric.trend as 'up' | 'down' | 'neutral'} // Casting para asegurar el tipo
+                    />
+                ))}
             </div>
 
             {/* Charts Grid */}

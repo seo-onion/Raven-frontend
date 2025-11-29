@@ -109,7 +109,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
                             </span>
                         </div>
                     </div>
-                    <div className="challengecard-actions">
+                    {/* <div className="challengecard-actions">
                         <button
                             className="challengecard-button challengecard-button-secondary"
                             onClick={onSecondaryClick}
@@ -122,7 +122,7 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
                         >
                             {primaryButtonText}
                         </button>
-                    </div>
+                    </div> */}
                 </div>
                 <p className="challengecard-applications">
                     {applicationsCount} {t('startups_applied')}

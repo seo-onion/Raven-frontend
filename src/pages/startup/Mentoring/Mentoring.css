@@ -20,7 +20,7 @@
 }
 
 .mentoring-main-title {
-    font-size: 2rem;
+    font-size: var(--text-2xl);
     font-weight: 500;
     margin: 0 0 1rem 0;
 }

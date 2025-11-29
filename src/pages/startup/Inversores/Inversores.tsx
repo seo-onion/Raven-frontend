@@ -21,10 +21,10 @@ const Inversores: React.FC = () => {
                         {t('funding_rounds_classification')}
                     </p>
                 </div>
-                <button className="inversores-btn-primary">
+                {/* <button className="inversores-btn-primary">
                     <FaPlus className="inversores-btn-icon" />
                     {t('add_contribution')}
-                </button>
+                </button> */}
             </div>
 
             {/* Crowdfunding Bar */}
