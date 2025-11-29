@@ -26,9 +26,11 @@
     text-align: center;
     max-width: 600px;
     width: 100%;
-    padding: 140px;
+    /* El padding se ajusta aquí y en el media query */
+    padding: 140px; 
     background-color: white;
     border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Añadido para dar efecto de tarjeta */
 }
 
 /* Header Section */
@@ -101,6 +103,11 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Ajuste clave para evitar desbordamiento en móviles */
+    .welcome-content {
+        padding: 40px 20px; 
+        max-width: 90%;
+    }
     .welcome-header h1 {
         font-size: 2.5em;
     }
@@ -109,30 +116,31 @@
         font-size: 1em;
     }
 
-    .welcome-logo-icon {
-        font-size: 48px;
-    }
+    /* El usertypeselection-logo usa un tamaño fijo de 72px, se mantiene */
 
     .welcome-actions {
         flex-direction: column;
         gap: 20px;
         align-items: center;
+        width: 100%;
     }
 
     .welcome-btn {
         width: 100%;
-        max-width: 300px;
+        min-width: unset; /* Permite que el botón ocupe todo el ancho disponible */
+        max-width: 100%;
     }
 }
 
 @media (max-width: 480px) {
+    .welcome-content {
+        padding: 30px 15px; 
+    }
     .welcome-header h1 {
         font-size: 2em;
     }
 
-    .welcome-logo-icon {
-        font-size: 40px;
-    }
+    /* El usertypeselection-logo usa un tamaño fijo de 72px, se mantiene */
 
     .welcome-header {
         margin-bottom: 40px;
