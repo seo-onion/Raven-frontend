@@ -26,33 +26,34 @@ const Welcome = () => {
         <div className="welcome-container">
             <div className="welcome-content">
                 <div className="welcome-header">
-                    <div className="welcome-logo-icon"><GrDeploy size={64} color='white'></GrDeploy></div>
-                    <h1 className="text-white">Raven CRM</h1>
-                    <p className="welcome-subtitle text-white">
+            <div className="usertypeselection-logo">
+                    <GrDeploy size={40} color='white'/>
+                </div>
+
+                    <h1 className="">Raven CRM</h1>
+                    <p className="welcome-subtitle">
                         {t('welcome_subtitle')}
                     </p>
                 </div>
 
                 <div className="welcome-actions">
-                    <div className='login-buttons'>
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            onClick={handleLoginStartup}
-                            className="welcome-btn"
-                        >
-                            Iniciar Sesion como StartUp
-                        </Button>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        onClick={handleLoginStartup}
+                        className="welcome-btn"
+                    >
+                        Iniciar Sesion como StartUp
+                    </Button>
 
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            onClick={handleLoginIncuvator}
-                            className="welcome-btn"
-                        >
-                            Iniciar Sesion como incuvadora
-                        </Button>
-                    </div>
+                    <Button
+                        variant="primary"
+                        size="lg"
+                        onClick={handleLoginIncuvator}
+                        className="welcome-btn"
+                    >
+                        Iniciar Sesion como incuvadora
+                    </Button>
 
                     <Button
                         variant="secondary"
