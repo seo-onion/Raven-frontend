@@ -2,12 +2,19 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReadinessIndicator from '../../../components/dashboard/ReadinessIndicator/ReadinessIndicator';
 import { LevelItem, type LevelStatus } from '../../../components/dashboard/LevelItem/LevelItem';
+import { useEvidences } from '../../../hooks/useStartupData';
 import './TRLCRL.css';
 
 const TRLCRL: React.FC = () => {
     const { t } = useTranslation('common');
     const [activeTab, setActiveTab] = useState<'trl' | 'crl'>('trl');
     const [openLevelIndex, setOpenLevelIndex] = useState<number | null>(null);
+    const { data: evidences } = useEvidences();
+
+    // Get current TRL level from evidences
+    const currentTRL = evidences && evidences.length > 0
+        ? Math.max(...evidences.map(e => e.trl_level))
+        : 1;
 
     interface LevelData {
         level: number;
@@ -127,7 +134,10 @@ const TRLCRL: React.FC = () => {
     ];
 
     const currentLevels = activeTab === 'trl' ? trlLevels : crlLevels;
-    const currentTRLLevel = trlLevels.filter(l => l.status === 'completed').length;
+    // Use real TRL level from evidences or fallback to mock data
+    const currentTRLLevel = evidences && evidences.length > 0
+        ? currentTRL
+        : trlLevels.filter(l => l.status === 'completed').length;
     const currentCRLLevel = crlLevels.filter(l => l.status === 'completed').length;
 
     return (

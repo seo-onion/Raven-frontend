@@ -335,13 +335,15 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 const res_payload: LogoutErrorResponse = error?.response?.data;
                 console.error("Logout Failed", res_payload?.detail);
             }
-            
-            localStorage.removeItem(ACCESS_TOKEN_KEY);
-            localStorage.removeItem(REFRESH_TOKEN_KEY);
-            localStorage.removeItem(USER_KEY);
 
-            setSidebarPosition(false);            
+            // Clear ALL localStorage data
+            localStorage.clear();
+
+            setSidebarPosition(false);
             set({ isLogged: false, isLoading: false });
+
+            // Redirect to home page
+            window.location.href = '/';
         },
         
         /**
@@ -521,7 +523,8 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 if (res_payload?.access_token && res_payload?.refresh_token && res_payload?.user) {
                     localStorage.setItem(ACCESS_TOKEN_KEY, res_payload.access_token);
                     localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh_token);
-                    
+                    localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
+
                     set({ isLogged: true });
                     toast.success(i18n.t('email_confirmed_and_logged_in'));
                     return true;

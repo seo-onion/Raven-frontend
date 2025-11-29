@@ -8,7 +8,6 @@ interface SessionCardProps {
     mentorName: string;
     date: string;
     time: string;
-    onReschedule?: () => void;
 }
 
 const SessionCard: React.FC<SessionCardProps> = ({
@@ -16,7 +15,6 @@ const SessionCard: React.FC<SessionCardProps> = ({
     mentorName,
     date,
     time,
-    onReschedule,
 }) => {
     const { t } = useTranslation('common');
 
@@ -29,11 +27,6 @@ const SessionCard: React.FC<SessionCardProps> = ({
                     <FaCalendar className="sessioncard-icon" />
                     {date} - {time}
                 </p>
-            </div>
-            <div className="sessioncard-actions">
-                <button className="sessioncard-button" onClick={onReschedule}>
-                    {t('reschedule')}
-                </button>
             </div>
         </div>
     );

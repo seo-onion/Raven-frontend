@@ -55,7 +55,19 @@ const VerifyEmail = () => {
             if (success) {
                 toast.success(t('email_verified_success'))
 
-                // Redirigir al dashboard unificado
+                // Get user data from localStorage to check onboarding status
+                const userStr = localStorage.getItem('user')
+                if (userStr) {
+                    const user = JSON.parse(userStr)
+
+                    // If startup user hasn't completed onboarding, redirect to wizard
+                    if (user.user_type === 'startup' && !user.onboarding_complete) {
+                        navigate(routes.onboardingWizard)
+                        return
+                    }
+                }
+
+                // Otherwise, redirect to dashboard
                 navigate(routes.dashboard)
             }
         } catch (error) {

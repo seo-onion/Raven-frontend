@@ -4,11 +4,106 @@ import { FaPlus, FaAward, FaCalendar, FaCheckCircle } from 'react-icons/fa';
 import MetricItem from '../../../components/dashboard/MetricItem/MetricItem';
 import SessionCard from '../../../components/dashboard/SessionCard/SessionCard';
 import MentorCard from '../../../components/dashboard/MentorCard/MentorCard';
+import useModalStore from '../../../stores/ModalStore';
+import ScheduleMentorModal from '../../../modals/ScheduleMentorModal/ScheduleMentorModal';
 import './Mentoring.css';
 
 const Mentoring: React.FC = () => {
     const { t } = useTranslation('common');
+    const { setModalContent } = useModalStore();
     const [activeTab, setActiveTab] = useState<'all' | 'fundraising' | 'marketing' | 'tech' | 'legal' | 'product'>('all');
+
+    // Mock mentors data
+    const mentorsData = [
+        {
+            name: "Dr. María González",
+            initials: "M",
+            avatarColor: "var(--main-secondary)",
+            role: "CEO & Co-Founder @ TechInnovations",
+            bio: "Ex-VP de Producto en Google. Fundadora de 3 startups exitosas con perfil combinado de $100M+.",
+            expertise: ['Tech', 'Product Marketing', 'Data & Analytics'],
+            expertiseColor: 'var(--main-secondary)',
+            expertiseBgColor: '#ede9fe',
+            experience: `15 ${t('years')}`,
+            rating: 4.9,
+            ratingCount: 156,
+            sessions: 385,
+            isCertified: true,
+        },
+        {
+            name: "Carlos Ruiz",
+            initials: "C",
+            avatarColor: "#4f46e5",
+            role: "CTO @ Perfect Solutions",
+            bio: "Arquitecto de sistemas escalables. Ha liderado equipos técnicos de 50+ ingenieros alrededor del mundo.",
+            expertise: ['Tech Architecture', 'Team Building', 'Agile'],
+            expertiseColor: "#4f46e5",
+            expertiseBgColor: "#e0f2fe",
+            experience: `12 ${t('years')}`,
+            rating: 4.6,
+            ratingCount: 92,
+            sessions: 101,
+            isCertified: true,
+        },
+        {
+            name: "Ana Martínez",
+            initials: "A",
+            avatarColor: "#10b981",
+            role: "Growth Marketing Agent",
+            bio: "Especialista en Growth Marketing. Ha escalado 3 startups de 0 a 100K usuarios.",
+            expertise: ['Marketing', 'Growth Hacking', 'Brand Strategy'],
+            expertiseColor: "#10b981",
+            expertiseBgColor: "#d1fae5",
+            experience: `10 ${t('years')}`,
+            rating: 4.7,
+            ratingCount: 78,
+            sessions: 203,
+            isCertified: true,
+        },
+        {
+            name: "Roberto Díaz",
+            initials: "R",
+            avatarColor: "#9ca3af",
+            role: "Legal & Corporate Advisor",
+            bio: "Abogado corporativo especializado en startups y venture capital.",
+            expertise: ['Legal', 'Compliance', 'Corporate Finance'],
+            expertiseColor: "#9ca3af",
+            expertiseBgColor: "#f3f4f6",
+            experience: `5 ${t('years')}`,
+            rating: 4.5,
+            ratingCount: 24,
+            sessions: 58,
+            isCertified: false,
+        },
+    ];
+
+    const handleRequestMentoring = () => {
+        // Open modal with the first mentor (default)
+        const defaultMentor = mentorsData[0];
+        setModalContent(
+            <ScheduleMentorModal
+                mentor={{
+                    name: defaultMentor.name,
+                    role: defaultMentor.role,
+                    initials: defaultMentor.initials,
+                    avatarColor: defaultMentor.avatarColor,
+                }}
+            />
+        );
+    };
+
+    const handleScheduleMentor = (mentor: typeof mentorsData[0]) => {
+        setModalContent(
+            <ScheduleMentorModal
+                mentor={{
+                    name: mentor.name,
+                    role: mentor.role,
+                    initials: mentor.initials,
+                    avatarColor: mentor.avatarColor,
+                }}
+            />
+        );
+    };
 
     return (
         <div className="mentoring-container">
@@ -17,7 +112,7 @@ const Mentoring: React.FC = () => {
                 <h1 className="mentoring-main-title">
                     {t('mentoring')}
                 </h1>
-                <button className="mentoring-btn-primary">
+                <button className="mentoring-btn-primary" onClick={handleRequestMentoring}>
                     <FaPlus className="mentoring-btn-icon" />
                     {t('request_mentoring')}
                 </button>
@@ -109,67 +204,25 @@ const Mentoring: React.FC = () => {
 
                 {/* Mentor List */}
                 <div className="mentoring-list">
-                    <MentorCard
-                        name="Dr. María González"
-                        initials="M"
-                        avatarColor="var(--main-secondary)"
-                        role="CEO & Co-Founder @ TechInnovations"
-                        bio="Ex-VP de Producto en Google. Fundadora de 3 startups exitosas con perfil combinado de $100M+."
-                        expertise={['Tech', 'Product Marketing', 'Data & Analytics']}
-                        experience={`15 ${t('years')}`}
-                        rating={4.9}
-                        ratingCount={156}
-                        sessions={385}
-                        isCertified={true}
-                    />
-
-                    <MentorCard
-                        name="Carlos Ruiz"
-                        initials="C"
-                        avatarColor="#4f46e5"
-                        role="CTO @ Perfect Solutions"
-                        bio="Arquitecto de sistemas escalables. Ha liderado equipos técnicos de 50+ ingenieros alrededor del mundo."
-                        expertise={['Tech Architecture', 'Team Building', 'Agile']}
-                        expertiseColor="#4f46e5"
-                        expertiseBgColor="#e0f2fe"
-                        experience={`12 ${t('years')}`}
-                        rating={4.6}
-                        ratingCount={92}
-                        sessions={101}
-                        isCertified={true}
-                    />
-
-                    <MentorCard
-                        name="Ana Martínez"
-                        initials="A"
-                        avatarColor="#10b981"
-                        role="Growth Marketing Agent"
-                        bio="Especialista en Growth Marketing. Ha escalado 3 startups de 0 a 100K usuarios."
-                        expertise={['Marketing', 'Growth Hacking', 'Brand Strategy']}
-                        expertiseColor="#10b981"
-                        expertiseBgColor="#d1fae5"
-                        experience={`10 ${t('years')}`}
-                        rating={4.7}
-                        ratingCount={78}
-                        sessions={203}
-                        isCertified={true}
-                    />
-
-                    <MentorCard
-                        name="Roberto Díaz"
-                        initials="R"
-                        avatarColor="#9ca3af"
-                        role="Legal & Corporate Advisor"
-                        bio="Abogado corporativo especializado en startups y venture capital."
-                        expertise={['Legal', 'Compliance', 'Corporate Finance']}
-                        expertiseColor="#9ca3af"
-                        expertiseBgColor="#f3f4f6"
-                        experience={`5 ${t('years')}`}
-                        rating={4.5}
-                        ratingCount={24}
-                        sessions={58}
-                        isCertified={false}
-                    />
+                    {mentorsData.map((mentor, index) => (
+                        <MentorCard
+                            key={index}
+                            name={mentor.name}
+                            initials={mentor.initials}
+                            avatarColor={mentor.avatarColor}
+                            role={mentor.role}
+                            bio={mentor.bio}
+                            expertise={mentor.expertise}
+                            expertiseColor={mentor.expertiseColor}
+                            expertiseBgColor={mentor.expertiseBgColor}
+                            experience={mentor.experience}
+                            rating={mentor.rating}
+                            ratingCount={mentor.ratingCount}
+                            sessions={mentor.sessions}
+                            isCertified={mentor.isCertified}
+                            onSchedule={() => handleScheduleMentor(mentor)}
+                        />
+                    ))}
                 </div>
             </div>
         </div>

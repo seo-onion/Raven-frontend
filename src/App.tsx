@@ -17,6 +17,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail/VerifyEmail"
 import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword"
 import ChangePassword from "./pages/auth/ChangePassword/ChangePassword"
 import Onboarding from "./pages/Onboarding/Onboarding"
+import OnboardingWizard from "./pages/startup/OnboardingWizard/OnboardingWizard"
 
 import Dashboard from "./layouts/Dashboard/Dashboard"
 import MiProgreso from "./pages/startup/MiProgreso/MiProgreso"
@@ -35,16 +36,9 @@ function App() {
     const { isLogged, getUserDetails } = useAuthStore()
 
     const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-        console.log("Estoy registrado: ", isLogged)
         if (!isLogged) {
             return <Navigate to={routes.login} replace />
         }
-
-        const user = getUserDetails()
-        if (user && user.user_type === 'startup' && !user.onboarding_complete) {
-            return <Navigate to={routes.onboarding} replace />
-        }
-
         return <>{children}</>
     }
 
@@ -63,6 +57,41 @@ function App() {
         // If already completed onboarding, redirect to dashboard
         if (user && user.onboarding_complete) {
             return <Navigate to={routes.dashboard} replace />
+        }
+
+        return <>{children}</>
+    }
+
+    const WizardRoute = ({ children }: { children: React.ReactNode }) => {
+        if (!isLogged) {
+            return <Navigate to={routes.login} replace />
+        }
+
+        const user = getUserDetails()
+
+        // If not a startup user, redirect to dashboard
+        if (user && user.user_type !== 'startup') {
+            return <Navigate to={routes.dashboard} replace />
+        }
+
+        // If already completed onboarding, redirect to dashboard
+        if (user && user.onboarding_complete) {
+            return <Navigate to={routes.dashboard} replace />
+        }
+
+        return <>{children}</>
+    }
+
+    const DashboardRoute = ({ children }: { children: React.ReactNode }) => {
+        if (!isLogged) {
+            return <Navigate to={routes.login} replace />
+        }
+
+        const user = getUserDetails()
+
+        // If startup user hasn't completed onboarding, redirect to wizard
+        if (user && user.user_type === 'startup' && !user.onboarding_complete) {
+            return <Navigate to={routes.onboardingWizard} replace />
         }
 
         return <>{children}</>
@@ -109,10 +138,10 @@ function App() {
                 <Route path={routes.changePassword} element={<ChangePassword />} />
 
                 {/* Onboarding - Protected route for startup users only */}
-                <Route path={routes.onboarding} element={<OnboardingRoute><Onboarding /></OnboardingRoute>} />
+                <Route path={routes.onboardingWizard} element={<WizardRoute><OnboardingWizard /></WizardRoute>} />
 
                 {/* Unified Dashboard - Protected routes for both startup and incubator */}
-                <Route path={routes.dashboard} element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
+                <Route path={routes.dashboard} element={<DashboardRoute><Dashboard /></DashboardRoute>}>
 
                     <Route index element={<Navigate to={routes.dashboardOverview} replace />} />
 

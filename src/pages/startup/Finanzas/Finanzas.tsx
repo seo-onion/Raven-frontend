@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import MetricCard from '../../../components/dashboard/MetricCard/MetricCard';
 import CashFlowChart from '../../../components/dashboard/CashFlowChart/CashFlowChart';
@@ -6,6 +6,7 @@ import RevenueVsCostsChart from '../../../components/dashboard/RevenueVsCostsCha
 import SensitivityAnalysis from '../../../components/dashboard/SensitivityAnalysis/SensitivityAnalysis';
 import CashFlowTable from '../../../components/dashboard/CashFlowTable/CashFlowTable';
 import Button from '@/components/common/Button/Button';
+import { useFinancialData } from '../../../hooks/useStartupData';
 import './Finanzas.css';
 import { FiDownload } from "react-icons/fi";
 
@@ -22,6 +23,52 @@ const mockMetrics = [
 
 const Finanzas: React.FC = () => {
     const { t } = useTranslation('common');
+    const { data: financialData, isLoading } = useFinancialData();
+
+    // Calculate real metrics from financial data
+    const realMetrics = useMemo(() => {
+        if (!financialData || financialData.length === 0) return null;
+
+        const latest = financialData[0]; // Most recent data
+        const totalRevenue = financialData.reduce((sum, f) => sum + Number(f.revenue), 0);
+        const totalCosts = financialData.reduce((sum, f) => sum + Number(f.costs), 0);
+        const avgCashBalance = financialData.reduce((sum, f) => sum + Number(f.cash_balance), 0) / financialData.length;
+
+        return [
+            {
+                title: t('revenue'),
+                value: `$${Number(latest.revenue).toLocaleString()}`,
+                secondaryValue: t('latest_period'),
+                trend: "up" as const
+            },
+            {
+                title: t('costs'),
+                value: `$${Number(latest.costs).toLocaleString()}`,
+                secondaryValue: t('latest_period'),
+                trend: "down" as const
+            },
+            {
+                title: t('net_cash_flow'),
+                value: `$${Number(latest.net_cash_flow).toLocaleString()}`,
+                secondaryValue: t('latest_period'),
+                trend: latest.net_cash_flow >= 0 ? "up" as const : "down" as const
+            },
+            {
+                title: t('cash_balance'),
+                value: `$${Number(latest.cash_balance).toLocaleString()}`,
+                secondaryValue: t('current'),
+                trend: "up" as const
+            },
+            {
+                title: t('monthly_burn_rate'),
+                value: `$${Number(latest.monthly_burn).toLocaleString()}`,
+                secondaryValue: t('monthly'),
+                trend: "down" as const
+            },
+        ];
+    }, [financialData, t]);
+
+    const metricsToShow = realMetrics || mockMetrics;
 
     // Manejador de clic para descargar el archivo de Excel
     const handleDownloadExcel = () => {
@@ -71,7 +118,7 @@ const Finanzas: React.FC = () => {
             {/* Metrics Grid */}
             <div className="finanzas-metrics-grid">
 
-                {mockMetrics.map((metric, index) => (
+                {metricsToShow.map((metric, index) => (
                     <MetricCard
                         key={index}
                         title={metric.title}

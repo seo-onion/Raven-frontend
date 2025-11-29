@@ -1,0 +1,382 @@
+/* =============================================================================
+   ONBOARDING WIZARD - PHASE 2
+   Multi-step form with progress tracking
+   ============================================================================= */
+
+.wizard-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
+}
+
+.wizard-card {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    padding: 3rem;
+}
+
+/* =============================================================================
+   PROGRESS BAR
+   ============================================================================= */
+
+.wizard-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.wizard-progress::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background: #e5e7eb;
+    z-index: 0;
+}
+
+.wizard-progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.wizard-progress-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.wizard-progress-step.active .wizard-progress-circle {
+    background: var(--main-secondary);
+    color: white;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
+}
+
+.wizard-progress-step.completed .wizard-progress-circle {
+    background: var(--main-secondary);
+    color: white;
+}
+
+.wizard-progress-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.wizard-progress-step.active .wizard-progress-label {
+    opacity: 1;
+    color: var(--main-secondary);
+}
+
+/* =============================================================================
+   STEP CONTENT
+   ============================================================================= */
+
+.wizard-content {
+    min-height: 400px;
+}
+
+.wizard-step {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wizard-step-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+}
+
+.wizard-step-description {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin: 0 0 2rem 0;
+}
+
+.wizard-subsection-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem 0;
+}
+
+/* =============================================================================
+   FORM ELEMENTS
+   ============================================================================= */
+
+.wizard-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.wizard-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.wizard-input,
+.wizard-select,
+.wizard-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.wizard-input:focus,
+.wizard-select:focus,
+.wizard-textarea:focus {
+    outline: none;
+    border-color: var(--main-secondary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.wizard-textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.wizard-hint {
+    display: block;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    margin-top: 0.25rem;
+}
+
+.wizard-error {
+    display: block;
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+/* =============================================================================
+   FINANCIAL GRID
+   ============================================================================= */
+
+.wizard-financial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+    .wizard-financial-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================================================================
+   INVESTOR CARDS
+   ============================================================================= */
+
+.wizard-investor-card {
+    background: var(--background-secondary);
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.wizard-investor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.wizard-investor-header h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.wizard-investor-fields {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .wizard-investor-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+.wizard-btn-primary,
+.wizard-btn-secondary,
+.wizard-btn-add,
+.wizard-btn-remove {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.wizard-btn-primary {
+    background: var(--main-secondary);
+    color: white;
+}
+
+.wizard-btn-primary:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.wizard-btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.wizard-btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.wizard-btn-secondary:hover:not(:disabled) {
+    background: #e5e7eb;
+}
+
+.wizard-btn-add {
+    background: var(--background-secondary);
+    color: var(--main-secondary);
+    border: 2px dashed var(--main-secondary);
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.wizard-btn-add:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.wizard-btn-remove {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.wizard-btn-remove:hover {
+    background: #fecaca;
+}
+
+/* =============================================================================
+   ACTIONS (Navigation Buttons)
+   ============================================================================= */
+
+.wizard-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.wizard-actions button:only-child {
+    margin-left: auto;
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .wizard-container {
+        padding: 1rem;
+    }
+
+    .wizard-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .wizard-progress {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .wizard-progress::before {
+        display: none;
+    }
+
+    .wizard-progress-step {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .wizard-actions {
+        flex-direction: column-reverse;
+    }
+
+    .wizard-actions button {
+        width: 100%;
+    }
+
+    .wizard-step-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* =============================================================================
+   DARK THEME SUPPORT (if needed)
+   ============================================================================= */
+
+@media (prefers-color-scheme: dark) {
+    .wizard-card {
+        background: var(--background-primary, #1f2937);
+        color: var(--text-primary, #f9fafb);
+    }
+
+    .wizard-input,
+    .wizard-select,
+    .wizard-textarea {
+        background: var(--background-secondary, #374151);
+        color: var(--text-primary, #f9fafb);
+        border-color: #4b5563;
+    }
+}

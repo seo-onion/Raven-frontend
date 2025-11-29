@@ -133,25 +133,27 @@ const MiProgreso: React.FC = () => {
 
             <div className="mi-progreso-grid">
                 <div className="mi-progreso-main">
-                    <ProgressCard
-                        title="Tu etapa actual: Incubación"
-                        percentage={progressPercentage}
-                        completedCount={completedCount}
-                        totalCount={requirements.length}
-                    />
+                    <div className="progress-requirements-unified">
+                        <ProgressCard
+                            title="Tu etapa actual: Incubación"
+                            percentage={progressPercentage}
+                            completedCount={completedCount}
+                            totalCount={requirements.length}
+                        />
 
-                    <div className="requirements-section">
-                        <h2 className="section-subtitle text-black">Requisitos para avanzar a Aceleración</h2>
-                        <div className="requirements-list">
-                            {requirements.map(requirement => (
-                                <RequirementItem
-                                    key={requirement.id}
-                                    title={requirement.title}
-                                    description={requirement.description}
-                                    completed={requirement.completed}
-                                    category={requirement.category}
-                                />
-                            ))}
+                        <div className="requirements-section-unified">
+                            <h2 className="section-subtitle text-black">Requisitos para avanzar a Aceleración</h2>
+                            <div className="requirements-list">
+                                {requirements.map(requirement => (
+                                    <RequirementItem
+                                        key={requirement.id}
+                                        title={requirement.title}
+                                        description={requirement.description}
+                                        completed={requirement.completed}
+                                        category={requirement.category}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

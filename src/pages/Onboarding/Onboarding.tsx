@@ -84,11 +84,14 @@ const Onboarding = () => {
             await axiosInstance.post('/onboarding/startup/', formData)
 
             // Update user details in localStorage
-            const updatedUser = await axiosInstance.get('/auth/user/')
-            localStorage.setItem('user', JSON.stringify(updatedUser.data))
+            const updatedUserResponse = await axiosInstance.get('/auth/user/')
+            const updatedUser = updatedUserResponse.data
+            localStorage.setItem('user', JSON.stringify(updatedUser))
 
             toast.success(t('onboarding_success'))
-            navigate(routes.dashboard)
+
+            // Redirect to the wizard to complete the full onboarding
+            navigate(routes.onboardingWizard)
         } catch (error: any) {
             console.error('Onboarding error:', error)
             const errorMessage = error.response?.data?.detail || t('onboarding_error')

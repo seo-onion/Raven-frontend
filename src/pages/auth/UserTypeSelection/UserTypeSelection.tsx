@@ -63,13 +63,14 @@ const UserTypeSelection = () => {
                     style={{
                         color: "white",
                         transition: "color 0.3s ease",
-                        textDecoration: "none"
+                        textDecoration: "none",
+                        fontSize:"1.6rem"
                     }}
-                    href="/register"
+                    href="/"
                     onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = "#d1d5db"}
                     onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = "white"}
                 >
-                    {t('register_here')}
+                    logueate aquí
                 </a>
             </p>
         </div>

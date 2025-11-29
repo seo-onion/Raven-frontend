@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import CrowdfundingBar from '../../../components/dashboard/CrowdfundingBar/CrowdfundingBar';
 import FundingRoundCard from '../../../components/dashboard/FundingRoundCard/FundingRoundCard';
 import InvestorPipelineCard from '../../../components/dashboard/InvestorPipelineCard/InvestorPipelineCard';
+import { useInvestors } from '../../../hooks/useStartupData';
 import './Inversores.css';
 
 const Inversores: React.FC = () => {
     const { t } = useTranslation('common');
+    const { data: investors, isLoading, error } = useInvestors();
 
     return (
         <div className="inversores-container">
@@ -73,47 +75,48 @@ const Inversores: React.FC = () => {
                     {t('investor_pipeline')}
                 </h2>
 
-                <InvestorPipelineCard
-                    name="Desprosa Capital"
-                    initials="DC"
-                    description="Inversionistas especializados en startups tecnológicas y energías renovables."
-                    avatarColor="var(--main-secondary)"
-                    stage="active"
-                    valuation="$50M"
-                    softInvestment="$100K - $150K"
-                    expectedClose="Junio 2025"
-                    email="contacto@desprosacapital.com"
-                    phone="+1 408 555 0123"
-                    isComplete={true}
-                />
+                {isLoading && <p className="text-black">{t('loading')}</p>}
+                {error && <p className="text-black">{t('error')}: {error.message}</p>}
 
-                <InvestorPipelineCard
-                    name="Andressen Horowitz"
-                    initials="AH"
-                    description="Inversionistas enfocados en software, Web3 y deep technology."
-                    avatarColor="#2563eb"
-                    stage="in-progress"
-                    valuation="$1.5B"
-                    softInvestment="$2M - $5M"
-                    expectedClose="Octubre 2025"
-                    email="michael@ahorowitz.com"
-                    phone="+1 408 555 1460"
-                     
-                />
+                {investors && investors.length === 0 && (
+                    <p className="text-black">{t('no_investors_yet')}</p>
+                )}
 
-                <InvestorPipelineCard
-                    name="Rocio Venturini"
-                    initials="RV"
-                    description="Inversionista Angel. Enfocada en B2B y SaaS."
-                    avatarColor="#dc2626"
-                    stage="discarded"
-                    valuation="N/A"
-                    softInvestment="$50K"
-                    expectedClose="Pendiente"
-                    email="ana.rodriguez@email.com"
-                    phone="+56 9 8765 4321"
-                     
-                />
+                {investors && investors.map((investor) => {
+                    const initials = investor.investor_name
+                        .split(' ')
+                        .map((n) => n[0])
+                        .join('')
+                        .toUpperCase()
+                        .slice(0, 2);
+
+                    const stageMap = {
+                        'CONTACTED': 'in-progress',
+                        'PITCH_SENT': 'in-progress',
+                        'MEETING_SCHEDULED': 'in-progress',
+                        'DUE_DILIGENCE': 'in-progress',
+                        'TERM_SHEET': 'active',
+                        'COMMITTED': 'active',
+                        'DECLINED': 'discarded'
+                    };
+
+                    return (
+                        <InvestorPipelineCard
+                            key={investor.id}
+                            name={investor.investor_name}
+                            initials={initials}
+                            description={investor.notes || t('no_description')}
+                            avatarColor="var(--main-secondary)"
+                            stage={stageMap[investor.stage] || 'in-progress'}
+                            valuation="N/A"
+                            softInvestment={investor.ticket_size ? `$${investor.ticket_size.toLocaleString()}` : 'N/A'}
+                            expectedClose={investor.next_action_date || t('pending')}
+                            email={investor.investor_email || ''}
+                            phone=""
+                            isComplete={investor.stage === 'COMMITTED'}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

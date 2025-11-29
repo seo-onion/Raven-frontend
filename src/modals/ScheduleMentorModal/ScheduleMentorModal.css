@@ -1,0 +1,187 @@
+.schedulementormodal-container {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.schedulementormodal-header {
+    margin-bottom: 1.5rem;
+}
+
+.schedulementormodal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.schedulementormodal-mentor-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--background-secondary);
+    border-radius: 0.5rem;
+}
+
+.schedulementormodal-avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.schedulementormodal-mentor-name {
+    font-weight: 600;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.schedulementormodal-mentor-role {
+    color: var(--text-secondary);
+    margin: 0.25rem 0 0 0;
+    font-size: 0.875rem;
+}
+
+.schedulementormodal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.schedulementormodal-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.schedulementormodal-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.schedulementormodal-label {
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.schedulementormodal-input,
+.schedulementormodal-textarea {
+    padding: 0.75rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background-color: white;
+    transition: border-color 0.2s;
+}
+
+.schedulementormodal-input:focus,
+.schedulementormodal-textarea:focus {
+    outline: none;
+    border-color: var(--main-secondary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.schedulementormodal-textarea {
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.schedulementormodal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
+
+.schedulementormodal-btn-secondary,
+.schedulementormodal-btn-primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.schedulementormodal-btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.schedulementormodal-btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+.schedulementormodal-btn-primary {
+    background-color: var(--main-secondary);
+    color: white;
+}
+
+.schedulementormodal-btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Success State */
+.schedulementormodal-success {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 3rem 2rem;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.schedulementormodal-success-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.schedulementormodal-success-icon svg {
+    width: 4rem;
+    height: 4rem;
+    color: var(--success-color, #10b981);
+}
+
+.schedulementormodal-success-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem 0;
+}
+
+.schedulementormodal-success-message {
+    font-size: 1rem;
+    margin: 0;
+    opacity: 0.7;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .schedulementormodal-container {
+        padding: 1.5rem;
+    }
+
+    .schedulementormodal-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .schedulementormodal-actions {
+        flex-direction: column-reverse;
+    }
+
+    .schedulementormodal-btn-secondary,
+    .schedulementormodal-btn-primary {
+        width: 100%;
+    }
+}
