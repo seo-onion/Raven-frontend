@@ -2,12 +2,13 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { Toaster, ToastBar, toast } from "react-hot-toast"
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
-import routes from "./routes/routes" 
+import routes from "./routes/routes"
 import Home from "./pages/Home/Home"
 import ModalBase from "./modals/ModalBase/ModalBase"
 
-import NotFound from "./pages/NotFound/NotFound" 
+import NotFound from "./pages/NotFound/NotFound"
 
+import Welcome from "./pages/Welcome/Welcome"
 import UserTypeSelection from "./pages/auth/UserTypeSelection/UserTypeSelection"
 import StartupLogin from "./pages/auth/StartupLogin/StartupLogin"
 import IncubatorLogin from "./pages/auth/IncubatorLogin/IncubatorLogin"
@@ -15,6 +16,7 @@ import Register from "./pages/auth/Register/Register"
 import VerifyEmail from "./pages/auth/VerifyEmail/VerifyEmail"
 import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword"
 import ChangePassword from "./pages/auth/ChangePassword/ChangePassword"
+import Onboarding from "./pages/Onboarding/Onboarding"
 
 import Dashboard from "./layouts/Dashboard/Dashboard"
 import MiProgreso from "./pages/startup/MiProgreso/MiProgreso"
@@ -30,13 +32,39 @@ import useAuthStore from "./stores/AuthStore"
 import './App.css'
 
 function App() {
-    const { isLogged } = useAuthStore()
+    const { isLogged, getUserDetails } = useAuthStore()
 
     const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
         console.log("Estoy registrado: ", isLogged)
         if (!isLogged) {
             return <Navigate to={routes.login} replace />
         }
+
+        const user = getUserDetails()
+        if (user && user.user_type === 'startup' && !user.onboarding_complete) {
+            return <Navigate to={routes.onboarding} replace />
+        }
+
+        return <>{children}</>
+    }
+
+    const OnboardingRoute = ({ children }: { children: React.ReactNode }) => {
+        if (!isLogged) {
+            return <Navigate to={routes.login} replace />
+        }
+
+        const user = getUserDetails()
+
+        // If not a startup user, redirect to dashboard
+        if (user && user.user_type !== 'startup') {
+            return <Navigate to={routes.dashboard} replace />
+        }
+
+        // If already completed onboarding, redirect to dashboard
+        if (user && user.onboarding_complete) {
+            return <Navigate to={routes.dashboard} replace />
+        }
+
         return <>{children}</>
     }
 
@@ -71,7 +99,7 @@ function App() {
             <Routes>
                 {/* Auth endpoints - Public routes */}
                 <Route path={routes.home} element={<Home />} />
-                <Route path={routes.main} element={<UserTypeSelection />} />
+                <Route path={routes.main} element={<Welcome />} />
                 <Route path={routes.login} element={<UserTypeSelection />} />
                 <Route path={routes.startupLogin} element={<StartupLogin />} />
                 <Route path={routes.incubatorLogin} element={<IncubatorLogin />} />
@@ -79,6 +107,9 @@ function App() {
                 <Route path={routes.verifyEmail} element={<VerifyEmail />} />
                 <Route path={routes.forgotPassword} element={<ForgotPassword />} />
                 <Route path={routes.changePassword} element={<ChangePassword />} />
+
+                {/* Onboarding - Protected route for startup users only */}
+                <Route path={routes.onboarding} element={<OnboardingRoute><Onboarding /></OnboardingRoute>} />
 
                 {/* Unified Dashboard - Protected routes for both startup and incubator */}
                 <Route path={routes.dashboard} element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>

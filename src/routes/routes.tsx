@@ -11,6 +11,9 @@ const routes = {
     forgotPassword: "/forgot-password",
     changePassword: "/change-password",
 
+    // Onboarding
+    onboarding: "/onboarding",
+
     // Dashboard - Unified for both startup and incubator
     dashboard: "/dashboard",
     dashboardOverview: "/dashboard/overview",

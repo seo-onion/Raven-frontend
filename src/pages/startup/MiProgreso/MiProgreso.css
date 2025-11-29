@@ -1,6 +1,8 @@
 .mi-progreso-container {
-    max-width: 1400px;
+    max-width: 100%;
     margin: 20px;
+    
+    margin-top: 4px;
 }
 
 .mi-progreso-header {
@@ -9,7 +11,7 @@
 
 .mi-progreso-header h1 {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 500;
     margin: 0 0 0.5rem 0;
 }
 
@@ -37,11 +39,12 @@
     border-radius: 0.75rem;
     padding: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: 40px 0;
 }
 
-.section-title {
-    font-size: 1.25rem;
-    font-weight: 600;
+.section-subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
     margin: 0 0 1.5rem 0;
 }
 
@@ -56,6 +59,19 @@
     flex-direction: column;
 }
 
+/* Grid for two columns (Alerts and Mentoring) */
+.mi-progreso-grid-two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 40px 0;
+}
+
+.progreso-full-width{
+    display: flex;
+    gap: 20px ;
+}
+
 /* Mobile Responsive */
 @media (max-width: 1024px) {
     .mi-progreso-grid {
@@ -64,6 +80,10 @@
 
     .mi-progreso-sidebar {
         order: -1;
+    }
+
+    .mi-progreso-grid-two {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -77,3 +97,4 @@
         padding: 1rem;
     }
 }
+

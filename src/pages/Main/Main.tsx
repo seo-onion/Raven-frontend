@@ -1,15 +1,13 @@
-import { 
-    Outlet, 
-    Navigate, 
-    useLocation 
+import {
+    Outlet,
+    useLocation
 } from "react-router-dom"
 import "./Main.css"
 
 // import Sidebar from "../../components/common/Sidebar/Sidebar"
 import Navbar from "@/components/common/Navbar/Navbar"
 import Footer from "../../components/common/Footer/Footer"
-
-import routes from '@/routes/routes'
+import Welcome from "@/pages/Welcome/Welcome"
 
 const Main = () => {
 
@@ -17,12 +15,14 @@ const Main = () => {
 
     // NOTE this is for adding conditions like isLogged, isAdmin and Navigate the user to some page
 
-    // Only show the landing page on the exact root URL
-    const isLandingPage = location.pathname === "/"
+    // Only show the welcome page on the exact root URL
+    const isWelcomePage = location.pathname === "/"
 
     return (
         <>
-            {!isLandingPage ? (
+            {isWelcomePage ? (
+                <Welcome />
+            ) : (
                 <div className="main-app-container">
                     {/* <Sidebar /> */}
                     <Navbar/>
@@ -31,8 +31,6 @@ const Main = () => {
                         <Footer />
                     </div>
                 </div>
-            ) : (
-                <Navigate to={routes.home} />
             )}
         </>
     )

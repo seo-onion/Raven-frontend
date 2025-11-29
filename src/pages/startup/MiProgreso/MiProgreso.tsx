@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ProgressCard from '../../../components/dashboard/ProgressCard/ProgressCard';
 import Timeline from '../../../components/dashboard/Timeline/Timeline';
 import RequirementItem from '../../../components/dashboard/RequirementItem/RequirementItem';
 import CompanyInfo from '../../../components/dashboard/CompanyInfo/CompanyInfo';
+import AlertsNotifications from '../../../components/dashboard/AlertsNotifications/AlertsNotifications';
+import MentoringSessions from '../../../components/dashboard/MentoringSessions/MentoringSessions';
+import FundingProgress from '../../../components/dashboard/FundingProgress/FundingProgress';
+import QuickActions from '../../../components/dashboard/QuickActions/QuickActions';
 import './MiProgreso.css';
 
 const MiProgreso: React.FC = () => {
+    const { t } = useTranslation('common');
+
     const [requirements] = useState([
         {
             id: 1,
@@ -44,39 +51,74 @@ const MiProgreso: React.FC = () => {
         },
     ]);
 
+    // Alerts data
+    const alerts = [
+        {
+            id: '1',
+            type: 'warning' as const,
+            message: 'Burn rate actual: $8K/mes - Runway: 9 meses',
+        },
+        {
+            id: '2',
+            type: 'info' as const,
+            message: 'Tienes 2 sesiones de mentoría programadas esta semana',
+        },
+        {
+            id: '3',
+            type: 'success' as const,
+            message: "Nuevo desafío compatible: 'Sistema de detección de fraude con IA'",
+        },
+    ];
+
+    // Mentoring sessions data
+    const mentoringSessions = [
+        {
+            id: '1',
+            title: 'Modelado financiero para Series A',
+            mentorName: 'Carlos Mendoza',
+            date: '28 oct 2024',
+            time: '3:00 PM',
+        },
+        {
+            id: '2',
+            title: 'Estrategia Go-to-Market',
+            mentorName: 'Ana Gutiérrez',
+            date: '30 oct 2024',
+            time: '10:00 AM',
+        },
+    ];
+
+    // Quick actions data
+    const quickActions = [
+        {
+            id: '1',
+            icon: 'upload-evidence' as const,
+            label: t('upload_evidence_trl'),
+            onClick: () => console.log('Upload TRL Evidence'),
+        },
+        {
+            id: '2',
+            icon: 'update-finances' as const,
+            label: t('update_finances'),
+            onClick: () => console.log('Update Finances'),
+        },
+        {
+            id: '3',
+            icon: 'request-mentoring' as const,
+            label: t('request_mentoring'),
+            onClick: () => console.log('Request Mentoring'),
+        },
+        {
+            id: '4',
+            icon: 'apply-challenge' as const,
+            label: t('apply_to_challenge'),
+            onClick: () => console.log('Apply to Challenge'),
+        },
+    ];
+
     const completedCount = requirements.filter(r => r.completed).length;
     const progressPercentage = Math.round((completedCount / requirements.length) * 100);
 
-    const timelineEvents = [
-        {
-            id: 1,
-            title: 'Registro completado',
-            date: '15 Nov 2024',
-            type: 'success' as const,
-            description: 'Tu cuenta ha sido creada exitosamente',
-        },
-        {
-            id: 2,
-            title: 'Perfil actualizado',
-            date: '18 Nov 2024',
-            type: 'success' as const,
-            description: 'Información de la empresa añadida',
-        },
-        {
-            id: 3,
-            title: 'Próxima sesión de mentoría',
-            date: '25 Nov 2024',
-            type: 'pending' as const,
-            description: 'Reunión con mentor asignado',
-        },
-        {
-            id: 4,
-            title: 'Evaluación TRL pendiente',
-            date: '30 Nov 2024',
-            type: 'warning' as const,
-            description: 'Completa tu evaluación de madurez',
-        },
-    ];
 
     return (
         <div className="mi-progreso-container">
@@ -88,14 +130,14 @@ const MiProgreso: React.FC = () => {
             <div className="mi-progreso-grid">
                 <div className="mi-progreso-main">
                     <ProgressCard
-                        title="Progreso General"
+                        title="Tu etapa actual: Incubación"
                         percentage={progressPercentage}
                         completedCount={completedCount}
                         totalCount={requirements.length}
                     />
 
                     <div className="requirements-section">
-                        <h2 className="section-title text-black">Requisitos</h2>
+                        <h2 className="section-subtitle text-black">Requisitos para avanzar a Aceleración</h2>
                         <div className="requirements-list">
                             {requirements.map(requirement => (
                                 <RequirementItem
@@ -108,16 +150,40 @@ const MiProgreso: React.FC = () => {
                             ))}
                         </div>
                     </div>
-
-                    <div className="timeline-section">
-                        <h2 className="section-title text-black">Línea de Tiempo</h2>
-                        <Timeline events={timelineEvents} />
-                    </div>
                 </div>
 
                 <aside className="mi-progreso-sidebar">
                     <CompanyInfo />
                 </aside>
+            </div>
+
+            {/* Full width sections */}
+            <div className="mi-progreso-full-width">
+                <div className="timeline-section">
+                    <h2 className="section-subtitle text-black">Timeline de etapas</h2>
+                    <Timeline currentStageKey="incubation"/>
+                </div>
+
+                {/* Grid for Alerts and Mentoring Sessions */}
+                <div className="mi-progreso-grid-two">
+                    <AlertsNotifications alerts={alerts} />
+                    <MentoringSessions
+                        sessions={mentoringSessions}
+                        onViewAll={() => console.log('View all mentoring sessions')}
+                    />
+                </div>
+
+                {/* Funding Progress */}
+                <FundingProgress
+                    currentAmount={45000}
+                    targetAmount={150000}
+                    roundName="Ronda Seed"
+                    onSearchInvestors={() => console.log('Search investors')}
+                    onViewDetails={() => console.log('View funding details')}
+                />
+
+                {/* Quick Actions */}
+                <QuickActions actions={quickActions} />
             </div>
         </div>
     );

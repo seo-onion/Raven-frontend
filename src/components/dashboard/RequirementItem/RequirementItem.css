@@ -2,7 +2,6 @@
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    border: 1px solid #e2e8f0;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
 }
@@ -12,17 +11,13 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.requirement-item.completed {
-    background-color: #f0fdf4;
-    border-color: #86efac;
-}
 
 .requirement-checkbox {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
     border: 2px solid #cbd5e0;
-    border-radius: 0.25rem;
+    border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

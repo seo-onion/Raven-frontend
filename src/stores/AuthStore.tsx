@@ -30,6 +30,8 @@ export interface UserDetails {
     last_name: string;
     actions_freezed_till?: string;
     user_type?: 'startup' | 'incubator';
+    onboarding_complete?: boolean;
+    company_name?: string;
 }
 
 /**
@@ -435,11 +437,17 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                         if (Array.isArray(res_payload.email)) {
                             emailErrors = res_payload.email.join(', ');
                         } else if (typeof res_payload.email === 'object') {
-                            emailErrors = res_payload.email.message || 'Invalid email';
+                            const errorType = res_payload.email.type;
+                            if (errorType === 'registration_failed') {
+                                // El email ya existe, pero el backend no lo dice directamente por seguridad
+                                emailErrors = 'This email may already be registered. Please try logging in or use a different email.';
+                            } else {
+                                emailErrors = res_payload.email.message || 'Invalid email';
+                            }
                         } else {
                             emailErrors = res_payload.email;
                         }
-                        toast.error(`Email: ${emailErrors}`);
+                        toast.error(emailErrors);
                     }
                     if ('password1' in res_payload && res_payload.password1) {
                         const pwErrors = Array.isArray(res_payload.password1)

@@ -16,17 +16,17 @@ const ProgressCard: React.FC<ProgressCardProps> = ({
 }) => {
     return (
         <div className="progress-card">
-            <h2 className="progress-card-title text-black">{title}</h2>
+
             <div className="progress-stats">
+                <div>
+                    <h2 className="progress-card-title text-black">{title}</h2>
+                    <p className='progress-card-subtitle'>Desarrolla tu producto y valida tu modelo de negocio</p>
+                </div>
+
                 <div className="progress-percentage">
                     <span className="progress-number text-black">{percentage}%</span>
-                    <span className="progress-label text-black">Completado</span>
                 </div>
-                <div className="progress-count">
-                    <span className="count-text text-black">
-                        {completedCount} de {totalCount} tareas
-                    </span>
-                </div>
+
             </div>
             <div className="progress-bar-container">
                 <div

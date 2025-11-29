@@ -38,7 +38,20 @@ const common = {
         missing_fields: "Por favor completa todos los campos",
         passwords_do_not_match: "Las contraseñas no coinciden",
         change_password: "Cambiar contraseña",
-    
+
+        // Onboarding
+        welcome_to_raven: "Bienvenido a Raven CRM",
+        complete_your_profile: "Completa tu perfil para comenzar",
+        company_name: "Nombre de la Empresa",
+        enter_company_name: "Ingresa el nombre de tu empresa",
+        company_name_required: "El nombre de la empresa es requerido",
+        industry: "Industria",
+        select_industry: "Selecciona tu industria",
+        industry_required: "La industria es requerida",
+        continue: "Continuar",
+        onboarding_success: "¡Perfil completado exitosamente!",
+        onboarding_error: "Error al completar el perfil",
+
         // Forms
         add: "Agregar",
         cancel: "Cancelar",
@@ -72,6 +85,21 @@ const common = {
         completed: "Completado",
         inReview: "En revisión",
         processing: "Procesando",
+        in_progress: "en Progreso",
+
+        // Dashboard Components
+        alerts_notifications: "Alertas y Notificaciones",
+        upcoming_mentoring_sessions: "Próximas Sesiones de Mentoría",
+        with: "con",
+        view_all_sessions: "Ver todas las sesiones",
+        of: "de",
+        committed: "comprometido",
+        search_investors: "Buscar Inversores",
+        view_details: "Ver Detalles",
+        upload_evidence_trl: "Subir Evidencias TRL",
+        update_finances: "Actualizar Finanzas",
+        request_mentoring: "Solicitar Mentoría",
+        apply_to_challenge: "Aplicar a Desafío",
 
         // Social
         website: "Sitio Web",
@@ -161,6 +189,9 @@ const common = {
         login_forgot_password: "¿Olvidaste tu contraseña?",
         login_reset_password: "Enivar solicitud",
 
+        // Welcome Page
+        welcome_subtitle: "Plataforma de Gestión de Incubación y Escalamiento Comercial",
+
         // Raven CRM Login
         raven_crm_title: "Raven CRM",
         raven_crm_subtitle: "Plataforma de Gestión de Incubación y Escalamiento Comercial",
@@ -170,7 +201,7 @@ const common = {
         incubator_description: "Supervisa y acompaña tu portafolio de startups con análisis consolidados.",
         login_as_startup: "Ingresar como Startup",
         login_as_incubator: "Ingresar como Incubadora",
-        no_account: "¿No tienes cuenta?",
+        no_account: "Ya tienes cuenta?",
         register_here: "Regístrate aquí",
         back_to_type_selection: "Volver a selección de tipo",
         demo_note: "¿Ya tienes una cuenta?",
@@ -291,7 +322,20 @@ const common = {
         missing_fields: "Please complete all fields",
         passwords_do_not_match: "Passwords do not match",
         change_password: "Change password",
-    
+
+        // Onboarding
+        welcome_to_raven: "Welcome to Raven CRM",
+        complete_your_profile: "Complete your profile to get started",
+        company_name: "Company Name",
+        enter_company_name: "Enter your company name",
+        company_name_required: "Company name is required",
+        industry: "Industry",
+        select_industry: "Select your industry",
+        industry_required: "Industry is required",
+        continue: "Continue",
+        onboarding_success: "Profile completed successfully!",
+        onboarding_error: "Error completing profile",
+
         // Forms
         add: "Add",
         cancel: "Cancel",
@@ -325,6 +369,21 @@ const common = {
         completed: "Completed",
         inReview: "Under review",
         processing: "Processing",
+        in_progress: "in Progress",
+
+        // Dashboard Components
+        alerts_notifications: "Alerts and Notifications",
+        upcoming_mentoring_sessions: "Upcoming Mentoring Sessions",
+        with: "with",
+        view_all_sessions: "View all sessions",
+        of: "of",
+        committed: "committed",
+        search_investors: "Search Investors",
+        view_details: "View Details",
+        upload_evidence_trl: "Upload TRL Evidence",
+        update_finances: "Update Finances",
+        request_mentoring: "Request Mentoring",
+        apply_to_challenge: "Apply to Challenge",
 
         // Social
         website: "Website",
@@ -413,6 +472,9 @@ const common = {
         login_old_user: "Already have an account?",
         login_forgot_password: "Forgot your password?",
         login_reset_password: "Send request",
+
+        // Welcome Page
+        welcome_subtitle: "Incubation and Commercial Scaling Management Platform",
 
         // Raven CRM Login
         raven_crm_title: "Raven CRM",
