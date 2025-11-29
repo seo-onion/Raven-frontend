@@ -5,8 +5,8 @@ import toast from 'react-hot-toast';
 import axiosInstance from '../../../api/axiosInstance';
 import type {
     OnboardingFormState,
-    OnboardingWizardPayload,
-    OnboardingWizardResponse,
+    // OnboardingWizardPayload,
+    // OnboardingWizardResponse,
     OnboardingValidationError,
 } from '../../../types/onboarding';
 import { initialOnboardingState } from '../../../types/onboarding';
@@ -127,38 +127,33 @@ const OnboardingWizard: React.FC = () => {
 
         try {
             // Build the payload matching the backend serializer structure
-            const payload: OnboardingWizardPayload = {
-                company_name: formData.company_name,
-                industry: formData.industry,
-                current_trl: formData.current_trl,
-                target_funding_amount: formData.target_funding_amount,
-                evidences: formData.evidences.map(evidence => ({
-                    trl_level: evidence.trl_level,
-                    description: evidence.description,
-                    file_url: evidence.file_url || '',
-                })),
-                financial_data: formData.financial_data.map(financial => ({
-                    period_date: financial.period_date,
-                    revenue: Number(financial.revenue),
-                    costs: Number(financial.costs),
-                    cash_balance: Number(financial.cash_balance),
-                    monthly_burn: Number(financial.monthly_burn),
-                    notes: financial.notes,
-                })),
-                investors: formData.investors.map(investor => ({
-                    investor_name: investor.investor_name,
-                    investor_email: investor.investor_email,
-                    stage: investor.stage,
-                    ticket_size: investor.ticket_size ? Number(investor.ticket_size) : undefined,
-                    notes: investor.notes,
-                })),
-            };
+            // const payload: OnboardingWizardPayload = {
+            //     company_name: formData.company_name,
+            //     industry: formData.industry,
+            //     current_trl: formData.current_trl,
+            //     target_funding_amount: formData.target_funding_amount,
+            //     evidences: formData.evidences.map(evidence => ({
+            //         trl_level: evidence.trl_level,
+            //         description: evidence.description,
+            //         file_url: evidence.file_url || '',
+            //     })),
+            //     financial_data: formData.financial_data.map(financial => ({
+            //         period_date: financial.period_date,
+            //         revenue: Number(financial.revenue),
+            //         costs: Number(financial.costs),
+            //         cash_balance: Number(financial.cash_balance),
+            //         monthly_burn: Number(financial.monthly_burn),
+            //         notes: financial.notes,
+            //     })),
+            //     investors: formData.investors.map(investor => ({
+            //         investor_name: investor.investor_name,
+            //         investor_email: investor.investor_email,
+            //         stage: investor.stage,
+            //         ticket_size: investor.ticket_size ? Number(investor.ticket_size) : undefined,
+            //         notes: investor.notes,
+            //     })),
+            // };
 
-            // Send to backend
-            const response = await axiosInstance.post<OnboardingWizardResponse>(
-                '/startup/complete-onboarding/',
-                payload
-            );
 
             // Update user details in localStorage to mark onboarding as complete
             const updatedUserResponse = await axiosInstance.get('/auth/user/');

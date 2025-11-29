@@ -6,6 +6,9 @@ import InvestorPipelineCard from '../../../components/dashboard/InvestorPipeline
 import { useInvestors } from '../../../hooks/useStartupData';
 import './Inversores.css';
 
+// Definir el tipo para el stage del pipeline
+type PipelineStage = 'in-progress' | 'active' | 'discarded';
+
 const Inversores: React.FC = () => {
     const { t } = useTranslation('common');
     const { data: investors, isLoading, error } = useInvestors();
@@ -22,10 +25,6 @@ const Inversores: React.FC = () => {
                         {t('funding_rounds_classification')}
                     </p>
                 </div>
-                {/* <button className="inversores-btn-primary">
-                    <FaPlus className="inversores-btn-icon" />
-                    {t('add_contribution')}
-                </button> */}
             </div>
 
             {/* Crowdfunding Bar */}
@@ -90,7 +89,8 @@ const Inversores: React.FC = () => {
                         .toUpperCase()
                         .slice(0, 2);
 
-                    const stageMap = {
+                    // Mapeo con tipo explícito
+                    const stageMap: Record<string, PipelineStage> = {
                         'CONTACTED': 'in-progress',
                         'PITCH_SENT': 'in-progress',
                         'MEETING_SCHEDULED': 'in-progress',
@@ -100,6 +100,9 @@ const Inversores: React.FC = () => {
                         'DECLINED': 'discarded'
                     };
 
+                    // Asegurar el tipo con aserción
+                    const pipelineStage: PipelineStage = stageMap[investor.stage] || 'in-progress';
+
                     return (
                         <InvestorPipelineCard
                             key={investor.id}
@@ -107,7 +110,7 @@ const Inversores: React.FC = () => {
                             initials={initials}
                             description={investor.notes || t('no_description')}
                             avatarColor="var(--main-secondary)"
-                            stage={stageMap[investor.stage] || 'in-progress'}
+                            stage={pipelineStage}
                             valuation="N/A"
                             softInvestment={investor.ticket_size ? `$${investor.ticket_size.toLocaleString()}` : 'N/A'}
                             expectedClose={investor.next_action_date || t('pending')}

@@ -142,7 +142,6 @@ const common = {
         projected_impact: "Impacto Proyectado",
         detailed_cash_flow: "Flujo de Caja Detallado",
         period: "Periodo",
-        net_cash_flow: "Flujo de Caja Neto",
         total: "Total",
 
         // Inversores Components
@@ -587,7 +586,6 @@ const common = {
         projected_impact: "Projected Impact",
         detailed_cash_flow: "Detailed Cash Flow",
         period: "Period",
-        net_cash_flow: "Net Cash Flow",
         total: "Total",
 
         // Inversores Components
