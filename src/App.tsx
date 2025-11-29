@@ -16,7 +16,6 @@ import Register from "./pages/auth/Register/Register"
 import VerifyEmail from "./pages/auth/VerifyEmail/VerifyEmail"
 import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword"
 import ChangePassword from "./pages/auth/ChangePassword/ChangePassword"
-import Onboarding from "./pages/Onboarding/Onboarding"
 import OnboardingWizard from "./pages/startup/OnboardingWizard/OnboardingWizard"
 
 import Dashboard from "./layouts/Dashboard/Dashboard"
@@ -34,33 +33,6 @@ import './App.css'
 
 function App() {
     const { isLogged, getUserDetails } = useAuthStore()
-
-    const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-        if (!isLogged) {
-            return <Navigate to={routes.login} replace />
-        }
-        return <>{children}</>
-    }
-
-    const OnboardingRoute = ({ children }: { children: React.ReactNode }) => {
-        if (!isLogged) {
-            return <Navigate to={routes.login} replace />
-        }
-
-        const user = getUserDetails()
-
-        // If not a startup user, redirect to dashboard
-        if (user && user.user_type !== 'startup') {
-            return <Navigate to={routes.dashboard} replace />
-        }
-
-        // If already completed onboarding, redirect to dashboard
-        if (user && user.onboarding_complete) {
-            return <Navigate to={routes.dashboard} replace />
-        }
-
-        return <>{children}</>
-    }
 
     const WizardRoute = ({ children }: { children: React.ReactNode }) => {
         if (!isLogged) {

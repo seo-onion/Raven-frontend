@@ -16,7 +16,7 @@ interface ScheduleMentorModalProps {
     handleClose?: () => void;
 }
 
-const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor, handleClose }) => {
+const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => {
     const { t } = useTranslation('common');
     const { closeModal } = useModalStore();
     const [isScheduled, setIsScheduled] = useState(false);

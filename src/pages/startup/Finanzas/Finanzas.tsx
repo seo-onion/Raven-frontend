@@ -23,16 +23,13 @@ const mockMetrics = [
 
 const Finanzas: React.FC = () => {
     const { t } = useTranslation('common');
-    const { data: financialData, isLoading } = useFinancialData();
+    const { data: financialData } = useFinancialData();
 
     // Calculate real metrics from financial data
     const realMetrics = useMemo(() => {
         if (!financialData || financialData.length === 0) return null;
 
         const latest = financialData[0]; // Most recent data
-        const totalRevenue = financialData.reduce((sum, f) => sum + Number(f.revenue), 0);
-        const totalCosts = financialData.reduce((sum, f) => sum + Number(f.costs), 0);
-        const avgCashBalance = financialData.reduce((sum, f) => sum + Number(f.cash_balance), 0) / financialData.length;
 
         return [
             {
