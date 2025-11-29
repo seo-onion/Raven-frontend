@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { FaPlus } from 'react-icons/fa';
 import CrowdfundingBar from '../../../components/dashboard/CrowdfundingBar/CrowdfundingBar';
 import FundingRoundCard from '../../../components/dashboard/FundingRoundCard/FundingRoundCard';
 import InvestorPipelineCard from '../../../components/dashboard/InvestorPipelineCard/InvestorPipelineCard';
@@ -99,7 +98,7 @@ const Inversores: React.FC = () => {
                     expectedClose="Octubre 2025"
                     email="michael@ahorowitz.com"
                     phone="+1 408 555 1460"
-                    isComplete={false}
+                     
                 />
 
                 <InvestorPipelineCard
@@ -113,7 +112,7 @@ const Inversores: React.FC = () => {
                     expectedClose="Pendiente"
                     email="ana.rodriguez@email.com"
                     phone="+56 9 8765 4321"
-                    isComplete={false}
+                     
                 />
             </div>
         </div>

@@ -34,10 +34,6 @@ const ChallengeCard: React.FC<ChallengeCardProps> = ({
     deadline,
     applicationsCount,
     status,
-    primaryButtonText,
-    secondaryButtonText,
-    onPrimaryClick,
-    onSecondaryClick,
 }) => {
     const { t } = useTranslation('common');
 

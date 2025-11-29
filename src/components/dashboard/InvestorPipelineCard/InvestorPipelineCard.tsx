@@ -30,7 +30,6 @@ const InvestorPipelineCard: React.FC<InvestorPipelineCardProps> = ({
     expectedClose,
     email,
     phone,
-    isComplete = false,
 }) => {
     const { t } = useTranslation('common');
 

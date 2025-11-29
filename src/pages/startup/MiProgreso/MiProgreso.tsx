@@ -183,7 +183,6 @@ const MiProgreso: React.FC = () => {
                     targetAmount={150000}
                     roundName="Ronda Seed"
                     onSearchInvestors={() => navigate("/dashboard/inversores")}
-                    onViewDetails={() => console.log('View funding details')}
                 />
 
                 {/* Quick Actions */}

@@ -8,7 +8,6 @@ interface FundingProgressProps {
     targetAmount: number;
     roundName: string;
     onSearchInvestors?: () => void;
-    onViewDetails?: () => void;
 }
 
 const FundingProgress = ({
@@ -16,7 +15,6 @@ const FundingProgress = ({
     targetAmount,
     roundName,
     onSearchInvestors,
-    onViewDetails,
 }: FundingProgressProps) => {
     const { t } = useTranslation('common');
 
