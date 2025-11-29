@@ -11,8 +11,6 @@ interface ProgressCardProps {
 const ProgressCard: React.FC<ProgressCardProps> = ({
     title,
     percentage,
-    completedCount,
-    totalCount,
 }) => {
     return (
         <div className="progress-card">

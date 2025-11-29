@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { FaCheckCircle, FaDollarSign, FaCommentDots, FaChartLine } from 'react-icons/fa';
 import './QuickActions.css';
 
@@ -14,7 +13,6 @@ interface QuickActionsProps {
 }
 
 const QuickActions = ({ actions }: QuickActionsProps) => {
-    const { t } = useTranslation('common');
 
     const getIcon = (iconType: QuickAction['icon']) => {
         const iconProps = { className: 'quickactions-icon' };

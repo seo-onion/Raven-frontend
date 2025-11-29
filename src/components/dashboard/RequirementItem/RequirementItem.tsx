@@ -12,7 +12,6 @@ const RequirementItem: React.FC<RequirementItemProps> = ({
     title,
     description,
     completed,
-    category,
 }) => {
     return (
         <div className={`requirement-item ${completed ? 'completed' : ''}`}>

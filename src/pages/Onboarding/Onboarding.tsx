@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -8,7 +8,6 @@ import Select from '@/components/forms/Select/Select'
 import Button from '@/components/common/Button/Button'
 import Card from '@/components/common/Card/Card'
 import routes from '@/routes/routes'
-import useAuthStore from '@/stores/AuthStore'
 import axiosInstance from '@/api/axiosInstance'
 
 import './Onboarding.css'
