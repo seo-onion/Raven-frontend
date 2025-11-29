@@ -1,0 +1,79 @@
+/* Mentoring Sessions Container */
+.mentoringsessions-container {
+    background-color: var(--background-primary);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px var(--black-5), 0 2px 4px -2px var(--black-5);
+    padding: 24px;
+}
+
+.mentoringsessions-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.mentoringsessions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Session Item */
+.mentoringsessions-item {
+    padding-bottom: 12px;
+}
+
+.mentoringsessions-item-border {
+    border-bottom: 1px solid var(--border-tertiary);
+}
+
+.mentoringsessions-item-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.mentoringsessions-item-mentor {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.mentoringsessions-item-datetime {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.mentoringsessions-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--text-tertiary);
+}
+
+/* Button */
+.mentoringsessions-button {
+    width: 100%;
+    margin-top: 16px;
+    background-color: var(--background-tertiary);
+    color: var(--main-primary);
+    font-weight: 500;
+    transition: background-color 0.15s ease;
+}
+
+.mentoringsessions-button:hover {
+    background-color: var(--gray-200);
+}
+
+/* Dark Mode Support */
+.dark .mentoringsessions-container {
+    background-color: var(--background-secondary);
+}
+
+.dark .mentoringsessions-item-border {
+    border-bottom-color: var(--border-secondary);
+}

@@ -1,0 +1,70 @@
+/* Alerts and Notifications Container */
+.alertsnotifications-container {
+    background-color: var(--background-primary);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px var(--black-5), 0 2px 4px -2px var(--black-5);
+    padding: 24px;
+}
+
+.alertsnotifications-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.alertsnotifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Alert Item Styles */
+.alertsnotifications-item {
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-left: 4px solid;
+}
+
+/* Warning Alert - Yellow */
+.alertsnotifications-warning {
+    background-color: #fffbe6;
+    border-left-color: var(--state-warning);
+    color: #78350f;
+}
+
+/* Info Alert - Blue */
+.alertsnotifications-info {
+    background-color: #eff6ff;
+    border-left-color: var(--state-info);
+    color: #1e40af;
+}
+
+/* Success Alert - Green */
+.alertsnotifications-success {
+    background-color: #f0fdf4;
+    border-left-color: var(--state-success);
+    color: #065f46;
+}
+
+/* Dark Mode Support */
+.dark .alertsnotifications-container {
+    background-color: var(--background-secondary);
+}
+
+.dark .alertsnotifications-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: var(--state-warning);
+}
+
+.dark .alertsnotifications-info {
+    background-color: rgba(45, 130, 232, 0.1);
+    color: var(--state-info);
+}
+
+.dark .alertsnotifications-success {
+    background-color: rgba(46, 213, 115, 0.1);
+    color: var(--state-success);
+}
