@@ -22,36 +22,8 @@ const MiProgreso: React.FC = () => {
             id: 1,
             title: 'Completar perfil de empresa',
             description: 'Añade información básica sobre tu startup',
-            completed: true,
+            completed: false, // Assuming it's not completed by default
             category: 'Perfil',
-        },
-        {
-            id: 2,
-            title: 'Subir pitch deck',
-            description: 'Documento de presentación de tu proyecto',
-            completed: true,
-            category: 'Documentos',
-        },
-        {
-            id: 3,
-            title: 'Validar nivel TRL/CRL',
-            description: 'Completa la evaluación de madurez tecnológica',
-            completed: false,
-            category: 'Validación',
-        },
-        {
-            id: 4,
-            title: 'Conectar con mentores',
-            description: 'Agenda al menos una sesión de mentoría',
-            completed: false,
-            category: 'Networking',
-        },
-        {
-            id: 5,
-            title: 'Completar plan financiero',
-            description: 'Proyecciones a 3 años',
-            completed: false,
-            category: 'Finanzas',
         },
     ]);
 

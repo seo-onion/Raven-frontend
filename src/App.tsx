@@ -31,14 +31,13 @@ import useAuthStore from "./stores/AuthStore"
 import './App.css'
 
 function App() {
-    const { isLogged, getUserDetails } = useAuthStore()
+    const user = useAuthStore(state => state.user); // Subscribe to the user state
+    const { isLogged } = useAuthStore(); // isLogged is still needed from the store
 
     const WizardRoute = ({ children }: { children: React.ReactNode }) => {
         if (!isLogged) {
             return <Navigate to={routes.login} replace />
         }
-
-        const user = getUserDetails()
 
         // If not a startup user, redirect to dashboard
         if (user && user.user_type !== 'startup') {
@@ -57,8 +56,6 @@ function App() {
         if (!isLogged) {
             return <Navigate to={routes.login} replace />
         }
-
-        const user = getUserDetails()
 
         // If startup user hasn't completed onboarding, redirect to wizard
         if (user && user.user_type === 'startup' && !user.onboarding_complete) {
@@ -125,6 +122,7 @@ function App() {
                     <Route path={routes.dashboardInversores} element={<Inversores />} />
                     <Route path={routes.dashboardDesafios} element={<Desafios />} />
                     <Route path={routes.dashboardMentoring} element={<Mentoring />} />
+                    <Route path={routes.dashboardFinanzas} element={<Finanzas />} />
                 </Route>
 
                 {/* Other Protected routes - Require authentication */}

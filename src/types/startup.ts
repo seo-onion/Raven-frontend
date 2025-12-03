@@ -16,6 +16,9 @@ export interface StartupData {
     onboarding_completed: boolean;
     created: string;
     updated: string;
+    current_trl: number | null;
+    actual_revenue: number | null;
+    current_crl: number | null; // Assuming current_crl might also be exposed
 }
 
 // =============================================================================

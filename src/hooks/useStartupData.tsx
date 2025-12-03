@@ -1,45 +1,61 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance, { EVIDENCE_BASE_PATH } from '../api/axiosInstance'; // Import EVIDENCE_BASE_PATH
 import type { StartupData, Evidence, FinancialData, InvestorPipeline } from '../types/startup';
 import type { InvestmentRound, Investor } from '../types/campaigns';
+import type { EvidenceData } from '../types/onboarding'; // Import EvidenceData for creation
 
 // =============================================================================
 // Fetch Functions
 // =============================================================================
 
 const fetchStartupData = async (): Promise<StartupData> => {
-    const response = await axiosInstance.get('/startup/data/');
+    const response = await axiosInstance.get('/api/users/startup/data/');
     return response.data;
 };
 
 const fetchEvidences = async (): Promise<Evidence[]> => {
-    const response = await axiosInstance.get('/startup/evidences/');
-    return response.data;
+    const response = await axiosInstance.get('/api/users/startup/evidences/');
+    return response.data.results;
 };
 
 const fetchFinancialData = async (): Promise<FinancialData[]> => {
-    const response = await axiosInstance.get('/startup/financial-data/');
+    const response = await axiosInstance.get('/api/users/startup/financial-data/');
     return response.data;
 };
 
 const fetchInvestors = async (): Promise<InvestorPipeline[]> => {
-    const response = await axiosInstance.get('/startup/investors/');
+    const response = await axiosInstance.get('/api/users/startup/investors/');
     return response.data;
 };
 
 const fetchInvestmentRounds = async (): Promise<InvestmentRound[]> => {
-    const response = await axiosInstance.get('/startup/rounds/');
-    return response.data;
+    const response = await axiosInstance.get('/api/users/startup/rounds/');
+    return response.data.results;
 };
 
 const createInvestmentRound = async (roundData: Partial<InvestmentRound>): Promise<InvestmentRound> => {
-    const response = await axiosInstance.post('/startup/rounds/', roundData);
+    const response = await axiosInstance.post('/api/users/startup/rounds/', roundData);
     return response.data;
 };
 
 const addInvestorToRound = async ({ roundId, investor }: { roundId: number, investor: Partial<Investor> }): Promise<Investor> => {
-    const response = await axiosInstance.post(`/startup/rounds/${roundId}/investors/`, investor);
+    const response = await axiosInstance.post(`/api/users/startup/rounds/${roundId}/investors/`, investor);
     return response.data;
+};
+
+// Evidence API functions
+const createEvidence = async ({ evidenceData, evidenceId }: { evidenceData: Omit<EvidenceData, 'id'>, evidenceId?: number }): Promise<Evidence> => {
+    if (evidenceId) {
+        const response = await axiosInstance.put(`${EVIDENCE_BASE_PATH}${evidenceId}/`, evidenceData);
+        return response.data;
+    } else {
+        const response = await axiosInstance.post(EVIDENCE_BASE_PATH, evidenceData);
+        return response.data;
+    }
+};
+
+const deleteEvidence = async (evidenceId: number): Promise<void> => {
+    await axiosInstance.delete(`${EVIDENCE_BASE_PATH}${evidenceId}/`);
 };
 
 
@@ -129,6 +145,34 @@ export const useAddInvestorToRound = () => {
         mutationFn: addInvestorToRound,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['investment-rounds'] });
+        },
+    });
+};
+
+/**
+ * Hook to create/update an evidence
+ */
+export const useCreateEvidence = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: ({ evidenceData, evidenceId }: { evidenceData: Omit<EvidenceData, 'id'>, evidenceId?: number }) => createEvidence({ evidenceData, evidenceId }),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['evidences'] });
+            queryClient.invalidateQueries({ queryKey: ['startup-data'] }); // Invalidate startup data to update TRL/CRL levels
+        },
+    });
+};
+
+/**
+ * Hook to delete an evidence
+ */
+export const useDeleteEvidence = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: deleteEvidence,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['evidences'] });
+            queryClient.invalidateQueries({ queryKey: ['startup-data'] }); // Invalidate startup data to update TRL/CRL levels
         },
     });
 };

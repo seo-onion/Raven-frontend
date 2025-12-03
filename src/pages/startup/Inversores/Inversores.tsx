@@ -27,8 +27,12 @@ const Inversores: React.FC = () => {
         setModalContent(<NewInvestorModal roundId={roundId} />);
     };
 
-    const totalGoal = rounds?.reduce((acc, round) => acc + round.target, 0) || 0;
-    const totalCurrent = rounds?.reduce((acc, round) => acc + round.investors.reduce((iAcc, i) => iAcc + i.amount, 0), 0) || 0;
+    const totalGoal = (rounds || []).reduce((acc, round) => acc + (round.target || 0), 0);
+    const totalCurrent = (rounds || []).reduce((acc, round) => {
+        const investors = round.investors || [];
+        const roundTotal = investors.reduce((iAcc, i) => iAcc + (i.amount || 0), 0);
+        return acc + roundTotal;
+    }, 0);
     const totalPercentage = totalGoal > 0 ? (totalCurrent / totalGoal) * 100 : 0;
 
     return (
@@ -64,17 +68,18 @@ const Inversores: React.FC = () => {
                 {isLoadingRounds && <p className="text-black">{t('loading')}</p>}
                 {errorRounds && <p className="text-black">{t('error')}: {(errorRounds as Error).message}</p>}
                 {rounds?.map((round) => {
-                    const roundCurrent = round.investors.reduce((acc, investor) => acc + investor.amount, 0);
-                    const roundPercentage = round.target > 0 ? (roundCurrent / round.target) * 100 : 0;
+                    const investors = round.investors || [];
+                    const roundCurrent = investors.reduce((acc, investor) => acc + (investor.amount || 0), 0);
+                    const roundPercentage = (round.target || 0) > 0 ? (roundCurrent / round.target) * 100 : 0;
                     return (
                         <div key={round.id} className="funding-round-with-button">
                             <FundingRoundCard
                                 name={round.name}
-                                value={`$${round.target.toLocaleString()}`}
+                                value={`$${(round.target || 0).toLocaleString()}`}
                                 closeDate="N/A"
                                 status="in-progress"
                                 percentage={roundPercentage}
-                                investors={round.investors.map(i => i.name)}
+                                investors={investors.map(i => i.name || 'Unknown')}
                             />
                             <Button variant="secondary" onClick={() => handleNewInvestor(round.id!)}>
                                 + {t('add_investor')}

@@ -1,5 +1,3 @@
-import type { CampaignFinancials } from "./campaigns";
-
 /**
  * TypeScript Interfaces for Onboarding Wizard - Phase 2
  * These interfaces match the Django backend serializers exactly
@@ -70,6 +68,23 @@ export interface InvestorDataResponse extends InvestorData {
 }
 
 // =============================================================================
+// Financial Projections (for CampaignFinancials)
+// =============================================================================
+
+export interface QuarterlyProjection {
+    revenue: number;
+    cogs: number;
+    opex: number;
+}
+
+export interface FinancialProjections {
+    q1: QuarterlyProjection;
+    q2: QuarterlyProjection;
+    q3: QuarterlyProjection;
+    q4: QuarterlyProjection;
+}
+
+// =============================================================================
 // Complete Onboarding Wizard Payload
 // =============================================================================
 
@@ -82,9 +97,14 @@ export interface OnboardingWizardPayload {
     current_trl: number;
     current_crl: number | null;
 
+    // Step 2: Finances
+    target_funding_amount: number;
+    financial_projections: FinancialProjections;
+
     // Data arrays
     evidences: EvidenceData[];
-    financials: CampaignFinancials | null;
+    financial_data: FinancialData[];
+    investors: InvestorData[];
 }
 
 // =============================================================================
@@ -100,6 +120,7 @@ export interface OnboardingWizardResponse {
     evidences_count: number;
     financial_periods_count: number;
     investors_count: number;
+    current_crl?: number;
 }
 
 // =============================================================================
@@ -117,7 +138,12 @@ export interface OnboardingFormState {
     evidences: EvidenceData[];
 
     // Step 2: Finances
-    financials: CampaignFinancials | null;
+    target_funding_amount: number;
+    financial_projections: FinancialProjections;
+    financial_data: FinancialData[];
+
+    // Step 3: Investors
+    investors: InvestorData[];
 }
 
 // Initial empty state
@@ -128,13 +154,29 @@ export const initialOnboardingState: OnboardingFormState = {
     current_crl: null,
     evidences: [
         {
-            type: 'TRL', // Default to TRL
-            level: 1,
+            type: 'TRL',
+            level: 1, // Default level, will be updated by wizard logic
             description: '',
             file_url: '',
         },
     ],
-    financials: null,
+    target_funding_amount: 0,
+    financial_projections: { // Added initial structure for financial_projections
+        q1: { revenue: 0, cogs: 0, opex: 0 },
+        q2: { revenue: 0, cogs: 0, opex: 0 },
+        q3: { revenue: 0, cogs: 0, opex: 0 },
+        q4: { revenue: 0, cogs: 0, opex: 0 },
+    },
+    financial_data: [
+        {
+            period_date: new Date().toISOString().split('T')[0], // Current date
+            revenue: 0,
+            costs: 0,
+            cash_balance: 0,
+            monthly_burn: 0,
+        },
+    ],
+    investors: [],
 };
 
 // =============================================================================

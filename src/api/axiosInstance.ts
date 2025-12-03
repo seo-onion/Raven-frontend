@@ -4,15 +4,18 @@ import useAuthStore from "@/stores/AuthStore"
 import usePageLayoutStore from "@/stores/PageLayoutStore"
 
 // Paths
-export const LOGIN_PATH = "/auth/login/"
-export const LOGOUT_PATH = "/auth/logout/"
-export const REFRESH_PATH = "/auth/token/refresh/"
-export const SIGNUP_PATH = "/auth/registration/"
-export const RESEND_EMAIL_PATH = "/resend-email-confirmation/"
-export const CONFIRM_EMAIL_PATH = "/auth/registration/account-confirm-email/"
-export const CHANGE_PASSWORD_PATH = "/auth/password/change/"
-export const RESET_PASSWORD_PATH = "/auth/password/reset/"
-export const RESET_PASSWORD_CONFIRM_PATH = "/auth/password/reset/confirm/"
+export const LOGIN_PATH = "/api/users/auth/login/"
+export const LOGOUT_PATH = "/api/users/auth/logout/"
+export const REFRESH_PATH = "/api/users/auth/token/refresh/"
+export const SIGNUP_PATH = "/api/users/auth/registration/"
+export const RESEND_EMAIL_PATH = "/api/users/resend-email-confirmation/"
+export const CONFIRM_EMAIL_PATH = "/api/users/auth/registration/account-confirm-email/"
+export const CHANGE_PASSWORD_PATH = "/api/users/auth/password/change/"
+export const RESET_PASSWORD_PATH = "/api/users/auth/password/reset/"
+export const RESET_PASSWORD_CONFIRM_PATH = "/api/users/auth/password/reset/confirm/"
+
+// Evidence Paths
+export const EVIDENCE_BASE_PATH = "/api/users/startup/evidences/"
 
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL || "/",

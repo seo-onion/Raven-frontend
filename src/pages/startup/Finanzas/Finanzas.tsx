@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MetricCard from '../../../components/dashboard/MetricCard/MetricCard';
 import CashFlowChart from '../../../components/dashboard/CashFlowChart/CashFlowChart';
@@ -9,6 +9,7 @@ import Button from '@/components/common/Button/Button';
 import { useFinancialData } from '../../../hooks/useStartupData';
 import './Finanzas.css';
 import { FiDownload } from "react-icons/fi";
+import * as XLSX from 'xlsx';
 
 const mockMetrics = [
     { title: "Utilidad Bruta", value: "68%", secondaryValue: "$340K", trend: "up", },
@@ -25,63 +26,186 @@ const Finanzas: React.FC = () => {
     const { t } = useTranslation('common');
     const { data: financialData } = useFinancialData();
 
+    // State for sensitivity analysis multipliers
+    const [revenueMultiplier, setRevenueMultiplier] = useState<number>(1);
+    const [costMultiplier, setCostMultiplier] = useState<number>(1);
+
+    // Sort financial data by date (most recent first)
+    const sortedFinancialData = useMemo(() => {
+        if (!financialData || financialData.length === 0) return [];
+
+        return [...financialData].sort((a, b) => new Date(b.period_date).getTime() - new Date(a.period_date).getTime());
+    }, [financialData]);
+
     // Calculate real metrics from financial data
     const realMetrics = useMemo(() => {
-        if (!financialData || financialData.length === 0) return null;
+        if (!sortedFinancialData || sortedFinancialData.length === 0) return null;
 
-        const latest = financialData[0]; // Most recent data
+        const latest = sortedFinancialData[0]; // Most recent data
+        const previous = sortedFinancialData[1]; // Previous period for comparison
+
+        // Apply sensitivity multipliers
+        const adjustedRevenue = latest.revenue * revenueMultiplier;
+        const adjustedCosts = latest.costs * costMultiplier;
+        const adjustedNetCashFlow = adjustedRevenue - adjustedCosts;
+
+        // Helper function to determine trend based on value sign and comparison
+        const getTrend = (current: number, prev: number | undefined, lowerIsBetter: boolean = false): 'up' | 'down' => {
+            if (!prev) {
+                // If no previous data, use simple logic based on whether lower is better
+                if (lowerIsBetter) {
+                    // For costs and burn rate: positive values show red
+                    return current > 0 ? 'down' : 'up';
+                }
+                // For revenue and cash flow: positive values show green
+                return current >= 0 ? 'up' : 'down';
+            }
+
+            // Compare with previous period
+            const isIncreasing = current > prev;
+
+            if (lowerIsBetter) {
+                // For costs/burn: decreasing is good (green), increasing is bad (red)
+                return isIncreasing ? 'down' : 'up';
+            }
+            // For revenue/cash: increasing is good (green), decreasing is bad (red)
+            return isIncreasing ? 'up' : 'down';
+        };
 
         return [
             {
                 title: t('revenue'),
-                value: `$${Number(latest.revenue).toLocaleString()}`,
+                value: `$${Number(adjustedRevenue).toLocaleString()}`,
                 secondaryValue: t('latest_period'),
-                trend: "up" as const
+                trend: getTrend(adjustedRevenue, previous ? previous.revenue * revenueMultiplier : undefined, false)
             },
             {
                 title: t('costs'),
-                value: `$${Number(latest.costs).toLocaleString()}`,
+                value: `$${Number(adjustedCosts).toLocaleString()}`,
                 secondaryValue: t('latest_period'),
-                trend: "down" as const
+                trend: getTrend(adjustedCosts, previous ? previous.costs * costMultiplier : undefined, true)
             },
             {
                 title: t('net_cash_flow'),
-                value: `$${Number(latest.net_cash_flow).toLocaleString()}`,
+                value: `$${Number(adjustedNetCashFlow).toLocaleString()}`,
                 secondaryValue: t('latest_period'),
-                trend: latest.net_cash_flow >= 0 ? "up" as const : "down" as const
+                trend: getTrend(adjustedNetCashFlow, previous ? (previous.revenue * revenueMultiplier - previous.costs * costMultiplier) : undefined, false)
             },
             {
                 title: t('cash_balance'),
                 value: `$${Number(latest.cash_balance).toLocaleString()}`,
                 secondaryValue: t('current'),
-                trend: "up" as const
+                trend: getTrend(latest.cash_balance, previous?.cash_balance, false)
             },
             {
                 title: t('monthly_burn_rate'),
                 value: `$${Number(latest.monthly_burn).toLocaleString()}`,
                 secondaryValue: t('monthly'),
-                trend: "down" as const
+                trend: getTrend(latest.monthly_burn, previous?.monthly_burn, true)
+            },
+            {
+                title: t('runway'),
+                value: latest.cash_balance > 0 && latest.monthly_burn > 0
+                    ? `${Math.floor(latest.cash_balance / latest.monthly_burn)} ${t('months')}`
+                    : t('not_available'),
+                secondaryValue: t('time_remaining'),
+                trend: 'neutral' as const
             },
         ];
-    }, [financialData, t]);
+    }, [sortedFinancialData, revenueMultiplier, costMultiplier, t]);
 
     const metricsToShow = realMetrics || mockMetrics;
 
     // Manejador de clic para descargar el archivo de Excel
-    const handleDownloadExcel = () => {
-        // Define la URL del archivo de Excel que quieres descargar
-        // Este es un ejemplo público de un archivo de Excel de prueba. 
-        // Reemplázalo con la URL real de tu archivo.
-        const excelUrl = 'go.microsoft.com';
+    const handleDownloadExcel = async () => {
+        try {
+            // Create workbook
+            const wb = XLSX.utils.book_new();
 
-        // Crea un enlace temporal
-        const link = document.createElement('a');
-        link.href = excelUrl;
-        // Asigna un nombre de archivo sugerido para la descarga
-        link.setAttribute('download', 'Reporte_Finanzas.xlsx');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+            // 1. Create metrics sheet
+            const metricsData = metricsToShow.map(metric => ({
+                'Métrica': metric.title,
+                'Valor': metric.value,
+                'Descripción': metric.secondaryValue,
+                'Tendencia': metric.trend === 'up' ? '↑ Positivo' : metric.trend === 'down' ? '↓ Negativo' : '→ Neutral'
+            }));
+            const wsMetrics = XLSX.utils.json_to_sheet(metricsData);
+            XLSX.utils.book_append_sheet(wb, wsMetrics, 'Métricas');
+
+            // 2. Create financial data sheet
+            if (sortedFinancialData && sortedFinancialData.length > 0) {
+                const financialDataFormatted = sortedFinancialData.map(data => ({
+                    'Fecha': new Date(data.period_date).toLocaleDateString('es-ES'),
+                    'Ingresos': data.revenue,
+                    'Costos': data.costs,
+                    'Flujo de Caja Neto': data.revenue - data.costs,
+                    'Balance de Efectivo': data.cash_balance,
+                    'Tasa de Quema Mensual': data.monthly_burn,
+                    'Notas': data.notes || ''
+                }));
+                const wsFinancial = XLSX.utils.json_to_sheet(financialDataFormatted);
+                XLSX.utils.book_append_sheet(wb, wsFinancial, 'Datos Financieros');
+
+                // 3. Create chart data sheet for Cash Flow
+                const cashFlowChartData = sortedFinancialData.map(data => ({
+                    'Periodo': new Date(data.period_date).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' }),
+                    'Flujo de Caja Neto': (data.revenue * revenueMultiplier) - (data.costs * costMultiplier)
+                }));
+                const wsCashFlow = XLSX.utils.json_to_sheet(cashFlowChartData);
+                XLSX.utils.book_append_sheet(wb, wsCashFlow, 'Gráfica Flujo de Caja');
+
+                // 4. Create chart data sheet for Revenue vs Costs
+                const revenueVsCostsData = sortedFinancialData.map(data => ({
+                    'Periodo': new Date(data.period_date).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' }),
+                    'Ingresos': data.revenue * revenueMultiplier,
+                    'Costos': data.costs * costMultiplier
+                }));
+                const wsRevenueCosts = XLSX.utils.json_to_sheet(revenueVsCostsData);
+                XLSX.utils.book_append_sheet(wb, wsRevenueCosts, 'Gráfica Ingresos vs Costos');
+
+                // 5. Create sensitivity analysis sheet
+                const sensitivityData = [
+                    {
+                        'Análisis': 'Multiplicador de Ingresos',
+                        'Valor': revenueMultiplier,
+                        'Descripción': 'Factor aplicado a los ingresos'
+                    },
+                    {
+                        'Análisis': 'Multiplicador de Costos',
+                        'Valor': costMultiplier,
+                        'Descripción': 'Factor aplicado a los costos'
+                    },
+                    {
+                        'Análisis': 'Ingresos Ajustados (Último Periodo)',
+                        'Valor': sortedFinancialData[0].revenue * revenueMultiplier,
+                        'Descripción': 'Ingresos con multiplicador aplicado'
+                    },
+                    {
+                        'Análisis': 'Costos Ajustados (Último Periodo)',
+                        'Valor': sortedFinancialData[0].costs * costMultiplier,
+                        'Descripción': 'Costos con multiplicador aplicado'
+                    },
+                    {
+                        'Análisis': 'Flujo de Caja Neto Ajustado',
+                        'Valor': (sortedFinancialData[0].revenue * revenueMultiplier) - (sortedFinancialData[0].costs * costMultiplier),
+                        'Descripción': 'Flujo neto con análisis de sensibilidad'
+                    }
+                ];
+                const wsSensitivity = XLSX.utils.json_to_sheet(sensitivityData);
+                XLSX.utils.book_append_sheet(wb, wsSensitivity, 'Análisis de Sensibilidad');
+            }
+
+            // Generate filename with current date
+            const today = new Date();
+            const filename = `Reporte_Financiero_${today.getFullYear()}_${String(today.getMonth() + 1).padStart(2, '0')}_${String(today.getDate()).padStart(2, '0')}.xlsx`;
+
+            // Write file
+            XLSX.writeFile(wb, filename);
+
+        } catch (error) {
+            console.error('Error al exportar a Excel:', error);
+            alert('Error al generar el archivo Excel');
+        }
     };
 
     return (
@@ -128,12 +252,25 @@ const Finanzas: React.FC = () => {
 
             {/* Charts Grid */}
             <div className="finanzas-charts-grid">
-                <CashFlowChart />
-                <RevenueVsCostsChart />
+                <CashFlowChart
+                    financialData={sortedFinancialData}
+                    revenueMultiplier={revenueMultiplier}
+                    costMultiplier={costMultiplier}
+                />
+                <RevenueVsCostsChart
+                    financialData={sortedFinancialData}
+                    revenueMultiplier={revenueMultiplier}
+                    costMultiplier={costMultiplier}
+                />
             </div>
 
             {/* Sensitivity Analysis */}
-            <SensitivityAnalysis />
+            <SensitivityAnalysis
+                revenueMultiplier={revenueMultiplier}
+                setRevenueMultiplier={setRevenueMultiplier}
+                costMultiplier={costMultiplier}
+                setCostMultiplier={setCostMultiplier}
+            />
 
             {/* Cash Flow Table */}
             <CashFlowTable />
@@ -142,3 +279,4 @@ const Finanzas: React.FC = () => {
 };
 
 export default Finanzas;
+

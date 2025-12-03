@@ -507,3 +507,21 @@
     border-color: var(--main-secondary);
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
+
+/* =============================================================================
+   VALIDATION WARNING
+   ============================================================================= */
+
+.wizard-validation-warning {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 1.5rem;
+}
+
+.wizard-validation-warning p {
+    color: #92400e;
+    font-weight: 500;
+    margin: 0;
+}

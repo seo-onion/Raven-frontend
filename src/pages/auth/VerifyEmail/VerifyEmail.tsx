@@ -68,7 +68,7 @@ const VerifyEmail = () => {
                 }
 
                 // Otherwise, redirect to dashboard
-                navigate(routes.dashboard)
+                navigate(routes.dashboardMiProgreso)
             }
         } catch (error) {
             toast.error(t('verification_failed'))

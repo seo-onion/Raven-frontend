@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useTranslation } from 'react-i18next';
 import './CashFlowChart.css';
+import type { FinancialData } from '../../../types/startup'; // Corrected import path with 'type'
 
 ChartJS.register(
     CategoryScale,
@@ -23,15 +24,29 @@ ChartJS.register(
     Legend
 );
 
-const CashFlowChart: React.FC = () => {
+interface CashFlowChartProps {
+    financialData: FinancialData[];
+    revenueMultiplier: number;
+    costMultiplier: number;
+}
+
+const CashFlowChart: React.FC<CashFlowChartProps> = ({ financialData, revenueMultiplier, costMultiplier }) => {
     const { t } = useTranslation('common');
 
+    // Dynamically generate chart data based on financialData and multipliers
+    const labels = financialData.map(data => new Date(data.period_date).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' }));
+    const netCashFlowData = financialData.map(data => {
+        const adjustedRevenue = data.revenue * revenueMultiplier;
+        const adjustedCosts = data.costs * costMultiplier;
+        return adjustedRevenue - adjustedCosts;
+    });
+
     const chartData = {
-        labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+        labels: labels,
         datasets: [
             {
                 label: t('net_cash_flow'),
-                data: [30000, 40000, 50000, 60000],
+                data: netCashFlowData,
                 borderColor: 'var(--main-secondary)',
                 backgroundColor: 'rgba(147, 51, 234, 0.1)',
                 tension: 0.4,
@@ -86,7 +101,11 @@ const CashFlowChart: React.FC = () => {
         <div className="cashflowchart-container">
             <h3 className="cashflowchart-title">{t('cash_flow_projection')}</h3>
             <div className="cashflowchart-chart-wrapper">
-                <Line data={chartData} options={chartOptions} />
+                {financialData.length > 0 ? (
+                    <Line data={chartData} options={chartOptions} />
+                ) : (
+                    <p>{t('no_financial_data_available')}</p>
+                )}
             </div>
         </div>
     );

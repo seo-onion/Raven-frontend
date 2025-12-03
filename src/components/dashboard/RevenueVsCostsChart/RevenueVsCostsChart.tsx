@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useTranslation } from 'react-i18next';
 import './RevenueVsCostsChart.css';
+import type { FinancialData } from '@/types/startup'; // Import FinancialData type
 
 ChartJS.register(
     CategoryScale,
@@ -23,22 +24,33 @@ ChartJS.register(
     Legend
 );
 
-const RevenueVsCostsChart: React.FC = () => {
+interface RevenueVsCostsChartProps {
+    financialData: FinancialData[];
+    revenueMultiplier: number;
+    costMultiplier: number;
+}
+
+const RevenueVsCostsChart: React.FC<RevenueVsCostsChartProps> = ({ financialData, revenueMultiplier, costMultiplier }) => {
     const { t } = useTranslation('common');
 
+    // Dynamically generate chart data based on financialData and multipliers
+    const labels = financialData.map(data => new Date(data.period_date).toLocaleDateString('es-ES', { month: 'short', year: '2-digit' }));
+    const revenues = financialData.map(data => data.revenue * revenueMultiplier);
+    const costs = financialData.map(data => data.costs * costMultiplier);
+
     const chartData = {
-        labels: ['Q1 2024', 'Q2 2024', 'Q3 2024', 'Q4 2024'],
+        labels: labels,
         datasets: [
             {
                 label: t('revenue'),
-                data: [125000, 145000, 165000, 185000],
+                data: revenues,
                 borderColor: '#059669',
                 backgroundColor: 'rgba(5, 150, 105, 0.1)',
                 tension: 0.4,
             },
             {
                 label: t('costs'),
-                data: [95000, 105000, 115000, 125000],
+                data: costs,
                 borderColor: '#dc2626',
                 backgroundColor: 'rgba(220, 38, 38, 0.1)',
                 tension: 0.4,
@@ -55,7 +67,7 @@ const RevenueVsCostsChart: React.FC = () => {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context: any) {
+                    label: function (context: any) {
                         let label = context.dataset.label || '';
                         if (label) {
                             label += ': ';
@@ -76,7 +88,7 @@ const RevenueVsCostsChart: React.FC = () => {
             y: {
                 beginAtZero: true,
                 ticks: {
-                    callback: function(value: any) {
+                    callback: function (value: any) {
                         return new Intl.NumberFormat('es-PE', {
                             style: 'currency',
                             currency: 'USD',
@@ -92,7 +104,11 @@ const RevenueVsCostsChart: React.FC = () => {
         <div className="revenuecostschart-container">
             <h3 className="revenuecostschart-title">{t('revenue_vs_costs')}</h3>
             <div className="revenuecostschart-chart-wrapper">
-                <Line data={chartData} options={chartOptions} />
+                {financialData.length > 0 ? (
+                    <Line data={chartData} options={chartOptions} />
+                ) : (
+                    <p>{t('no_financial_data_available')}</p>
+                )}
             </div>
         </div>
     );

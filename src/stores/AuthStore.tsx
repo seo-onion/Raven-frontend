@@ -226,6 +226,7 @@ interface AuthStore {
     // State
     isLogged: boolean;
     isLoading: boolean;
+    user: UserDetails | undefined; // Add user to state
     
     // Authentication methods
     logIn: (credentials: LoginRequest, handleGo2Fa: () => void) => Promise<AuthResult>;
@@ -237,6 +238,7 @@ interface AuthStore {
     registerAccount: (data: SignupRequest) => Promise<boolean>;
     resendConfirmationCode: (token: string) => Promise<boolean>; // Called by logIn
     verifyConfirmationCode: (code: string) => Promise<boolean>;
+    setOnboardingComplete: (isComplete: boolean) => void;
     
     // Password management
     sendResetPasswordRequest: (data: ResetPasswordRequest) => Promise<boolean>;
@@ -265,10 +267,23 @@ const useAuthStore = create<AuthStore>()((set, get) => {
     // Get UI-related functions from other stores
     const setSidebarPosition = usePageLayoutStore.getState().setSidebarPosition;
 
+    // Helper to parse user from localStorage
+    const getInitialUser = (): UserDetails | undefined => {
+        const user_details = localStorage.getItem(USER_KEY);
+        if (!user_details) return undefined;
+        const parsed = JSON.parse(user_details);
+        // Migration: Update old 'incubadora' to 'incubator' - this should probably happen once on login or load
+        if (parsed.user_type === 'incubadora') {
+            parsed.user_type = 'incubator';
+        }
+        return parsed;
+    };
+
     return {
         // State initialization
         isLogged: isTokenValid(localStorage.getItem(REFRESH_TOKEN_KEY) || ""),
         isLoading: false,
+        user: getInitialUser(), // Initialize user state from localStorage
         
         /**
          * Log in a user with credentials
@@ -286,7 +301,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh);
                 localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
 
-                set({ isLogged: true, isLoading: false });
+                set({ isLogged: true, isLoading: false, user: res_payload.user }); // Update user state
                 return "success";
                 
             } catch (error: any) {
@@ -340,8 +355,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             localStorage.clear();
 
             setSidebarPosition(false);
-            set({ isLogged: false, isLoading: false });
-
+            set({ isLogged: false, isLoading: false, user: undefined }); // Clear user state
             // Redirect to home page
             window.location.href = '/';
         },
@@ -391,20 +405,21 @@ const useAuthStore = create<AuthStore>()((set, get) => {
          * Get user details from localStorage (synchronous)
          */
         getUserDetails: (): UserDetails | undefined => {
-            const user_details = localStorage.getItem(USER_KEY);
-            if (!user_details) return undefined;
-
-            const parsed = JSON.parse(user_details);
-
-            // Migration: Update old 'incubadora' to 'incubator'
-            if (parsed.user_type === 'incubadora') {
-                parsed.user_type = 'incubator';
-                localStorage.setItem(USER_KEY, JSON.stringify(parsed));
-            }
-
-            return parsed;
+            return get().user;
         },
         
+        /**
+         * Update the onboarding_complete status in localStorage and the store
+         */
+        setOnboardingComplete: (isComplete: boolean) => {
+            const userDetails = get().user; // Get user from state
+            if (userDetails) {
+                const updatedUserDetails = { ...userDetails, onboarding_complete: isComplete };
+                localStorage.setItem(USER_KEY, JSON.stringify(updatedUserDetails));
+                set({ user: updatedUserDetails }); // Update user state in Zustand
+            }
+        },
+
         /**
          * Register a new user account
          */
@@ -525,7 +540,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                     localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh_token);
                     localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
 
-                    set({ isLogged: true });
+                    set({ isLogged: true, user: res_payload.user }); // Update user state
                     toast.success(i18n.t('email_confirmed_and_logged_in'));
                     return true;
                 }

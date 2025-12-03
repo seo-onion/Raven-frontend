@@ -35,7 +35,7 @@ interface InputProps {
     /** Maximum value for number inputs */
     max?: string
     /** HTML input type attribute */
-    type?: 'text' | 'email' | 'url' | 'password' | 'tel' | 'search' | 'file' | 'number'
+    type?: 'text' | 'email' | 'url' | 'password' | 'tel' | 'search' | 'file' | 'number' | 'date' | 'range'
     /** Enable multiline textarea functionality */
     multiline?: boolean
     /** Number of visible text lines for textarea */
