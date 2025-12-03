@@ -4,9 +4,8 @@ const routes = {
 
     // Auth
     login: "/login",
-    startupLogin: "/startup-login",
-    incubatorLogin: "/incubator-login",
     register: "/register",
+    preRegister: "/pre-register",
     verifyEmail: "/verify-email",
     forgotPassword: "/forgot-password",
     changePassword: "/change-password",

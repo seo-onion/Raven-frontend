@@ -389,6 +389,9 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id
 
 ## Best Practices
 
+### Fetch api
+- **MODEL.md** Use `MODEL.md` to fetch data from the api
+
 ### Performance
 - **Lazy load** pages and heavy components
 - **Memoize** expensive calculations

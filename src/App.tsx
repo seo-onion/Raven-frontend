@@ -4,13 +4,11 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
 import routes from "./routes/routes"
 import Home from "./pages/Home/Home"
-import HomeGateway from "./pages/HomeGateway/HomeGateway"
 import ModalBase from "./modals/ModalBase/ModalBase"
 
 import NotFound from "./pages/NotFound/NotFound";
+import Login from "./pages/auth/Login/Login"
 import UserTypeSelection from "./pages/auth/UserTypeSelection/UserTypeSelection"
-import StartupLogin from "./pages/auth/StartupLogin/StartupLogin"
-import IncubatorLogin from "./pages/auth/IncubatorLogin/IncubatorLogin"
 import Register from "./pages/auth/Register/Register"
 import VerifyEmail from "./pages/auth/VerifyEmail/VerifyEmail"
 import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword"
@@ -29,6 +27,7 @@ import IncubatorOverview from "./pages/incubator/Overview/Overview"
 import useAuthStore from "./stores/AuthStore"
 
 import './App.css'
+import Main from "./pages/Main/Main"
 
 function App() {
     const user = useAuthStore(state => state.user); // Subscribe to the user state
@@ -95,11 +94,10 @@ function App() {
             />
             <Routes>
                 {/* Auth endpoints - Public routes */}
-                <Route path={routes.home} element={<Home />} />
-                <Route path={routes.main} element={<HomeGateway />} />
-                <Route path={routes.login} element={<UserTypeSelection />} />
-                <Route path={routes.startupLogin} element={<StartupLogin />} />
-                <Route path={routes.incubatorLogin} element={<IncubatorLogin />} />
+                <Route path={routes.main} element={<Home />} />
+                <Route path={routes.home} element={<Main />} />
+                <Route path={routes.login} element={<Login />} />
+                <Route path={routes.preRegister} element={<UserTypeSelection />} />
                 <Route path={routes.register} element={<Register />} />
                 <Route path={routes.verifyEmail} element={<VerifyEmail />} />
                 <Route path={routes.forgotPassword} element={<ForgotPassword />} />

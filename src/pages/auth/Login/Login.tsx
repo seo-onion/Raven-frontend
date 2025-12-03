@@ -153,9 +153,8 @@ const Login = () => {
                     className="text-btn login-register-footer"
                     onClick={() => navigate(routes.register)}
                 >
-                    <span>{t('login_new_user')}</span>
                     <span className="login-register-color-text">
-                        {t('signup')}
+                        Registrarse como ...
                     </span>
                 </button>
             </Card>

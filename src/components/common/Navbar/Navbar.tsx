@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { 
+import {
     RiHome3Line,
     RiMenuLine,
     RiCloseLine,
@@ -23,12 +23,12 @@ const Navbar = () => {
     const location = useLocation()
 
     const { isLogged, getUserDetails } = useAuthStore()
-    
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [userDetails, setUserDetails] = useState<UserDetails | undefined>(undefined)
     const [profileLoading, setProfileLoading] = useState(false)
     const [scrolled, setScrolled] = useState(false)
-    
+
 
     useEffect(() => {
         if (isLogged) {
@@ -41,7 +41,7 @@ const Navbar = () => {
             }, 500)
         }
     }, [isLogged, getUserDetails])
-    
+
     // Handle scroll event to add glass effect when scrolled
     useEffect(() => {
         const handleScroll = () => {
@@ -51,7 +51,7 @@ const Navbar = () => {
                 setScrolled(false)
             }
         }
-        
+
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
@@ -68,7 +68,7 @@ const Navbar = () => {
 
     return (
         <nav className={`navbar-main-cont ${scrolled ? 'navbar-scrolled' : ''}`}>
-            
+
             {/* Main logo */}
             <Link to={routes.home} className="navbar-logo">
                 <img src={mainLogo.src} alt={mainLogo.alt} className="navbar-logo-img" />
@@ -83,7 +83,7 @@ const Navbar = () => {
                     <RiMenuLine size={24} className="fade-in" />
                 )}
             </button>
-            
+
             {/* DESKTOP: menu links */}
             <div className={`navbar-nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
                 {navItems.map((item) => (
@@ -98,9 +98,9 @@ const Navbar = () => {
                         {isActive(item.path) && <span className="navbar-active-indicator"></span>}
                     </Link>
                 ))}
-                
+
                 {isLogged && mobileMenuOpen ? (
-                    <Link 
+                    <Link
                         to="/profile"
                         className={`navbar-nav-link ${isActive('/profile') ? 'active' : ''} show-when-small`}
                         onClick={() => setMobileMenuOpen(false)}
@@ -109,7 +109,7 @@ const Navbar = () => {
                         <span>{t('profile')}</span>
                     </Link>
                 ) : (
-                    <Button 
+                    <Button
                         variant="primary"
                         size="sm"
                         className="show-when-small"
@@ -118,9 +118,9 @@ const Navbar = () => {
                         {t('nav_login')}
                     </Button>
                 )}
-                
+
             </div>
-            
+
             {/* User actions */}
             <div className="navbar-actions">
                 {profileLoading ? (
@@ -138,7 +138,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <div className="navbar-auth-actions fade-in">
-                        <Button 
+                        <Button
                             variant="primary"
                             size="sm"
                             onClick={() => navigate(routes.login)}

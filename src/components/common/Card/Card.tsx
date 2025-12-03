@@ -9,6 +9,8 @@ type CardProps = {
     children: React.ReactNode;
     /** Additional CSS classes for custom styling (optional) */
     className?: string;
+    /** Inline style object for custom styling (optional) */
+    style?: React.CSSProperties;
     /** Click handler for the card (optional) */
     onClick?: () => void;
     /** Whether the card should show hover effects (optional) */
@@ -17,9 +19,10 @@ type CardProps = {
     disabled?: boolean;
 }
 
-const Card = ({ 
-    children, 
-    className = "", 
+const Card = ({
+    children,
+    className = "",
+    style,
     onClick,
     hoverable = false,
     disabled = false
@@ -32,13 +35,14 @@ const Card = ({
     ].filter(Boolean).join(' ');
 
     return (
-        <div 
+        <div
             className={cardClasses}
+            style={style}
             onClick={!disabled && onClick ? onClick : undefined}
             role={onClick ? "button" : undefined}
             tabIndex={onClick && !disabled ? 0 : undefined}
             onKeyPress={
-                onClick && !disabled 
+                onClick && !disabled
                     ? (e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             onClick();

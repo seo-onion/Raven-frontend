@@ -78,7 +78,7 @@ const ForgotPassword = () => {
             <div className="login-register-header">
                 <button
                     className="login-register-back-button"
-                    onClick={() => navigate('/main')}
+                    onClick={() => navigate(routes.login)}
                     aria-label="Back to login"
                 >
                     <IoChevronBack /> {t('login_back_to_login_button')}

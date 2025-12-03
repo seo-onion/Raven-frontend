@@ -18,11 +18,11 @@ const UserTypeSelection = () => {
     // }, [isLogged, navigate])
 
     const handleStartupSelect = () => {
-        navigate(`${routes.startupLogin}`)
+        navigate(`${routes.register}?type=startup`)
     }
 
     const handleIncubatorSelect = () => {
-        navigate(`${routes.incubatorLogin}`)
+        navigate(`${routes.register}?type=incubator`)
     }
 
     return (
@@ -58,20 +58,26 @@ const UserTypeSelection = () => {
             </div>
 
             <p className="usertypeselection-register-link">
-                <span>{t('no_account')} </span>
-                <a
+                <span>{t('already_have_account')} </span>
+                <button
                     style={{
                         color: "white",
                         transition: "color 0.3s ease",
                         textDecoration: "none",
-                        fontWeight: "bold"
+                        fontWeight: "bold",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        padding: 0,
+                        fontFamily: "inherit",
+                        fontSize: "inherit"
                     }}
-                    href="/register"
-                    onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = "#d1d5db"}
-                    onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = "white"}
+                    onClick={() => navigate(routes.login)}
+                    onMouseEnter={(e) => (e.target as HTMLButtonElement).style.color = "#d1d5db"}
+                    onMouseLeave={(e) => (e.target as HTMLButtonElement).style.color = "white"}
                 >
-                    Registrate aquí
-                </a>
+                    Inicia sesión aquí
+                </button>
             </p>
         </div>
     )
