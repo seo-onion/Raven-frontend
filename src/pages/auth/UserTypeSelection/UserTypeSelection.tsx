@@ -76,7 +76,7 @@ const UserTypeSelection = () => {
                     onMouseEnter={(e) => (e.target as HTMLButtonElement).style.color = "#d1d5db"}
                     onMouseLeave={(e) => (e.target as HTMLButtonElement).style.color = "white"}
                 >
-                    Inicia sesión aquí
+                    {t('login_here')}
                 </button>
             </p>
         </div>

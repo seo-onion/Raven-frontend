@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { IoChevronBack } from 'react-icons/io5'
-
+import { MdFactory } from "react-icons/md";
 import Input from '@/components/forms/Input/Input'
 import PasswordEyeInput from '@/components/forms/PasswordEyeInput/PasswordEyeInput'
 import Button from '@/components/common/Button/Button'
@@ -14,11 +14,10 @@ import routes from '@/routes/routes'
 
 import './Login.css'
 import '@/styles/Auth.css'
-import '@/styles/General.css'
 
-const Login = () => {
+const IncubatorLogin = () => {
     const navigate = useNavigate()
-    const { logIn, isLoading, isLogged } = useAuthStore()
+    const { logIn, isLoading } = useAuthStore()
     const { t } = useTranslation('common')
 
     const [formData, setFormData] = useState<LoginRequest>({
@@ -26,11 +25,19 @@ const Login = () => {
         password: '',
     })
 
-    useEffect(() => {
-        if (isLogged) {
-            navigate(routes.home)
-        }
-    }, [isLogged])
+    // Comentado para desarrollo - permite acceder al login aunque estés logueado
+    // useEffect(() => {
+    //     if (isLogged) {
+    //         const userDetails = getUserDetails()
+    //         if (userDetails?.user_type === 'startup') {
+    //             navigate(routes.dashboard)
+    //         } else if (userDetails?.user_type === 'incubadora') {
+    //             navigate(routes.incubadora)
+    //         } else {
+    //             navigate(routes.home)
+    //         }
+    //     }
+    // }, [isLogged, navigate])
 
     const handleFormDataChange = (key: string, value: string) => {
         setFormData((prevState) => ({
@@ -46,7 +53,6 @@ const Login = () => {
             return { isValid: false, message: t('missing_fields') }
         }
 
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(email)) {
             return { isValid: false, message: t('invalid_email') }
@@ -65,11 +71,11 @@ const Login = () => {
         }
 
         try {
-            const status: AuthResult = await logIn(formData, () => console.log('2FA required'));
+            const status: AuthResult = await logIn(formData, () => console.log('2FA required'))
 
             if (status === 'success') {
                 toast.success(t('success'))
-                navigate(routes.home)
+                navigate(routes.dashboardOverview)
             }
 
             if (status === 'confirm_email') {
@@ -84,82 +90,74 @@ const Login = () => {
         }
     }
 
-    // const handleLoginWithGoogle = async () => {
-    //     return
-    // }
-
     return (
-        <div className="login-register-main-cont animated-gradient-background">
-            <div className="login-register-header">
-                <button
-                    className="login-register-back-button"
-                    onClick={() => navigate(routes.main)}
-                    aria-label="Back to home"
-                >
-                    <IoChevronBack /> {t('backToHome')}
-                </button>
-            </div>
-            <Card className="login-register-card-cont">
-                <div className="section-title">
-                    {t('login_welcome')}
+        <div className="incubatorlogin-main-container">
+            <div className="incubatorlogin-logo-container">
+                <div className="incubatorlogin-logo">
+                    <MdFactory size={40} color='var(--main-primary)' />
                 </div>
+                <h1 className="text-white">{t('raven_crm_title')}</h1>
+                <p className="text-white incubatorlogin-subtitle">
+                    {t('login_as_incubator')}
+                </p>
+            </div>
 
-                <form
-                    className="login-register-form-cont"
-                    onSubmit={(e) => handleFormSubmit(e)}
-                >
-                    <Input
-                        name="email"
-                        value={formData.email}
-                        setValue={(value) => handleFormDataChange('email', value)}
-                        label={t('email_label')}
-                        placeholder={t('email_placeholder')}
-                    />
-                    <PasswordEyeInput
-                        name="password"
-                        value={formData.password}
-                        setValue={(value) => handleFormDataChange('password', value)}
-                        label={t('password_label')}
-                        placeholder={t('password_placeholder')}
-                    />
+            <div className="incubatorlogin-content-container">
+                <Card className="incubatorlogin-card">
+                    <h2 className="text-black incubatorlogin-title">{t('login')}</h2>
 
-                    <Button
-                        variant="primary"
-                        size="lg"
-                        type="submit"
-                        disabled={isLoading}
+                    <form
+                        className="incubatorlogin-form"
+                        onSubmit={handleFormSubmit}
                     >
-                        {isLoading ? <Spinner variant="secondary" /> : t('submit')}
-                    </Button>
+                        <Input
+                            name="email"
+                            value={formData.email}
+                            setValue={(value) => handleFormDataChange('email', value)}
+                            label={t('email_label')}
+                            placeholder={t('email_placeholder')}
+                        />
+                        <PasswordEyeInput
+                            name="password"
+                            value={formData.password}
+                            setValue={(value) => handleFormDataChange('password', value)}
+                            label={t('password_label')}
+                            placeholder={t('password_placeholder')}
+                        />
 
-                    {/* <Button
-                        variant="secondary"
-                        size="lg"
-                        type="button"
-                        onClick={handleLoginWithGoogle}
-                    >
-                        {t('login_with_google')}
-                    </Button> */}
-                </form>
+                        <button
+                            type="button"
+                            className="text-btn incubatorlogin-forgot-password"
+                            onClick={() => navigate(routes.forgotPassword)}
+                        >
+                            <span className="text-black">{t('login_forgot_password')}</span>
+                        </button>
 
-                <button
-                    className="text-btn login-register-footer"
-                    onClick={() => navigate(routes.forgotPassword)}
-                >
-                    <span>{t('login_forgot_password')}</span>
-                </button>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            type="submit"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <Spinner variant="secondary" /> : t('submit')}
+                        </Button>
 
-                <button
-                    className="text-btn login-register-footer"
-                    onClick={() => navigate(routes.register)}
-                >
-                    <span className="login-register-color-text">
-                        Registrarse como ...
-                    </span>
-                </button>
-            </Card>
+                        <button
+                            type="button"
+                            className="text-btn incubatorlogin-back-link"
+                            onClick={() => navigate(routes.preRegister)}
+                        >
+                            <IoChevronBack /> {t('back_to_type_selection')}
+                        </button>
+                    </form>
+                </Card>
+            </div>
+
+            <div className="incubatorlogin-demo-note">
+                {t('demo_note')} <button className='text-white' onClick={() => navigate(routes.preRegister)} style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: 'inherit' }}>{t('register_here')}</button>
+            </div>
         </div>
     )
 }
 
-export default Login
+export default IncubatorLogin
