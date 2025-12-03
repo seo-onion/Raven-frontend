@@ -13,6 +13,16 @@ const common = {
         share: "Compartir",
         loading: "Cargando...",
 
+        // Home Gateway
+        homegateway_title: "Raven CRM",
+        homegateway_subtitle: "Plataforma de Gestión de Incubación y Escalamiento Comercial",
+        homegateway_login: "Iniciar Sesión",
+        homegateway_register: "Registrarse",
+
+        // Home Actions
+        action_login: "Iniciar Sesión",
+        action_register: "Registrarse",
+
         // Auth
         login: "Iniciar Sesión",
         logout: "Cerrar Sesión",
@@ -48,6 +58,16 @@ const common = {
         industry: "Industria",
         select_industry: "Selecciona tu industria",
         industry_required: "La industria es requerida",
+        step1_basics_title: "Propuesta de Valor",
+        step1_basics_description: "Cuéntanos sobre el problema que resuelves y tu solución",
+        campaign_problem_label: "¿Qué problema resuelves?",
+        campaign_solution_label: "¿Cuál es tu solución?",
+        campaign_business_model_label: "Modelo de Negocio",
+        campaign_problem_placeholder: "Describe el problema que tu startup resuelve...",
+        campaign_solution_placeholder: "Explica cómo tu producto o servicio soluciona este problema...",
+        campaign_business_model_placeholder: "Describe cómo tu startup genera ingresos...",
+        loading_campaign_data: "Cargando información de tu startup...",
+        no_campaign_found: "No se encontró información de tu startup.",
         continue: "Continuar",
         onboarding_success: "¡Perfil completado exitosamente!",
         onboarding_error: "Error al completar el perfil",
@@ -235,13 +255,24 @@ const common = {
         onboarding_step3_description: "Define tu objetivo de financiamiento y añade inversores",
         other: "Otro",
         current_trl_level: "Nivel TRL Actual",
+        current_crl_level: "Nivel CRL Actual (Opcional)",
+        trl_level: "Nivel TRL",
+        crl_level: "Nivel CRL (Opcional)",
+        select_trl: "Selecciona TRL",
+        select_crl_optional: "Selecciona CRL (Opcional)",
+        no_crl: "Sin CRL",
+        crl_optional_hint: "El CRL (Commercial Readiness Level) es opcional y mide la madurez comercial",
         evidence_description: "Descripción de la Evidencia",
         evidence_description_placeholder: "Describe qué demuestra esta evidencia sobre tu nivel TRL",
         evidence_file_url: "URL del Archivo de Evidencia",
         evidence_file_url_hint: "Proporciona un enlace a tu documento de evidencia (PDF, imagen, etc.)",
+        add_evidence: "Agregar Evidencia",
+        evidence: "Evidencia",
         period_date: "Fecha del Periodo",
         cash_balance: "Balance de Efectivo",
-        monthly_burn_rate: "Tasa de Quema Mensual",
+        monthly_burn: "Quema Mensual",
+        notes: "Notas",
+        add_financial_period: "Agregar Periodo Financiero",
         target_funding_amount: "Monto Objetivo de Financiamiento",
         add_investors: "Añadir Inversores",
         investor: "Inversor",
@@ -258,21 +289,35 @@ const common = {
         stage_term_sheet: "Negociación de Term Sheet",
         stage_committed: "Comprometido",
         submitting: "Enviando...",
+        saving: "Guardando...",
+        save_draft: "Guardar Borrador",
+        submit_application: "Crear Startup",
         complete_onboarding: "Completar Onboarding",
         onboarding_wizard_success: "¡Onboarding completado exitosamente!",
         onboarding_wizard_error: "Error al completar el onboarding. Por favor revisa los datos.",
+
+        funding_goal: "Meta de Financiamiento",
+        pre_money_valuation: "Valoración Pre-Money",
+        current_cash_balance: "Balance de Caja Actual",
+        monthly_burn_rate: "Tasa de Quema Mensual",
+        usage_of_funds: "Uso de los Fondos",
+        usage_of_funds_placeholder: "Describe cómo se utilizarán los fondos...",
+        quarterly_projections: "Proyecciones Trimestrales",
+        concept: "Concepto",
+        cogs: "Costos (COGS)",
+        opex: "Gastos Operativos (OpEx)",
 
         // Social
         website: "Sitio Web",
         twitter: "Twitter",
         linkedin: "LinkedIn",
-        
+
         // Languages
         english: "Inglés",
         spanish: "Español",
         english_short: "EN",
         spanish_short: "ES",
-        
+
         // Toast error keys
         invalid: "Invalido",
         wrong_data: "Datos incorrectos",
@@ -320,11 +365,11 @@ const common = {
         medium: "Mediano",
         large: "Grande",
         extra_large: "Extra Grande",
-        
+
         /**
          * PAGES
          */
-        
+
         // Home Page
         home_hero_title: "Componentes disponibles",
         home_hero_subtitle: "Explora todos los componentes disponibles en esta plantilla de react",
@@ -338,7 +383,7 @@ const common = {
         home_toggle_loading: "Activar Carga",
         home_table_components: "Tablas",
         home_paginator_components: "Paginadores",
-        
+
         // Login Page
         login_welcome: "Bienvenido",
         login_back_to_profile_button: "Volver al perfil",
@@ -362,7 +407,7 @@ const common = {
         incubator_description: "Supervisa y acompaña tu portafolio de startups con análisis consolidados.",
         login_as_startup: "Ingresar como Startup",
         login_as_incubator: "Ingresar como Incubadora",
-        no_account: "Ya tienes cuenta?",
+        no_account: "¿Aún no tienes una cuenta?",
         register_here: "Regístrate aquí",
         back_to_type_selection: "Volver a selección de tipo",
         demo_note: "¿Ya tienes una cuenta?",
@@ -374,13 +419,13 @@ const common = {
         login_verify_email_invalid: "El link de verificación es inválido o ha expirado",
         login_verify_email_sent: "Correo de verificación enviado",
         login_verify_resend_email: "Reenviar correo",
-        
+
         // Profile Page
         profile_change_password: "Cambiar Contraseña",
         profile_change_password_description: "Actualizar la contrseña de su cuenta",
         profile_two_factor_authentication: "Autenticación en dos pasos",
         profile_two_factor_authentication_description: "Añade una capa adicional de seguridad",
-        
+
         // NotFound Page
         notFound_title: "Página No Encontrada",
         notFound_message: "La página que estás buscando no existe o ha sido eliminada.",
@@ -408,7 +453,7 @@ const common = {
         sending: "Enviando...",
         resend_verification_code: "Reenviar código de verificación",
 
-        
+
 
         /**
          * COMPONENTS
@@ -430,12 +475,12 @@ const common = {
 
         // Auth Required
         auth_required: "Autenticación Requerida",
-        auth_required_message: "Necesitas iniciar sesión para continuar.",        
+        auth_required_message: "Necesitas iniciar sesión para continuar.",
 
         // Language Toggle
         language_toggle: "Cambiar idioma",
         language_toggle_aria: "Botón para cambiar entre inglés y español",
-        
+
         // File Upload
         clickToUpload: "Haz clic para subir archivo",
         dragAndDrop: "o arrastra y suelta aquí",
@@ -457,6 +502,16 @@ const common = {
         view: "View",
         share: "Share",
         loading: "Loading...",
+
+        // Home Gateway
+        homegateway_title: "Raven CRM",
+        homegateway_subtitle: "Incubation and Commercial Scaling Management Platform",
+        homegateway_login: "Log In",
+        homegateway_register: "Sign Up",
+
+        // Home Actions
+        action_login: "Log In",
+        action_register: "Sign Up",
 
         // Auth
         login: "Log In",
@@ -493,6 +548,16 @@ const common = {
         industry: "Industry",
         select_industry: "Select your industry",
         industry_required: "Industry is required",
+        step1_basics_title: "Value Proposition",
+        step1_basics_description: "Tell us about the problem you solve and your solution",
+        campaign_problem_label: "What problem do you solve?",
+        campaign_solution_label: "What is your solution?",
+        campaign_business_model_label: "Business Model",
+        campaign_problem_placeholder: "Describe the problem your startup solves...",
+        campaign_solution_placeholder: "Explain how your product or service solves this problem...",
+        campaign_business_model_placeholder: "Describe how your startup generates revenue...",
+        loading_campaign_data: "Loading your startup information...",
+        no_campaign_found: "No startup information found.",
         continue: "Continue",
         onboarding_success: "Profile completed successfully!",
         onboarding_error: "Error completing profile",
@@ -680,12 +745,24 @@ const common = {
         onboarding_step3_description: "Define your funding target and add investors",
         other: "Other",
         current_trl_level: "Current TRL Level",
+        current_crl_level: "Current CRL Level (Optional)",
+        trl_level: "TRL Level",
+        crl_level: "CRL Level (Optional)",
+        select_trl: "Select TRL",
+        select_crl_optional: "Select CRL (Optional)",
+        no_crl: "No CRL",
+        crl_optional_hint: "CRL (Commercial Readiness Level) is optional and measures commercial maturity",
         evidence_description: "Evidence Description",
         evidence_description_placeholder: "Describe what this evidence demonstrates about your TRL level",
         evidence_file_url: "Evidence File URL",
         evidence_file_url_hint: "Provide a link to your evidence document (PDF, image, etc.)",
+        add_evidence: "Add Evidence",
+        evidence: "Evidence",
         period_date: "Period Date",
         cash_balance: "Cash Balance",
+        monthly_burn: "Monthly Burn",
+        notes: "Notes",
+        add_financial_period: "Add Financial Period",
         monthly_burn_rate: "Monthly Burn Rate",
         target_funding_amount: "Target Funding Amount",
         add_investors: "Add Investors",
@@ -703,21 +780,34 @@ const common = {
         stage_term_sheet: "Term Sheet Negotiation",
         stage_committed: "Committed",
         submitting: "Submitting...",
+        saving: "Saving...",
+        save_draft: "Save Draft",
+        submit_application: "Submit Application",
         complete_onboarding: "Complete Onboarding",
         onboarding_wizard_success: "Onboarding completed successfully!",
         onboarding_wizard_error: "Error completing onboarding. Please check your data.",
+
+        funding_goal: "Funding Goal",
+        pre_money_valuation: "Pre-Money Valuation",
+        current_cash_balance: "Current Cash Balance",
+        usage_of_funds: "Usage of Funds",
+        usage_of_funds_placeholder: "Describe how the funds will be used...",
+        quarterly_projections: "Quarterly Projections",
+        concept: "Concept",
+        cogs: "Costs (COGS)",
+        opex: "Operating Expenses (OpEx)",
 
         // Social
         website: "Website",
         twitter: "Twitter",
         linkedin: "LinkedIn",
-        
+
         // Languages
         english: "English",
         spanish: "Spanish",
         english_short: "EN",
         spanish_short: "ES",
-        
+
         // Toast error keys
         invalid: "Invalid",
         wrong_data: "Wrong data",
@@ -765,11 +855,11 @@ const common = {
         medium: "Medium",
         large: "Large",
         extra_large: "Extra Large",
-        
+
         /**
          * PAGES
          */
-        
+
         // Home Page
         home_hero_title: "Component Showcase",
         home_hero_subtitle: "Explore all available components in this React template",
@@ -783,7 +873,7 @@ const common = {
         home_toggle_loading: "Toggle Loading",
         home_table_components: "Table Components",
         home_paginator_components: "Paginator Components",
-        
+
         // Login Page
         login_welcome: "Welcome to KuskaPay",
         login_back_to_profile_button: "Back to profile",
@@ -819,13 +909,13 @@ const common = {
         login_verify_email_invalid: "The verification link is invalid or has expired",
         login_verify_email_sent: "Verification email sent",
         login_verify_resend_email: "Resend email",
-        
+
         // Profile Page
         profile_change_password: "Change Password",
         profile_change_password_description: "Update your account password",
         profile_two_factor_authentication: "Two-Factor Authentication",
         profile_two_factor_authentication_description: "Add an additional layer of security",
-        
+
         // NotFound Page
         notFound_title: "Page Not Found",
         notFound_message: "The page you are looking for does not exist or has been removed.",
@@ -875,7 +965,7 @@ const common = {
 
         // Auth Required
         auth_required: "Authentication Required",
-        auth_required_message: "You need to log in to continue.",        
+        auth_required_message: "You need to log in to continue.",
 
         // Language Toggle
         language_toggle: "Change language",
@@ -887,7 +977,7 @@ const common = {
         supportedFormats: "Supported formats",
         maxSize: "Maximum size",
         removeFile: "Remove file",
-        
+
     }
 }
 

@@ -39,17 +39,17 @@ const ForgotPassword = () => {
 
     const validateForm = (formData: ResetPasswordRequest) => {
         const { email } = formData;
-        
+
         if (!email) {
             return { isValid: false, message: t('missing_fields') }
         }
-        
+
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(email)) {
             return { isValid: false, message: t('invalid_email') }
         }
-        
+
         return { isValid: true, message: '' }
     }
 
@@ -78,7 +78,7 @@ const ForgotPassword = () => {
             <div className="login-register-header">
                 <button
                     className="login-register-back-button"
-                    onClick={() => navigate('/login')}
+                    onClick={() => navigate('/main')}
                     aria-label="Back to login"
                 >
                     <IoChevronBack /> {t('login_back_to_login_button')}

@@ -4,11 +4,10 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
 import routes from "./routes/routes"
 import Home from "./pages/Home/Home"
+import HomeGateway from "./pages/HomeGateway/HomeGateway"
 import ModalBase from "./modals/ModalBase/ModalBase"
 
-import NotFound from "./pages/NotFound/NotFound"
-
-import Welcome from "./pages/Welcome/Welcome"
+import NotFound from "./pages/NotFound/NotFound";
 import UserTypeSelection from "./pages/auth/UserTypeSelection/UserTypeSelection"
 import StartupLogin from "./pages/auth/StartupLogin/StartupLogin"
 import IncubatorLogin from "./pages/auth/IncubatorLogin/IncubatorLogin"
@@ -100,7 +99,7 @@ function App() {
             <Routes>
                 {/* Auth endpoints - Public routes */}
                 <Route path={routes.home} element={<Home />} />
-                <Route path={routes.main} element={<Welcome />} />
+                <Route path={routes.main} element={<HomeGateway />} />
                 <Route path={routes.login} element={<UserTypeSelection />} />
                 <Route path={routes.startupLogin} element={<StartupLogin />} />
                 <Route path={routes.incubatorLogin} element={<IncubatorLogin />} />
@@ -117,7 +116,7 @@ function App() {
 
                     <Route index element={<Navigate to={routes.dashboardOverview} replace />} />
 
-                    
+
                     <Route path={routes.dashboardOverview} element={<IncubatorOverview />} />
                     <Route path={routes.dashboardMiProgreso} element={<MiProgreso />} />
                     <Route path={routes.dashboardPipeline} element={<div className="text-black">Pipeline - En desarrollo</div>} />

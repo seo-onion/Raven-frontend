@@ -26,7 +26,8 @@ export type EvidenceStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
 export interface Evidence {
     id: number;
-    trl_level: number; // 1-9
+    type: 'TRL' | 'CRL'; // New field to indicate evidence type
+    level: number; // Combined TRL/CRL level based on 'type'
     description: string;
     file?: string;
     file_url?: string;

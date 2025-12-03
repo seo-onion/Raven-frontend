@@ -73,3 +73,10 @@
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #e5e7eb;
 }
+
+.funding-round-with-button {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}

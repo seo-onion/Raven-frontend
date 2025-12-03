@@ -2,10 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import Button from '@/components/common/Button/Button'
 import routes from '@/routes/routes'
-import { GrDeploy } from 'react-icons/gr'
-import './Home.css'
+import './HomeGateway.css'
 
-const Home = () => {
+const HomeGateway = () => {
     const { t } = useTranslation('common')
     const navigate = useNavigate()
 
@@ -18,37 +17,31 @@ const Home = () => {
     }
 
     return (
-        <div className="home__container">
-            <div className="home__logo-container">
-                <div className="home__logo">
-                    <GrDeploy size={40} color='var(--main-primary)' />
-                </div>
-                <h1 className="text-white home__title">
-                    {t('raven_crm_title')}
-                </h1>
-                <p className="text-white home__subtitle">
-                    {t('raven_crm_subtitle')}
-                </p>
-            </div>
-
-            <div className="home__card">
-                <div className="home__content">
-                    <div className="home__actions">
+        <div className="homegateway_container">
+            <div className="homegateway_card">
+                <div className="homegateway_content">
+                    <h1 className="homegateway_title text-black">
+                        {t('homegateway_title')}
+                    </h1>
+                    <p className="homegateway_subtitle text-black">
+                        {t('homegateway_subtitle')}
+                    </p>
+                    <div className="homegateway_actions">
                         <Button
                             variant="primary"
                             size="lg"
                             onClick={handleLogin}
-                            className="home__button"
+                            className="homegateway_button"
                         >
-                            {t('action_login')}
+                            {t('homegateway_login')}
                         </Button>
                         <Button
                             variant="secondary"
                             size="lg"
                             onClick={handleRegister}
-                            className="home__button"
+                            className="homegateway_button"
                         >
-                            {t('action_register')}
+                            {t('homegateway_register')}
                         </Button>
                     </div>
                 </div>
@@ -57,4 +50,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default HomeGateway

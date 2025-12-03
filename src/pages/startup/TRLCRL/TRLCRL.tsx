@@ -13,7 +13,7 @@ const TRLCRL: React.FC = () => {
 
     // Get current TRL level from evidences
     const currentTRL = evidences && evidences.length > 0
-        ? Math.max(...evidences.map(e => e.trl_level))
+        ? Math.max(...evidences.map(e => e.level))
         : 1;
 
     interface LevelData {

@@ -1,3 +1,5 @@
+import type { CampaignFinancials } from "./campaigns";
+
 /**
  * TypeScript Interfaces for Onboarding Wizard - Phase 2
  * These interfaces match the Django backend serializers exactly
@@ -8,7 +10,8 @@
 // =============================================================================
 
 export interface EvidenceData {
-    trl_level: number; // 1-9
+    type: 'TRL' | 'CRL'; // New field to indicate evidence type
+    level: number; // Combined TRL/CRL level based on 'type'
     description: string;
     file?: File; // For file upload
     file_url?: string; // For cloud storage URL
@@ -76,15 +79,12 @@ export interface OnboardingWizardPayload {
     industry: string;
 
     // Step 1: TRL/CRL
-    current_trl: number; // 1-9
-
-    // Step 2: Finances
-    target_funding_amount: number;
+    current_trl: number;
+    current_crl: number | null;
 
     // Data arrays
     evidences: EvidenceData[];
-    financial_data: FinancialData[];
-    investors: InvestorData[];
+    financials: CampaignFinancials | null;
 }
 
 // =============================================================================
@@ -113,14 +113,11 @@ export interface OnboardingFormState {
 
     // Step 1: TRL/CRL
     current_trl: number;
+    current_crl: number | null;
     evidences: EvidenceData[];
 
     // Step 2: Finances
-    financial_data: FinancialData[];
-
-    // Step 3: Investors
-    target_funding_amount: number;
-    investors: InvestorData[];
+    financials: CampaignFinancials | null;
 }
 
 // Initial empty state
@@ -128,33 +125,16 @@ export const initialOnboardingState: OnboardingFormState = {
     company_name: '',
     industry: '',
     current_trl: 1,
+    current_crl: null,
     evidences: [
         {
-            trl_level: 1,
+            type: 'TRL', // Default to TRL
+            level: 1,
             description: '',
             file_url: '',
         },
     ],
-    financial_data: [
-        {
-            period_date: '',
-            revenue: 0,
-            costs: 0,
-            cash_balance: 0,
-            monthly_burn: 0,
-            notes: '',
-        },
-    ],
-    target_funding_amount: 0,
-    investors: [
-        {
-            investor_name: '',
-            investor_email: '',
-            stage: 'CONTACTED',
-            ticket_size: 0,
-            notes: '',
-        },
-    ],
+    financials: null,
 };
 
 // =============================================================================

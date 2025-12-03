@@ -41,17 +41,17 @@ const Login = () => {
 
     const validateForm = (formData: LoginRequest) => {
         const { email, password } = formData
-        
+
         if (!email || !password) {
             return { isValid: false, message: t('missing_fields') }
         }
-        
+
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!emailRegex.test(email)) {
             return { isValid: false, message: t('invalid_email') }
         }
-        
+
         return { isValid: true, message: '' }
     }
 
@@ -91,9 +91,9 @@ const Login = () => {
     return (
         <div className="login-register-main-cont animated-gradient-background">
             <div className="login-register-header">
-                <button 
+                <button
                     className="login-register-back-button"
-                    onClick={() => navigate(routes.home)}
+                    onClick={() => navigate(routes.main)}
                     aria-label="Back to home"
                 >
                     <IoChevronBack /> {t('backToHome')}
@@ -104,8 +104,8 @@ const Login = () => {
                     {t('login_welcome')}
                 </div>
 
-                <form 
-                    className="login-register-form-cont" 
+                <form
+                    className="login-register-form-cont"
                     onSubmit={(e) => handleFormSubmit(e)}
                 >
                     <Input
@@ -141,15 +141,15 @@ const Login = () => {
                         {t('login_with_google')}
                     </Button> */}
                 </form>
-            
-                <button 
-                    className="text-btn login-register-footer" 
+
+                <button
+                    className="text-btn login-register-footer"
                     onClick={() => navigate(routes.forgotPassword)}
                 >
                     <span>{t('login_forgot_password')}</span>
                 </button>
-            
-                <button 
+
+                <button
                     className="text-btn login-register-footer"
                     onClick={() => navigate(routes.register)}
                 >

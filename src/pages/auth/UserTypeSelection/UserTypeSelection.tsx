@@ -18,18 +18,18 @@ const UserTypeSelection = () => {
     // }, [isLogged, navigate])
 
     const handleStartupSelect = () => {
-        navigate(`${routes.register}?type=startup`)
+        navigate(`${routes.startupLogin}`)
     }
 
     const handleIncubatorSelect = () => {
-        navigate(`${routes.register}?type=incubator`)
+        navigate(`${routes.incubatorLogin}`)
     }
 
     return (
         <div className="usertypeselection-main-container">
             <div className="usertypeselection-logo-container">
                 <div className="usertypeselection-logo">
-                    <GrDeploy size={40} color='var(--main-primary)'/>
+                    <GrDeploy size={40} color='var(--main-primary)' />
                 </div>
                 <h1 className="text-white">{t('raven_crm_title')}</h1>
                 <p className="text-white usertypeselection-subtitle">
@@ -64,13 +64,13 @@ const UserTypeSelection = () => {
                         color: "white",
                         transition: "color 0.3s ease",
                         textDecoration: "none",
-                        fontSize:"1.6rem"
+                        fontWeight: "bold"
                     }}
-                    href="/"
+                    href="/register"
                     onMouseEnter={(e) => (e.target as HTMLAnchorElement).style.color = "#d1d5db"}
                     onMouseLeave={(e) => (e.target as HTMLAnchorElement).style.color = "white"}
                 >
-                    logueate aquí
+                    Registrate aquí
                 </a>
             </p>
         </div>

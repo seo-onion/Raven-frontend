@@ -1,0 +1,168 @@
+/* HomeGateway Container - Diagonal Gradient Background */
+.homegateway_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, var(--main-primary), var(--main-secondary));
+    padding: 24px;
+}
+
+/* Central White Card */
+.homegateway_card {
+    background-color: var(--background-primary);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 48px;
+    max-width: 520px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.homegateway_card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.35);
+}
+
+/* Content Container */
+.homegateway_content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Title Styling */
+.homegateway_title {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+/* Subtitle Styling */
+.homegateway_subtitle {
+    font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+/* Actions Container */
+.homegateway_actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+/* Button Overrides for Full Width */
+.homegateway_button {
+    width: 100%;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Primary Button (Login) - Blue */
+.homegateway_button[class*="primary"] {
+    background-color: var(--main-secondary);
+    color: white;
+}
+
+.homegateway_button[class*="primary"]:hover {
+    background-color: #2563EB;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.homegateway_button[class*="primary"]:active {
+    transform: translateY(0);
+}
+
+/* Secondary Button (Register) - Purple */
+.homegateway_button[class*="secondary"] {
+    background-color: #7C3AED;
+    color: white;
+}
+
+.homegateway_button[class*="secondary"]:hover {
+    background-color: #6D28D9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(124, 58, 237, 0.3);
+}
+
+.homegateway_button[class*="secondary"]:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .homegateway_container {
+        padding: 16px;
+    }
+
+    .homegateway_card {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .homegateway_title {
+        font-size: 28px;
+    }
+
+    .homegateway_subtitle {
+        font-size: 14px;
+    }
+
+    .homegateway_button {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .homegateway_card {
+        padding: 24px 16px;
+    }
+
+    .homegateway_title {
+        font-size: 24px;
+    }
+
+    .homegateway_subtitle {
+        font-size: 13px;
+    }
+}
+
+/* Dark Theme Support */
+.dark .homegateway_card {
+    background-color: var(--background-secondary);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.dark .homegateway_title {
+    color: var(--text-primary);
+}
+
+.dark .homegateway_subtitle {
+    color: var(--text-secondary);
+}
+
+.dark .homegateway_card:hover {
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.7);
+}

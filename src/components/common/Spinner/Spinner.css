@@ -8,7 +8,7 @@
 }
 
 .spinner-primary {
-    border-top-color: white;
+    border-top-color: var(--main-primary);
 }
 
 .spinner-secondary {

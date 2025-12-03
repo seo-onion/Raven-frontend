@@ -363,11 +363,54 @@
 }
 
 /* =============================================================================
+   LOADING STATE
+   ============================================================================= */
+
+.wizard-loading-container,
+.wizard-error-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
+}
+
+.wizard-loading-content,
+.wizard-error-content {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.wizard-loading-text,
+.wizard-error-text {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.wizard-error-text {
+    color: var(--state-danger);
+}
+
+/* =============================================================================
    DARK THEME SUPPORT (if needed)
    ============================================================================= */
 
 @media (prefers-color-scheme: dark) {
     .wizard-card {
+        background: var(--background-primary, #1f2937);
+        color: var(--text-primary, #f9fafb);
+    }
+
+    .wizard-loading-content,
+    .wizard-error-content {
         background: var(--background-primary, #1f2937);
         color: var(--text-primary, #f9fafb);
     }
@@ -379,4 +422,88 @@
         color: var(--text-primary, #f9fafb);
         border-color: #4b5563;
     }
+}
+
+/* =============================================================================
+   TABS
+   ============================================================================= */
+
+.wizard-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.wizard-tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.wizard-tab-btn.active {
+    color: var(--main-secondary);
+}
+
+.wizard-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--main-secondary);
+}
+
+/* =============================================================================
+   PROJECTIONS GRID
+   ============================================================================= */
+
+.wizard-projections-grid {
+    display: grid;
+    grid-template-columns: 1fr repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.wizard-projections-header-cell {
+    font-weight: 600;
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--background-secondary);
+    border-radius: 8px;
+}
+
+.wizard-projections-concept-cell {
+    font-weight: 500;
+    text-align: left;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.wizard-projections-input-cell {
+    padding: 0;
+}
+
+.wizard-projections-input {
+    background: var(--background-secondary);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 12px 16px;
+    text-align: right;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.wizard-projections-input:focus {
+    outline: none;
+    border-color: var(--main-secondary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }

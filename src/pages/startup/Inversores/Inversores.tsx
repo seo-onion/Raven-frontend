@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next';
 import CrowdfundingBar from '../../../components/dashboard/CrowdfundingBar/CrowdfundingBar';
 import FundingRoundCard from '../../../components/dashboard/FundingRoundCard/FundingRoundCard';
 import InvestorPipelineCard from '../../../components/dashboard/InvestorPipelineCard/InvestorPipelineCard';
-import { useInvestors } from '../../../hooks/useStartupData';
+import { useInvestors, useInvestmentRounds } from '../../../hooks/useStartupData';
+import Button from '@/components/common/Button/Button';
+import useModalStore from '@/stores/ModalStore';
+import NewRoundModal from '@/modals/NewRoundModal/NewRoundModal';
+import NewInvestorModal from '@/modals/NewInvestorModal/NewInvestorModal';
 import './Inversores.css';
 
 // Definir el tipo para el stage del pipeline
@@ -11,7 +15,21 @@ type PipelineStage = 'in-progress' | 'active' | 'discarded';
 
 const Inversores: React.FC = () => {
     const { t } = useTranslation('common');
-    const { data: investors, isLoading, error } = useInvestors();
+    const { data: investors, isLoading: isLoadingInvestors, error: errorInvestors } = useInvestors();
+    const { data: rounds, isLoading: isLoadingRounds, error: errorRounds } = useInvestmentRounds();
+    const { setModalContent } = useModalStore();
+
+    const handleNewRound = () => {
+        setModalContent(<NewRoundModal />);
+    };
+
+    const handleNewInvestor = (roundId: number) => {
+        setModalContent(<NewInvestorModal roundId={roundId} />);
+    };
+
+    const totalGoal = rounds?.reduce((acc, round) => acc + round.target, 0) || 0;
+    const totalCurrent = rounds?.reduce((acc, round) => acc + round.investors.reduce((iAcc, i) => iAcc + i.amount, 0), 0) || 0;
+    const totalPercentage = totalGoal > 0 ? (totalCurrent / totalGoal) * 100 : 0;
 
     return (
         <div className="inversores-container">
@@ -25,13 +43,16 @@ const Inversores: React.FC = () => {
                         {t('funding_rounds_classification')}
                     </p>
                 </div>
+                <Button variant="primary" onClick={handleNewRound}>
+                    + {t('new_round')}
+                </Button>
             </div>
 
             {/* Crowdfunding Bar */}
             <CrowdfundingBar
-                goal="$100K"
-                current="$80K"
-                percentage={80}
+                goal={`$${totalGoal.toLocaleString()}`}
+                current={`$${totalCurrent.toLocaleString()}`}
+                percentage={totalPercentage}
             />
 
             {/* Funding Rounds */}
@@ -40,32 +61,27 @@ const Inversores: React.FC = () => {
                     {t('funding_rounds')}
                 </h2>
 
-                <FundingRoundCard
-                    name="Pre Seed"
-                    value="$150K"
-                    closeDate="09/01/2024"
-                    status="completed"
-                    percentage={100}
-                    investors={['Angel Investment', '4 contactos', 'Otros']}
-                />
-
-                <FundingRoundCard
-                    name="Seed"
-                    value="$600K"
-                    closeDate="09/07/2024"
-                    status="in-progress"
-                    percentage={57}
-                    investors={['Socios', 'Venture Capital', '2 contactos']}
-                />
-
-                <FundingRoundCard
-                    name="Serie A"
-                    value="$500K"
-                    closeDate="09/01/2025"
-                    status="pending"
-                    percentage={5}
-                    investors={['Pendiente']}
-                />
+                {isLoadingRounds && <p className="text-black">{t('loading')}</p>}
+                {errorRounds && <p className="text-black">{t('error')}: {(errorRounds as Error).message}</p>}
+                {rounds?.map((round) => {
+                    const roundCurrent = round.investors.reduce((acc, investor) => acc + investor.amount, 0);
+                    const roundPercentage = round.target > 0 ? (roundCurrent / round.target) * 100 : 0;
+                    return (
+                        <div key={round.id} className="funding-round-with-button">
+                            <FundingRoundCard
+                                name={round.name}
+                                value={`$${round.target.toLocaleString()}`}
+                                closeDate="N/A"
+                                status="in-progress"
+                                percentage={roundPercentage}
+                                investors={round.investors.map(i => i.name)}
+                            />
+                            <Button variant="secondary" onClick={() => handleNewInvestor(round.id!)}>
+                                + {t('add_investor')}
+                            </Button>
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Investor Pipeline */}
@@ -74,8 +90,8 @@ const Inversores: React.FC = () => {
                     {t('investor_pipeline')}
                 </h2>
 
-                {isLoading && <p className="text-black">{t('loading')}</p>}
-                {error && <p className="text-black">{t('error')}: {error.message}</p>}
+                {isLoadingInvestors && <p className="text-black">{t('loading')}</p>}
+                {errorInvestors && <p className="text-black">{t('error')}: {(errorInvestors as Error).message}</p>}
 
                 {investors && investors.length === 0 && (
                     <p className="text-black">{t('no_investors_yet')}</p>

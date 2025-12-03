@@ -1,115 +1,189 @@
-.home_container {
+/* Home Container - Diagonal Gradient Background */
+.home__container {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    position: relative;
-    z-index: 1;
-    overflow-x: hidden;
+    background: linear-gradient(135deg, var(--main-primary) 0%, var(--main-secondary) 100%);
+    padding: 40px 20px;
     box-sizing: border-box;
 }
 
-/* Header Section */
-.home_header {
+/* Logo Container Section */
+.home__logo-container {
     text-align: center;
-    padding: 2rem 0;
-    background: linear-gradient(135deg, var(--main-primary), var(--main-secondary));
+    margin-bottom: 50px;
+}
+
+/* Logo Icon Box */
+.home__logo {
+    width: 72px;
+    height: 72px;
+    background-color: var(--background-primary);
     border-radius: 16px;
-    color: var(--text-inverse);
-    margin-bottom: 2rem;
-}
-
-.home_header_content {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
-    padding: 1rem;
-    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px var(--black-10);
 }
 
-.home_title {
-    font-size: var(--text-3xl);
-    font-weight: 700;
-    margin: 0;
-}
-
-.home_subtitle {
-    font-size: var(--text-lg);
-    opacity: 0.9;
-    margin: 0;
-}
-
-.home_header_controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
-/* Section Styling */
-.home_section {
-    margin-bottom: 2rem;
-}
-
-.home_showcase_card {
-    padding: 2rem;
-}
-
-/* Component Grid Layouts */
-.home_component_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 1.5rem;
-}
-
-.home_component_group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.home_component_group h4 {
-    font-size: var(--text-lg);
+/* Title Styling */
+.home__title {
+    font-size: 48px;
     font-weight: 600;
-    margin: 0 0 1rem 0;
-    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
 }
 
-/* Button Groups */
-.home_button_group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+/* Subtitle Styling */
+.home__subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.95;
+    letter-spacing: 0.2px;
 }
 
-/* Form Grid */
-.home_form_grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-    margin-top: 1.5rem;
-}
-
-.home_form_column {
+/* Central White Card */
+.home__card {
+    background-color: var(--background-primary);
+    border: 1px solid var(--white-20);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px var(--black-20);
+    padding: 48px;
+    max-width: 440px;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-}
-
-/* Spinner Group */
-.home_spinner_group {
-    display: flex;
-    gap: 1rem;
     align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Paginator */
-.home_current_page {
-    margin-top: 1rem;
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: var(--text-sm);
+.home__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px var(--black-30);
+}
+
+/* Content Container */
+.home__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Actions Container */
+.home__actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Button Overrides for Full Width */
+.home__button {
+    width: 100%;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+/* Primary Button (Login) */
+.home__button[class*="primary"] {
+    background-color: var(--main-secondary);
+    color: white;
+}
+
+.home__button[class*="primary"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px var(--black-20);
+}
+
+.home__button[class*="primary"]:active {
+    transform: translateY(0);
+}
+
+/* Secondary Button (Register) */
+.home__button[class*="secondary"] {
+    background-color: var(--main-primary);
+    color: white;
+}
+
+.home__button[class*="secondary"]:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px var(--black-20);
+}
+
+.home__button[class*="secondary"]:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home__container {
+        padding: 24px 16px;
+    }
+
+    .home__logo-container {
+        margin-bottom: 40px;
+    }
+
+    .home__title {
+        font-size: 36px;
+    }
+
+    .home__subtitle {
+        font-size: 14px;
+    }
+
+    .home__card {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .home__button {
+        padding: 14px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .home__logo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .home__title {
+        font-size: 28px;
+    }
+
+    .home__subtitle {
+        font-size: 13px;
+    }
+
+    .home__card {
+        padding: 24px 16px;
+    }
+}
+
+/* Dark Theme Support */
+.dark .home__card {
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    box-shadow: 0 20px 40px var(--black-50);
+}
+
+.dark .home__card:hover {
+    box-shadow: 0 24px 48px var(--black-70);
+}
+
+.dark .home__logo {
+    background-color: var(--background-tertiary);
 }
