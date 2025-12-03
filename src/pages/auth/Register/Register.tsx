@@ -167,7 +167,7 @@ const Register = () => {
                         <button
                             type="button"
                             className="text-btn register-back-link"
-                            onClick={() => navigate(routes.login)}
+                            onClick={() => navigate(routes.main)}
                         >
                             <IoChevronBack /> {t('back_to_login')}
                         </button>

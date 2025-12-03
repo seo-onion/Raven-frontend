@@ -151,6 +151,70 @@ This document provides a comprehensive overview of the **database schema** and *
 ---
 
 ## 3. Request / Response Schemas & Axios TypeScript Examples
+### 3.0 Authentication (Registration & Verification)
+#### Register (POST `/auth/registration/`)
+**Request**
+```json
+{
+  "email": "user@example.com",
+  "password1": "securePassword123",
+  "password2": "securePassword123",
+  "user_type": "startup",
+  "first_name": "John",
+  "last_name": "Doe"
+}
+```
+**Response**
+```json
+{
+  "detail": "Verification e-mail sent."
+}
+```
+**Axios TS**
+```ts
+import axios from 'axios';
+
+export interface RegisterDTO {
+  email: string;
+  password1: string;
+  password2: string;
+  user_type: 'startup' | 'incubator';
+  first_name?: string;
+  last_name?: string;
+}
+
+export const register = async (data: RegisterDTO) => {
+  const resp = await axios.post('/auth/registration/', data);
+  return resp.data;
+};
+```
+
+#### Verify Email (POST `/auth/registration/account-confirm-email/`)
+**Request**
+```json
+{
+  "key": "Mg.X7... (verification key from email)"
+}
+```
+**Response**
+```json
+{
+  "access_token": "eyJ0eXAiOiJKV1QiLCJhbGci...",
+  "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGci...",
+  "detail": "Email verified successfully. You are now logged in."
+}
+```
+**Axios TS**
+```ts
+export const verifyEmail = async (key: string) => {
+  const resp = await axios.post('/auth/registration/account-confirm-email/', { key });
+  // Store tokens
+  localStorage.setItem('access', resp.data.access_token);
+  localStorage.setItem('refresh', resp.data.refresh_token);
+  return resp.data;
+};
+```
+
 ### 3.1 Authentication (Login)
 **Request** (`POST /auth/login/`)
 ```json

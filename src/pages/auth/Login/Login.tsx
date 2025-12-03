@@ -75,7 +75,13 @@ const IncubatorLogin = () => {
 
             if (status === 'success') {
                 toast.success(t('success'))
-                navigate(routes.dashboardOverview)
+                const user = useAuthStore.getState().user;
+
+                if (user?.user_type === 'startup' && !user.company_name) {
+                    navigate(routes.onboardingWizard)
+                } else {
+                    navigate(routes.dashboardOverview)
+                }
             }
 
             if (status === 'confirm_email') {

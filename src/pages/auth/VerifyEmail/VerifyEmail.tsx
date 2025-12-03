@@ -68,7 +68,7 @@ const VerifyEmail = () => {
                 }
 
                 // Otherwise, redirect to dashboard
-                navigate(routes.dashboardMiProgreso)
+                navigate(routes.dashboard)
             }
         } catch (error) {
             toast.error(t('verification_failed'))
@@ -144,7 +144,7 @@ const VerifyEmail = () => {
                         <button
                             type="button"
                             className="text-btn verifyemail-back-link"
-                            onClick={() => navigate(routes.login)}
+                            onClick={() => navigate(routes.main)}
                         >
                             <IoChevronBack /> {t('back_to_login')}
                         </button>

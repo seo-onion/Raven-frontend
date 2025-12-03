@@ -5,16 +5,16 @@ import i18n from "@/i18n"
 import axiosInstance from "@/api/axiosInstance"
 import usePageLayoutStore from "@/stores/PageLayoutStore"
 
-import { 
-    LOGIN_PATH, 
+import {
+    LOGIN_PATH,
     LOGOUT_PATH,
-    REFRESH_PATH, 
-    SIGNUP_PATH, 
-    RESEND_EMAIL_PATH, 
+    REFRESH_PATH,
+    SIGNUP_PATH,
+    RESEND_EMAIL_PATH,
     CONFIRM_EMAIL_PATH,
-    CHANGE_PASSWORD_PATH, 
-    RESET_PASSWORD_PATH, 
-    RESET_PASSWORD_CONFIRM_PATH 
+    CHANGE_PASSWORD_PATH,
+    RESET_PASSWORD_PATH,
+    RESET_PASSWORD_CONFIRM_PATH
 } from "@/api/axiosInstance";
 
 
@@ -227,19 +227,19 @@ interface AuthStore {
     isLogged: boolean;
     isLoading: boolean;
     user: UserDetails | undefined; // Add user to state
-    
+
     // Authentication methods
     logIn: (credentials: LoginRequest, handleGo2Fa: () => void) => Promise<AuthResult>;
     logOut: () => Promise<void>;
     getAccessToken: () => Promise<string | undefined>;
     getUserDetails: () => UserDetails | undefined;
-    
+
     // Account management
     registerAccount: (data: SignupRequest) => Promise<boolean>;
     resendConfirmationCode: (token: string) => Promise<boolean>; // Called by logIn
     verifyConfirmationCode: (code: string) => Promise<boolean>;
     setOnboardingComplete: (isComplete: boolean) => void;
-    
+
     // Password management
     sendResetPasswordRequest: (data: ResetPasswordRequest) => Promise<boolean>;
     resetPassword: (data: ResetPasswordConfirmRequest) => Promise<boolean>;
@@ -251,7 +251,7 @@ interface AuthStore {
  */
 const isTokenValid = (token: string): boolean => {
     if (!token) return false;
-    
+
     try {
         const decodedToken = jwtDecode<TokenPayload>(token);
         return decodedToken.exp * 1000 > Date.now();
@@ -284,7 +284,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
         isLogged: isTokenValid(localStorage.getItem(REFRESH_TOKEN_KEY) || ""),
         isLoading: false,
         user: getInitialUser(), // Initialize user state from localStorage
-        
+
         /**
          * Log in a user with credentials
          */
@@ -296,14 +296,14 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             try {
                 const res = await axiosInstance.post(LOGIN_PATH, credentials);
                 const res_payload: LoginSuccessResponse = res.data;
-                            
+
                 localStorage.setItem(ACCESS_TOKEN_KEY, res_payload.access);
                 localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh);
                 localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
 
                 set({ isLogged: true, isLoading: false, user: res_payload.user }); // Update user state
                 return "success";
-                
+
             } catch (error: any) {
                 set({ isLoading: false });
                 if (credentials?.googlecode) return "otp_fail";
@@ -318,24 +318,24 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                         if (!resend) return "error";
                         return "confirm_email";
                     }
-                    
-                    const err_msg = res_payload.type && res_payload.type?.length > 0 ? res_payload.type[0] : 
+
+                    const err_msg = res_payload.type && res_payload.type?.length > 0 ? res_payload.type[0] :
                         res_payload.message && res_payload.message?.length > 0 ? res_payload.message[0] : "error"
 
                     if (err_msg == "two_fa_failed") {
                         handleGo2Fa();
                         return "go2fa";
                     }
-                    
+
                     if (!["go2fa", "otp_fail", "wrong_data", "reset_psw", "account_block", "invalid"].includes(err_msg)) return "error"
                     toast.error(i18n.t(err_msg));
                     return err_msg as AuthResult
                 }
             }
-            
+
             return "error";
         },
-        
+
         /**
          * Log out the current user
          */
@@ -359,7 +359,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             // Redirect to home page
             window.location.href = '/';
         },
-        
+
         /**
          * Get a valid access token, refreshing if necessary
          */
@@ -368,21 +368,21 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             const access_token = localStorage.getItem(ACCESS_TOKEN_KEY);
             const refresh_token = localStorage.getItem(REFRESH_TOKEN_KEY);
             if (!access_token) return;
-            
+
             // Check if auth token is valid
             try {
                 const payload: TokenPayload = jwtDecode(access_token);
                 const expTime = payload.exp * 1000;
                 const curTime = new Date().getTime();
                 const timeToExpire = expTime - curTime;
-                
+
                 // Token is still valid for more than 10 minutes
                 if (timeToExpire > 600000) return access_token;
 
             } catch (error) {
                 console.error("Access token invalid", error);
             }
-            
+
             // Refresh auth token
             try {
                 if (!refresh_token) throw Error("Refresh token not found")
@@ -392,7 +392,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 localStorage.setItem(ACCESS_TOKEN_KEY, res_payload.access);
                 localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh);
                 return res_payload.access;
-                
+
             } catch (error: any) {
                 const res_payload: RefreshErrorResponse = error?.response?.data;
                 console.error("Refresh Failed", res_payload?.detail);
@@ -407,7 +407,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
         getUserDetails: (): UserDetails | undefined => {
             return get().user;
         },
-        
+
         /**
          * Update the onboarding_complete status in localStorage and the store
          */
@@ -498,14 +498,14 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return false;
             }
         },
-        
+
         /**
          * Resend email confirmation code
          */
         resendConfirmationCode: async (token: string): Promise<boolean> => {
             set({ isLoading: true });
             toast.dismiss();
-            
+
             try {
                 const res = await axiosInstance.post(RESEND_EMAIL_PATH, { token } as ResendEmailRequest);
                 const res_payload: ResendEmailSuccessResponse = res.data;
@@ -521,26 +521,31 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return false;
             }
         },
-        
+
         /**
          * Verify email confirmation code
          */
-        verifyConfirmationCode: async (code: string): Promise<boolean> => { 
+        verifyConfirmationCode: async (code: string): Promise<boolean> => {
             set({ isLoading: true });
             toast.dismiss();
-            
+
             try {
                 // Call verify email API
                 const response = await axiosInstance.post(CONFIRM_EMAIL_PATH, { key: code } as ConfirmEmailRequest);
                 const res_payload: ConfirmEmailSuccessResponse = response.data;
                 set({ isLoading: false });
-                
-                if (res_payload?.access_token && res_payload?.refresh_token && res_payload?.user) {
+
+                if (res_payload?.access_token && res_payload?.refresh_token) {
                     localStorage.setItem(ACCESS_TOKEN_KEY, res_payload.access_token);
                     localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh_token);
-                    localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
 
-                    set({ isLogged: true, user: res_payload.user }); // Update user state
+                    if (res_payload.user) {
+                        localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
+                        set({ isLogged: true, user: res_payload.user });
+                    } else {
+                        set({ isLogged: true });
+                    }
+
                     toast.success(i18n.t('email_confirmed_and_logged_in'));
                     return true;
                 }
@@ -554,14 +559,14 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return false;
             }
         },
-        
+
         /**
          * Send password reset request
          */
         sendResetPasswordRequest: async (data: ResetPasswordRequest): Promise<boolean> => {
             set({ isLoading: true });
             toast.dismiss();
-            
+
             try {
                 const res = await axiosInstance.post(RESET_PASSWORD_PATH, data);
                 const res_payload: ResetPasswordSuccessResponse = res.data;
@@ -577,14 +582,14 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return false;
             }
         },
-        
+
         /**
          * Reset password with token
          */
         resetPassword: async (data: ResetPasswordConfirmRequest): Promise<boolean> => {
             set({ isLoading: true });
             toast.dismiss();
-            
+
             try {
                 const res = await axiosInstance.post(RESET_PASSWORD_CONFIRM_PATH, data);
                 const res_payload: ResetPasswordConfirmSuccessResponse = res.data;
@@ -601,14 +606,14 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 return false;
             }
         },
-        
+
         /**
          * Change password while logged in
          */
         changePasswordLogged: async (data: ChangePasswordRequest): Promise<boolean> => {
             set({ isLoading: true });
             toast.dismiss();
-            
+
             try {
                 const res = await axiosInstance.post(CHANGE_PASSWORD_PATH, data);
                 const res_payload: ChangePasswordSuccessResponse = res.data;
@@ -617,7 +622,7 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 toast.success(i18n.t('password_reset_success'));
                 return true;
             } catch (error: any) {
-                const res_payload: ChangePasswordErrorResponse = error?.response?.data; 
+                const res_payload: ChangePasswordErrorResponse = error?.response?.data;
                 const err_msg = res_payload.code || "error";
                 console.error("Password change failed:", error);
                 set({ isLoading: false });

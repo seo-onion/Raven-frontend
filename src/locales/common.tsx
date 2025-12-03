@@ -537,7 +537,7 @@ const common = {
         select_account_type: "Selecciona el tipo de cuenta",
         startup: "Startup",
         incubator: "Incubadora",
-        back_to_login: "Volver al inicio de sesión",
+        back_to_login: "Volver a la página principal",
 
         // Email Verification
         verify_your_email: "Verifica tu correo electrónico",
