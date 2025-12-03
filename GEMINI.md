@@ -458,4 +458,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id
 - **Separate configs** for development, staging, and production
 - **Environment-specific** API URLs and settings
 
+## Dont do git commands manually
+
 Remember: These rules ensure consistency, maintainability, and scalability of the frontend. Always prioritize code readability and follow the established patterns.
+
