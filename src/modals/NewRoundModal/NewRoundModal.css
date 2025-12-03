@@ -1,0 +1,15 @@
+.new-round-modal {
+    padding: 24px;
+    background-color: var(--background-color);
+}
+
+.new-round-modal h2 {
+    margin-bottom: 24px;
+}
+
+.new-round-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}

@@ -1,0 +1,14 @@
+.investor-form {
+    border: 1px solid var(--gray-lighter);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+    background-color: var(--background-light);
+}
+
+.investor-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}

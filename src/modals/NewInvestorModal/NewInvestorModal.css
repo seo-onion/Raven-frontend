@@ -1,0 +1,15 @@
+.new-investor-modal {
+    padding: 24px;
+    background-color: var(--background-color);
+}
+
+.new-investor-modal h2 {
+    margin-bottom: 24px;
+}
+
+.new-investor-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
