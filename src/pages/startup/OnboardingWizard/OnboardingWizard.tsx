@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import useOnboardingStore from '../../../stores/OnboardingStore';
-import type { InvestorStage } from '@/types/onboarding';
 import './OnboardingWizard.css';
 import Button from '@/components/common/Button/Button';
 import Spinner from '@/components/common/Spinner/Spinner';
 import Input from '@/components/forms/Input/Input';
 import Select from '@/components/forms/Select/Select';
 import routes from '@/routes/routes'
+import { fetchIncubators } from '@/api/onboarding';
 
 
 const OnboardingWizard: React.FC = () => {
@@ -85,7 +85,7 @@ const OnboardingWizard: React.FC = () => {
     const handleSubmit = async () => {
         const success = await submitOnboarding();
         if (success) {
-            navigate(`${routes.dashboard}`)
+            navigate(`${routes.dashboardMiProgreso}`)
 
         }
     };
@@ -137,7 +137,7 @@ const OnboardingWizard: React.FC = () => {
             case 1:
                 return <Step1TRLCRL />;
             case 2:
-                return <Step2Finanzas />;
+                return <Step2Incubators />;
             default:
                 return <Step0CompanyBasics />;
         }
@@ -148,7 +148,7 @@ const OnboardingWizard: React.FC = () => {
             <div className="wizard-card">
                 <div className="wizard-progress">
                     <p className="text-black">
-                        {t('wizard_step_1')} {currentStep + 1} {t('of')} {totalSteps}
+                        {t('Paso')} {currentStep + 1} {t('of')} {totalSteps}
                     </p>
                 </div>
 
@@ -250,429 +250,203 @@ const Step0CompanyBasics: React.FC = () => {
 
 const Step1TRLCRL: React.FC = () => {
     const { t } = useTranslation('common');
-    const { current_trl, current_crl, evidences, setField, addEvidence, updateEvidence, removeEvidence } = useOnboardingStore();
-
-    const trlOptions = Array.from({ length: 9 }, (_, i) => ({
-        value: String(i + 1),
-        label: `TRL ${i + 1}`
-    }));
-
-    const crlOptions = [
-        { value: '', label: t('no_crl') },
-        ...Array.from({ length: 9 }, (_, i) => ({
-            value: String(i + 1),
-            label: `CRL ${i + 1}`
-        }))
-    ];
+    const { evidences, addEvidence, updateEvidence, removeEvidence } = useOnboardingStore();
 
     const [activeTab, setActiveTab] = React.useState<'TRL' | 'CRL'>('TRL');
+
+    // Filter evidences by active tab
+    const activeEvidences = evidences.filter(e => e.type === activeTab);
+
+    // Effect to ensure levels are sequential?
+    // Or just trust the display?
+    // The prompt says "quita el trl_level como botón plegable... debe empezar en uno y ir subiendo".
 
     return (
         <div className="wizard-step">
             <h2 className="text-black wizard-step-title">{t('onboarding_step1_title')}</h2>
             <p className="text-black wizard-step-description">{t('onboarding_step1_description')}</p>
 
-            <div className="wizard-financial-grid">
-                <div className="wizard-form-group">
-                    <Select
-                        label={t('current_trl_level')}
-                        value={String(current_trl)}
-                        onChange={(e) => setField('current_trl', Number(e.target.value))}
-                        options={[{ value: '', label: t('select_trl') }, ...trlOptions]}
-                        required
-                        placeholder={t('select_trl')}
-                    />
-                </div>
-
-                <div className="wizard-form-group">
-                    <Select
-                        label={t('current_crl_level')}
-                        value={current_crl ? String(current_crl) : ''}
-                        onChange={(e) => setField('current_crl', e.target.value ? Number(e.target.value) : null)}
-                        options={crlOptions}
-                        placeholder={t('select_crl_optional')}
-                    />
-                    <span className="text-black wizard-hint">{t('crl_optional_hint')}</span>
-                </div>
-            </div>
-
             <div className="wizard-tabs">
                 <button
                     className={`wizard-tab-btn ${activeTab === 'TRL' ? 'active' : ''}`}
                     onClick={() => setActiveTab('TRL')}
                 >
-                    {t('trl_evidences')}
+                    {t('trl_levels')}
                 </button>
                 <button
                     className={`wizard-tab-btn ${activeTab === 'CRL' ? 'active' : ''}`}
                     onClick={() => setActiveTab('CRL')}
                 >
-                    {t('crl_evidences')}
+                    {t('crl_levels')}
                 </button>
             </div>
 
-            <h3 className="text-black wizard-subsection-title">{t('evidence_documentation')}</h3>
+            <h3 className="text-black wizard-subsection-title">{t('define_levels_and_evidence')}</h3>
+            <p className="text-black wizard-hint" style={{ fontSize: '1rem' }}>
+                {activeTab === 'TRL'
+                    ? t('trl_explanation_hint')
+                    : t('crl_explanation_hint')}
+            </p>
 
-            {evidences.filter(e => e.type === activeTab).map((evidence, index) => {
-                // Find the original index in the main evidences array
-                const originalIndex = evidences.findIndex(e => e === evidence);
-                return (
-                    <div key={originalIndex} className="wizard-investor-card">
-                        <div className="wizard-investor-header">
-                            <h4 className="text-black">{t('evidence')} {index + 1}</h4>
-                            {evidences.filter(e => e.type === activeTab).length > 1 && (
-                                <button
-                                    type="button"
-                                    className="wizard-btn-remove"
-                                    onClick={() => removeEvidence(originalIndex)}
-                                >
-                                    {t('delete')}
-                                </button>
-                            )}
-                        </div>
+            {
+                activeEvidences.map((evidence, index) => {
+                    // Find the original index in the main evidences array
+                    const originalIndex = evidences.findIndex(e => e === evidence);
 
-                        <div className="wizard-financial-grid">
+                    // Auto-assign level based on index + 1 for display and potentially update data
+                    const displayLevel = index + 1;
+
+                    // If the stored level doesn't match the display level (sequential), update it
+                    // This is a bit of a side-effect in render, but React might handle it or we should use useEffect.
+                    // Better to just display it correctly and rely on submit to clean it up or update on change.
+                    if (evidence.level !== displayLevel) {
+                        // We can't call updateEvidence inside render safely.
+                        // Let's just display the correct level title.
+                    }
+
+                    return (
+                        <div key={originalIndex} className="wizard-investor-card">
+                            <div className="wizard-investor-header">
+                                <h4 className="text-black">
+                                    {activeTab} {t('level')} {displayLevel}
+                                </h4>
+                                {activeEvidences.length > 1 && (
+                                    <button
+                                        type="button"
+                                        className="wizard-btn-remove"
+                                        onClick={() => removeEvidence(originalIndex)}
+                                    >
+                                        {t('delete')}
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* Removed Level Select - Now auto-assigned/displayed in header */}
+
                             <div className="wizard-form-group">
-                                <Select
-                                    label={t(`${activeTab.toLowerCase()}_level`)}
-                                    value={String(evidence.level)}
-                                    onChange={(e) => updateEvidence(originalIndex, { level: Number(e.target.value) })}
-                                    options={[{ value: '', label: t(`select_${activeTab.toLowerCase()}`) }, ...(activeTab === 'TRL' ? trlOptions : crlOptions)]}
+                                <Input
+                                    name={`evidence_title_${originalIndex}`}
+                                    label={t('level_title')}
+                                    value={evidence.title || ''}
+                                    setValue={(value) => updateEvidence(originalIndex, { title: value, level: displayLevel })}
+                                    placeholder={t('level_title_placeholder')}
                                     required
                                 />
                             </div>
-                        </div>
 
-                        <div className="wizard-form-group">
-                            <label className="text-black wizard-label">
-                                {t('evidence_description')} *
-                            </label>
-                            <textarea
-                                className="wizard-textarea"
-                                rows={3}
-                                value={evidence.description}
-                                onChange={(e) => updateEvidence(originalIndex, { description: e.target.value })}
-                                placeholder={t('evidence_description_placeholder')}
-                            />
-                        </div>
+                            <div className="wizard-form-group">
+                                <Input
+                                    name={`evidence_subtitle_${originalIndex}`}
+                                    label={t('level_subtitle')}
+                                    value={evidence.subtitle || ''}
+                                    setValue={(value) => updateEvidence(originalIndex, { subtitle: value, level: displayLevel })}
+                                    placeholder={t('level_subtitle_placeholder')}
+                                />
+                            </div>
 
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`evidence_file_url_${originalIndex}`}
-                                label={t('evidence_file_url')}
-                                value={evidence.file_url || ''}
-                                setValue={(value) => updateEvidence(originalIndex, { file_url: value })}
-                                placeholder="https://..."
-                            />
-                            <span className="text-black wizard-hint">{t('evidence_file_url_hint')}</span>
+                            <div className="wizard-form-group">
+                                <label className="text-black wizard-label">
+                                    {t('evidence_description')} *
+                                </label>
+                                <textarea
+                                    className="wizard-textarea"
+                                    rows={3}
+                                    value={evidence.description}
+                                    onChange={(e) => updateEvidence(originalIndex, { description: e.target.value, level: displayLevel })}
+                                    placeholder={t('evidence_description_placeholder')}
+                                />
+                            </div>
+
+                            <div className="wizard-form-group">
+                                <Input
+                                    name={`evidence_file_url_${originalIndex}`}
+                                    label={t('evidence_file_url')}
+                                    value={evidence.file_url || ''}
+                                    setValue={(value) => updateEvidence(originalIndex, { file_url: value, level: displayLevel })}
+                                    placeholder="https://..."
+                                />
+                                <span className="text-black wizard-hint">{t('evidence_file_url_hint')}</span>
+                            </div>
                         </div>
-                    </div>
-                )
-            })}
+                    )
+                })
+            }
 
             <button
                 type="button"
                 className="wizard-btn-add"
                 onClick={() => addEvidence(activeTab)}
             >
-                + {t(`add_${activeTab.toLowerCase()}_evidence`)}
+                + {t(`add_${activeTab.toLowerCase()}_level`)}
             </button>
-        </div>
+        </div >
     );
 };
 
-const Step2Finanzas: React.FC = () => {
+const Step2Incubators: React.FC = () => {
     const { t } = useTranslation('common');
     const {
-        target_funding_amount,
-        financial_projections,
-        financial_data,
-        investors,
+        incubator_ids,
         setField,
-        setFinancialProjection,
-        addFinancialData,
-        updateFinancialData,
-        removeFinancialData,
-        addInvestor,
-        updateInvestor,
-        removeInvestor,
     } = useOnboardingStore();
+    const [incubators, setIncubators] = React.useState<any[]>([]);
+    const [loading, setLoading] = React.useState(false);
 
-    const quarters = ['q1', 'q2', 'q3', 'q4'] as const;
+    useEffect(() => {
+        const loadIncubators = async () => {
+            setLoading(true);
+            try {
+                const data = await fetchIncubators();
+                setIncubators(data);
+            } catch (error) {
+                console.error("Failed to fetch incubators", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadIncubators();
+    }, []);
 
-    const investorStageOptions = [
-        { value: 'CONTACTED', label: t('stage_contacted') },
-        { value: 'PITCH_SENT', label: t('stage_pitch_sent') },
-        { value: 'MEETING_SCHEDULED', label: t('stage_meeting_scheduled') },
-        { value: 'DUE_DILIGENCE', label: t('stage_due_diligence') },
-        { value: 'TERM_SHEET', label: t('stage_term_sheet') },
-        { value: 'COMMITTED', label: t('stage_committed') },
-        { value: 'DECLINED', label: t('stage_declined') },
-    ];
+    const toggleIncubator = (id: string) => {
+        const currentIds = incubator_ids || [];
+        if (currentIds.includes(id)) {
+            setField('incubator_ids', currentIds.filter(i => i !== id));
+        } else {
+            setField('incubator_ids', [...currentIds, id]);
+        }
+    };
 
     return (
         <div className="wizard-step">
-            <h2 className="text-black wizard-step-title">{t('onboarding_step2_title')}</h2>
-            <p className="text-black wizard-step-description">{t('onboarding_step2_description')}</p>
+            <h2 className="text-black wizard-step-title">{t('onboarding_step2_title_incubator')}</h2>
+            <p className="text-black wizard-step-description">{t('onboarding_step2_description_incubator')}</p>
 
-            {/* Target Funding Amount */}
-            <h3 className="text-black wizard-subsection-title">{t('target_funding_amount')}</h3>
-            <div className="wizard-financial-grid">
-                <Input
-                    name="target_funding_amount"
-                    label={t('target_funding_amount')}
-                    type="number"
-                    value={String(target_funding_amount || 0)}
-                    setValue={(value) => setField('target_funding_amount', Number(value))}
-                    placeholder="0.00"
-                    required
-                />
-            </div>
-
-            {/* Financial Projections Grid */}
-            <h3 className="text-black wizard-subsection-title">{t('financial_projections')}</h3>
-            <p className="text-black wizard-hint">{t('financial_projections_hint')}</p>
-
-            <div className="wizard-projections-grid">
-                {/* Header Row */}
-                <div className="wizard-projections-header-cell text-black">{t('concept')}</div>
-                {quarters.map(quarter => (
-                    <div key={quarter} className="wizard-projections-header-cell text-black">
-                        {t(quarter)}
-                    </div>
-                ))}
-
-                {/* Revenue Row */}
-                <div className="wizard-projections-concept-cell text-black">{t('revenue')}</div>
-                {quarters.map(quarter => (
-                    <div key={`revenue-${quarter}`} className="wizard-projections-input-cell">
-                        <input
-                            type="number"
-                            className="wizard-projections-input"
-                            value={financial_projections?.[quarter]?.revenue || 0}
-                            onChange={(e) => setFinancialProjection(quarter, 'revenue', Number(e.target.value))}
-                            placeholder="0"
-                        />
-                    </div>
-                ))}
-
-                {/* COGS Row */}
-                <div className="wizard-projections-concept-cell text-black">{t('cogs')}</div>
-                {quarters.map(quarter => (
-                    <div key={`cogs-${quarter}`} className="wizard-projections-input-cell">
-                        <input
-                            type="number"
-                            className="wizard-projections-input"
-                            value={financial_projections?.[quarter]?.cogs || 0}
-                            onChange={(e) => setFinancialProjection(quarter, 'cogs', Number(e.target.value))}
-                            placeholder="0"
-                        />
-                    </div>
-                ))}
-
-                {/* OPEX Row */}
-                <div className="wizard-projections-concept-cell text-black">{t('opex')}</div>
-                {quarters.map(quarter => (
-                    <div key={`opex-${quarter}`} className="wizard-projections-input-cell">
-                        <input
-                            type="number"
-                            className="wizard-projections-input"
-                            value={financial_projections?.[quarter]?.opex || 0}
-                            onChange={(e) => setFinancialProjection(quarter, 'opex', Number(e.target.value))}
-                            placeholder="0"
-                        />
-                    </div>
-                ))}
-            </div>
-
-            {/* Financial Data History */}
-            <h3 className="text-black wizard-subsection-title">{t('financial_data_history')}</h3>
-            <p className="text-black wizard-hint">{t('financial_data_hint')}</p>
-
-            {financial_data.map((data, index) => (
-                <div key={index} className="wizard-investor-card">
-                    <div className="wizard-investor-header">
-                        <h4 className="text-black">{t('period')} {index + 1}</h4>
-                        {financial_data.length > 1 && (
-                            <button
-                                type="button"
-                                className="wizard-btn-remove"
-                                onClick={() => removeFinancialData(index)}
-                            >
-                                {t('delete')}
-                            </button>
-                        )}
-                    </div>
-                    <div className="wizard-investor-fields">
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`period_date_${index}`}
-                                label={t('period_date')}
-                                type="date"
-                                value={data.period_date}
-                                setValue={(value) => updateFinancialData(index, { period_date: value })}
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`revenue_${index}`}
-                                label={t('revenue')}
-                                type="number"
-                                value={String(data.revenue)}
-                                setValue={(value) => updateFinancialData(index, { revenue: Number(value) })}
-                                placeholder="0.00"
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`costs_${index}`}
-                                label={t('costs')}
-                                type="number"
-                                value={String(data.costs)}
-                                setValue={(value) => updateFinancialData(index, { costs: Number(value) })}
-                                placeholder="0.00"
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`cash_balance_${index}`}
-                                label={t('cash_balance')}
-                                type="number"
-                                value={String(data.cash_balance)}
-                                setValue={(value) => updateFinancialData(index, { cash_balance: Number(value) })}
-                                placeholder="0.00"
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`monthly_burn_${index}`}
-                                label={t('monthly_burn')}
-                                type="number"
-                                value={String(data.monthly_burn)}
-                                setValue={(value) => updateFinancialData(index, { monthly_burn: Number(value) })}
-                                placeholder="0.00"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="wizard-form-group">
-                        <label className="text-black wizard-label">
-                            {t('notes')}
-                        </label>
-                        <textarea
-                            className="wizard-textarea"
-                            rows={2}
-                            value={data.notes || ''}
-                            onChange={(e) => updateFinancialData(index, { notes: e.target.value })}
-                            placeholder={t('financial_notes_placeholder')}
-                        />
+            {loading ? (
+                <div className="wizard-loading-content">
+                    <Spinner variant="primary" size="md" />
+                </div>
+            ) : (
+                <div className="wizard-form-group">
+                    <label className="text-black wizard-label">{t('select_incubator')}</label>
+                    <div className="wizard-grid-options">
+                        {incubators.map(inc => {
+                            const isSelected = (incubator_ids || []).includes(String(inc.id));
+                            return (
+                                <div
+                                    key={inc.id}
+                                    className={`wizard-selectable-card ${isSelected ? 'selected' : ''}`}
+                                    onClick={() => toggleIncubator(String(inc.id))}
+                                >
+                                    <div className="wizard-selectable-card-content">
+                                        <span className="wizard-selectable-card-title">{inc.name}</span>
+                                    </div>
+                                    <div className="wizard-selectable-card-check"></div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
-            ))}
-
-            <button
-                type="button"
-                className="wizard-btn-add"
-                onClick={addFinancialData}
-            >
-                + {t('add_financial_period')}
-            </button>
-
-            {/* Investor Pipeline */}
-            <h3 className="text-black wizard-subsection-title">{t('investor_pipeline')}</h3>
-            <p className="text-black wizard-hint">{t('add_potential_investors')}</p>
-
-            {investors.map((investor, index) => (
-                <div key={index} className="wizard-investor-card">
-                    <div className="wizard-investor-header">
-                        <h4 className="text-black">{t('investor')} {index + 1}</h4>
-                        {investors.length > 1 && (
-                            <button
-                                type="button"
-                                className="wizard-btn-remove"
-                                onClick={() => removeInvestor(index)}
-                            >
-                                {t('delete')}
-                            </button>
-                        )}
-                    </div>
-                    <div className="wizard-investor-fields">
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`investor_name_${index}`}
-                                label={t('investor_name')}
-                                type="text"
-                                value={investor.investor_name}
-                                setValue={(value) => updateInvestor(index, { investor_name: value })}
-                                placeholder={t('enter_investor_name')}
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`investor_email_${index}`}
-                                label={t('investor_email')}
-                                type="email"
-                                value={investor.investor_email || ''}
-                                setValue={(value) => updateInvestor(index, { investor_email: value })}
-                                placeholder="email@example.com"
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Select
-                                label={t('stage')}
-                                value={investor.stage}
-                                onChange={(e) => updateInvestor(index, { stage: e.target.value as InvestorStage })}
-                                options={investorStageOptions}
-                                required
-                            />
-                        </div>
-                        <div className="wizard-form-group">
-                            <Input
-                                name={`ticket_size_${index}`}
-                                label={t('ticket_size')}
-                                type="number"
-                                value={String(investor.ticket_size || 0)}
-                                setValue={(value) => updateInvestor(index, { ticket_size: Number(value) })}
-                                placeholder="0.00"
-                            />
-                        </div>
-                    </div>
-                    <div className="wizard-form-group">
-                        <label className="text-black wizard-label">
-                            {t('notes')}
-                        </label>
-                        <textarea
-                            className="wizard-textarea"
-                            rows={2}
-                            value={investor.notes || ''}
-                            onChange={(e) => updateInvestor(index, { notes: e.target.value })}
-                            placeholder={t('investor_notes_placeholder')}
-                        />
-                    </div>
-                    <div className="wizard-form-group">
-                        <Input
-                            name={`next_action_date_${index}`}
-                            label={t('next_action_date')}
-                            type="date"
-                            value={investor.next_action_date || ''}
-                            setValue={(value) => updateInvestor(index, { next_action_date: value })}
-                        />
-                    </div>
-                </div>
-            ))}
-
-            <button
-                type="button"
-                className="wizard-btn-add"
-                onClick={addInvestor}
-            >
-                + {t('add_investor')}
-            </button>
+            )}
         </div>
     );
 };

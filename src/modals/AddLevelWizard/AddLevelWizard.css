@@ -1,0 +1,54 @@
+.add-level-wizard {
+    padding: 1.5rem;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90vw;
+}
+
+.add-level-wizard-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.wizard-step-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.wizard-form-group {
+    margin-bottom: 1rem;
+}
+
+.wizard-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.basic-input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.multiline-textarea {
+    resize: vertical;
+}
+
+.wizard-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}

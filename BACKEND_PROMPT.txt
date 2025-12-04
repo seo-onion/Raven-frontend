@@ -1,0 +1,82 @@
+PROMPT PARA ACTUALIZAR EL BACKEND - ONBOARDING WIZARD
+======================================================
+
+El frontend del wizard de onboarding ha sido modificado para enviar solo los datos que el usuario completó.
+
+PROBLEMA ACTUAL:
+El backend espera siempre recibir todos los campos (evidences, financial_data, investors, etc.) y falla con KeyError cuando estos campos no están presentes.
+
+SOLUCIÓN REQUERIDA:
+Modifica el archivo users/views.py en el método post() de CompleteOnboardingView para:
+
+1. Hacer OPCIONALES todos los campos excepto: company_name, industry, current_trl, current_crl
+2. Usar .get() con valores por defecto al acceder a campos opcionales
+3. No fallar si faltan arrays como evidences, financial_data, investors
+
+CÓDIGO SUGERIDO PARA users/views.py (líneas 280-320 aproximadamente):
+
+```python
+# Inicializar result con valores por defecto
+result = {
+    'evidences': [],
+    'financial_data': [],
+    'investors': [],
+}
+
+# Procesar evidences SOLO si existen en el payload
+if 'evidences' in validated_data and validated_data['evidences']:
+    evidences_objects = []
+    for evidence_data in validated_data['evidences']:
+        evidence_obj = Evidence.objects.create(startup=startup, **evidence_data)
+        evidences_objects.append(evidence_obj)
+    result['evidences'] = evidences_objects
+
+# Procesar financial_data SOLO si existe en el payload
+if 'financial_data' in validated_data and validated_data['financial_data']:
+    financial_data_objects = []
+    for fd_data in validated_data['financial_data']:
+        fd_obj = FinancialData.objects.create(startup=startup, **fd_data)
+        financial_data_objects.append(fd_obj)
+    result['financial_data'] = financial_data_objects
+
+# Procesar investors SOLO si existe en el payload
+if 'investors' in validated_data and validated_data['investors']:
+    investors_objects = []
+    for investor_data in validated_data['investors']:
+        investor_obj = Investor.objects.create(startup=startup, **investor_data)
+        investors_objects.append(investor_obj)
+    result['investors'] = investors_objects
+
+# Mensaje de respuesta - usar .get() para evitar KeyError
+detail_message = (
+    f"Onboarding completed successfully. "
+    f"Created {len(result.get('evidences', []))} evidences, "
+    f"{len(result.get('financial_data', []))} financial periods, "
+    f"{len(result.get('investors', []))} investors."
+)
+```
+
+ACTUALIZAR EL SERIALIZER (OnboardingWizardSerializer):
+
+```python
+class OnboardingWizardSerializer(serializers.Serializer):
+    # Required fields
+    company_name = serializers.CharField(max_length=255)
+    industry = serializers.CharField(max_length=100)
+    current_trl = serializers.IntegerField(min_value=1, max_value=9)
+    current_crl = serializers.IntegerField(min_value=1, max_value=9, allow_null=True, required=False)
+
+    # Optional fields - AGREGAR required=False
+    target_funding_amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False, allow_null=True)
+    financial_projections = FinancialProjectionsSerializer(required=False, allow_null=True)
+    evidences = EvidenceSerializer(many=True, required=False, allow_empty=True)
+    financial_data = FinancialDataSerializer(many=True, required=False, allow_empty=True)
+    investors = InvestorSerializer(many=True, required=False, allow_empty=True)
+    incubator_ids = serializers.ListField(child=serializers.IntegerField(), required=False, allow_empty=True)
+```
+
+ARCHIVOS A MODIFICAR:
+- users/views.py (método post de CompleteOnboardingView, líneas ~280-320)
+- users/serializers.py (OnboardingWizardSerializer)
+
+Esto solucionará el KeyError: 'financial_data' y permitirá que el wizard funcione correctamente.

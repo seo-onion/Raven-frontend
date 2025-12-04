@@ -13,19 +13,34 @@ export interface CampaignTeamMember {
 
 export interface Investor {
     id?: number;
-    name: string;
-    email: string;
-    amount: number;
-    status: string;
+    incubator_id?: number; // Write-only (for creating/updating)
+    incubator_details?: {  // Read-only
+        id: number;
+        name: string;
+    };
+    amount: string;
+    status: 'CONTACTED' | 'PITCH_SENT' | 'MEETING_SCHEDULED' | 'DUE_DILIGENCE' | 'TERM_SHEET' | 'COMMITTED';
 }
 
+export type InvestorDTO = Investor;
+
 export interface InvestmentRound {
-    id?: number;
+    id: number;
     name: string;
-    target: number;
-    valuation: number;
-    investors: Investor[];
+    target_amount: string;
+    pre_money_valuation?: string;
+    status: 'PLANNED' | 'OPEN' | 'CLOSED';
+    is_current: boolean;
+    launch_date?: string;
+    target_close_date?: string;
+    actual_close_date?: string;
+    investors?: Investor[];
+    total_committed_amount?: number;
+    created: string;
+    updated: string;
 }
+
+export type InvestmentRoundDTO = InvestmentRound;
 
 export interface CampaignFinancials {
     id?: number;
@@ -69,4 +84,81 @@ export interface CampaignData {
     financials: CampaignFinancials | null;
     tractions: CampaignTraction[];
     legal: CampaignLegal | null;
+    // Financial sheet with quarterly projections data
+    financial_sheet?: {
+        id?: number;
+        sheet_data?: {
+            q1?: { revenue: number; cogs: number; opex: number };
+            q2?: { revenue: number; cogs: number; opex: number };
+            q3?: { revenue: number; cogs: number; opex: number };
+            q4?: { revenue: number; cogs: number; opex: number };
+        } | null;
+        metadata?: {
+            last_updated?: string;
+            version?: number;
+        };
+    } | null;
+}
+
+export interface RoundNestedUpdateDTO {
+    name?: string;
+    target_amount?: string;
+    pre_money_valuation?: string;
+    status?: 'PLANNED' | 'OPEN' | 'CLOSED';
+    is_current?: boolean;
+    launch_date?: string;
+    target_close_date?: string;
+    actual_close_date?: string;
+    investors?: Investor[];
+}
+
+export interface RoundCreateDTO {
+    name: string;
+    target_amount: string; // decimal string
+    pre_money_valuation?: string;
+    status?: 'PLANNED' | 'OPEN' | 'CLOSED';
+    is_current?: boolean;
+    launch_date?: string; // YYYY-MM-DD
+    target_close_date?: string;
+    actual_close_date?: string;
+    investors?: InvestorDTO[];
+}
+
+export interface CampaignFinancialsBackendDTO {
+    total_capital_injection: number;
+    financial_projections: Record<string, any>;
+    pre_money_valuation: string;
+    // ... other fields
+}
+
+export interface CampaignDataWithFinancialsDTO extends CampaignData {
+    financials: CampaignFinancialsBackendDTO & CampaignFinancials;
+    rounds: InvestmentRound[];
+}
+
+/**
+ * DTO for updating campaign financials via PATCH
+ */
+export interface FinancialsUpdateDTO {
+    current_cash_balance?: number;
+    monthly_burn_rate?: number;
+    funding_goal?: number;
+    valuation?: number;
+    usage_of_funds?: string;
+    pre_money_valuation?: number;
+    financial_projections?: {
+        q1?: { revenue: number; cogs: number; opex: number };
+        q2?: { revenue: number; cogs: number; opex: number };
+        q3?: { revenue: number; cogs: number; opex: number };
+        q4?: { revenue: number; cogs: number; opex: number };
+    };
+    revenue_history?: Record<string, any>;
+    // For the spreadsheet/financial sheet data
+    financial_sheet?: {
+        data: Record<string, any>;
+        metadata?: {
+            last_updated: string;
+            version: number;
+        };
+    };
 }

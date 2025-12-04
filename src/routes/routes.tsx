@@ -13,6 +13,7 @@ const routes = {
     // Onboarding
     onboarding: "/onboarding",
     onboardingWizard: "/onboarding/wizard",
+    incubatorOnboardingWizard: "/incubator/onboarding/wizard",
 
     // Dashboard - Unified for both startup and incubator
     dashboard: "/dashboard",
@@ -24,6 +25,7 @@ const routes = {
     dashboardDesafios: "/dashboard/desafios",
     dashboardMentoring: "/dashboard/mentoring",
     dashboardMiProgreso: "/dashboard/mi-progreso",
+    dashboardMetrics: "/dashboard/metrics",
 
     // Main
     profile: "/profile",

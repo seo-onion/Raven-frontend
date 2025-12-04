@@ -4,15 +4,8 @@ import { useAuthStore } from '../../../stores/AuthStore';
 import routes from '../../../routes/routes';
 import './Sidebar.css';
 import Spinner from '@/components/common/Spinner/Spinner';
-import { MdFactory } from "react-icons/md";
-import { GoGraph } from "react-icons/go";
-import { LuDollarSign } from "react-icons/lu";
-import { LuUsers } from "react-icons/lu";
-import { FiTarget } from "react-icons/fi";
-import { LuBrain } from "react-icons/lu";
+import { MdFactory, MdDashboard } from "react-icons/md";
 import { RxExit } from "react-icons/rx";
-import { MdDashboard } from "react-icons/md";
-import { LuPackage } from "react-icons/lu";
 
 interface MenuItem {
     icon: React.ReactNode;
@@ -35,12 +28,7 @@ const IncubatorSidebar: React.FC = () => {
 
     const menuItems: MenuItem[] = [
         { icon: <MdDashboard size={24} />, label: 'Overview', path: '/dashboard/overview' },
-        { icon: <LuPackage size={24} />, label: 'Pipeline', path: '/dashboard/pipeline' },
-        { icon: <GoGraph size={24}/>, label: 'TRL/CRL', path: '/dashboard/trl-crl' },
-        { icon: <LuDollarSign size={24}/>, label: 'Finanzas', path: '/dashboard/finanzas' },
-        { icon: <LuUsers size={24}/>, label: 'Inversores', path: '/dashboard/inversores' },
-        { icon: <FiTarget size={24}/>, label: 'Desafíos', path: '/dashboard/desafios' },
-        { icon: <LuBrain size={24}/>, label: 'Mentoring', path: '/dashboard/mentoring' },
+        // Add other incubator pages here once identified
     ];
 
     return (

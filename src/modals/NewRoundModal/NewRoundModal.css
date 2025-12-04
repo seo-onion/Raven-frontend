@@ -1,15 +1,147 @@
 .new-round-modal {
-    padding: 24px;
-    background-color: var(--background-color);
+    padding: 1.5rem;
+    background-color: white;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-.new-round-modal h2 {
-    margin-bottom: 24px;
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.modal-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.modal-subtitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Investor Input Group */
+.investor-input-group {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr auto;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    background: #f9fafb;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.add-investor-btn {
+    height: 42px;
+    /* Match input height roughly */
+    margin-bottom: 2px;
+}
+
+/* Investors List */
+.investors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.investor-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.investor-item:hover {
+    border-color: var(--main-secondary);
+}
+
+.investor-info {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex: 1;
+}
+
+.investor-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.investor-email {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.investor-amount {
+    margin-left: auto;
+    font-weight: 600;
+    color: var(--main-secondary);
+}
+
+.remove-investor-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.remove-investor-btn:hover {
+    color: #ef4444;
 }
 
 .new-round-modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    margin-top: 24px;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+@media (max-width: 640px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .investor-input-group {
+        grid-template-columns: 1fr;
+    }
+
+    .investor-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .investor-amount {
+        margin-left: 0;
+    }
 }

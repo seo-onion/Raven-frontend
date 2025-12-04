@@ -1,0 +1,11 @@
+.apply-challenge-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 400px;
+}
+
+.apply-challenge-modal textarea {
+    min-height: 150px;
+    resize: vertical;
+}

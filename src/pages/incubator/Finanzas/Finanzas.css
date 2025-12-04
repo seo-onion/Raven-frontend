@@ -1,0 +1,296 @@
+/* Finanzas Container - Exact copy from HTML */
+.finanzas-container {
+    max-width: 80rem;
+    max-width: 100%;
+    margin: 20px;
+    margin-top: 4px;
+}
+
+.finanzas-container>*+* {
+    margin-top: 1.5rem;
+}
+
+/* Header */
+.finanzas-main-title {
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+}
+
+.finanzas-subtitle {
+    margin: 0;
+    opacity: 0.7;
+    font-size: 1rem;
+}
+
+/* Action Buttons */
+.finanzas-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.finanzas-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: opacity 150ms;
+}
+
+.finanzas-btn:hover {
+    opacity: 0.9;
+}
+
+.finanzas-btn-primary {
+    background-color: var(--main-secondary);
+    color: white;
+}
+
+.finanzas-btn-secondary {
+    background-color: white;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+/* Metrics Grid */
+.finanzas-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .finanzas-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .finanzas-metrics-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Charts Grid */
+.finanzas-charts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .finanzas-charts-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.finanzas-header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.typeselectioncard-button {
+    height: 40px;
+}
+
+.button-container {
+
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Investment Lists */
+.finanzas-section-title {
+    font-size: 1.25rem;
+    /* text-xl */
+    font-weight: 700;
+    /* font-bold */
+    margin-bottom: 1rem;
+    /* mb-4 */
+    color: black;
+}
+
+.finanzas-list-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.finanzas-empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+    /* text-gray-500 */
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px dashed #e5e7eb;
+}
+
+/* Investment Card - Following ChallengeCard pattern */
+.finanzas_investmentcard {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: white;
+    align-items: center;
+}
+
+.finanzas_investmentcard:hover {
+    border-color: var(--main-primary);
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.1);
+}
+
+.finanzas_investmentavatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(147, 51, 234, 0.15));
+    color: var(--main-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.finanzas_investmentavatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.finanzas_investmentcontent {
+    flex-grow: 1;
+}
+
+.finanzas_investmentname {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.finanzas_investmentround {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.finanzas_investmentdetails {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.finanzas_investmentdetail {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+}
+
+.finanzas_investmentlabel {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-bottom: 0.125rem;
+}
+
+.finanzas_investmentvalue {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.finanzas_investmentstatus {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.finanzas_investmentstatus.committed {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.finanzas_investmentstatus.rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.finanzas_investmentstatus.pending {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.finanzas_investmentactions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Section Wrapper */
+.finanzas_section {
+    margin-top: 2rem;
+}
+
+.finanzas_sectionheader {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.finanzas_sectionwrapper {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+
+/* Loading State */
+.finanzas_loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 16rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .finanzas_investmentcard {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .finanzas_investmentdetails {
+        width: 100%;
+        justify-content: space-between;
+        padding-top: 0.75rem;
+        margin-top: 0.75rem;
+        border-top: 1px dashed #e5e7eb;
+    }
+
+    .finanzas_investmentactions {
+        width: 100%;
+        margin-top: 0.75rem;
+    }
+
+    .finanzas_investmentactions button {
+        flex-grow: 1;
+    }
+}

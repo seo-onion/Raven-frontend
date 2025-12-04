@@ -159,7 +159,10 @@ export const calculateIRR = (cashFlows: number[], guess: number = 0.1): number =
  * @param adjustedProjections The adjusted financial projections.
  * @returns An object containing all calculated KPIs.
  */
-export const calculateAllKPIs = (adjustedProjections: FinancialProjectionsAdjusted): CalculatedKPIs => {
+export const calculateAllKPIs = (
+    adjustedProjections: FinancialProjectionsAdjusted,
+    initialInvestment: number = 0
+): CalculatedKPIs => {
     const qValues = Object.values(adjustedProjections);
 
     const totalGrossProfit = qValues.reduce((sum, q) => sum + (q.grossProfit || 0), 0);
@@ -167,11 +170,11 @@ export const calculateAllKPIs = (adjustedProjections: FinancialProjectionsAdjust
 
     const freeCashFlows = qValues.map(q => q.freeCashFlow || 0);
 
-    // Assuming an initial investment of 0 for NPV and IRR based on the prompt's context
-    // If there's an initial investment, it should be passed here or pre-pended to cashFlows
-    const npv = calculateNPV(freeCashFlows);
-    const irr = calculateIRR([0, ...freeCashFlows]); // IRR usually includes an initial (negative) cash flow at period 0.
-    // Here, assuming current state is period 0 with 0 cash flow, then future quarters.
+    // Use initialInvestment (negative) for NPV and IRR
+    // Note: calculateNPV expects initialInvestment as a separate parameter (usually negative)
+    // calculateIRR expects an array where the first element is the initial investment (negative)
+    const npv = calculateNPV(freeCashFlows, WACC_DEFAULT, -initialInvestment);
+    const irr = calculateIRR([-initialInvestment, ...freeCashFlows]);
 
     return {
         grossProfit: totalGrossProfit,

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import useModalStore from '@/stores/ModalStore';
-import { useAddInvestorToRound } from '@/hooks/useStartupData';
+import { useStartupData, useInvestmentRounds } from '@/hooks/useStartupData';
+import { updateRound } from '@/api/rounds';
 import Input from '@/components/forms/Input/Input';
 import Select from '@/components/forms/Select/Select';
 import Button from '@/components/common/Button/Button';
+import type { RoundNestedUpdateDTO } from '@/types/campaigns';
 import './NewInvestorModal.css';
 
 interface NewInvestorModalProps {
@@ -14,13 +17,18 @@ interface NewInvestorModalProps {
 
 const NewInvestorModal: React.FC<NewInvestorModalProps> = ({ roundId }) => {
     const { t } = useTranslation('common');
+    const queryClient = useQueryClient();
     const { closeModal } = useModalStore();
-    const { mutate: addInvestor, isPending } = useAddInvestorToRound();
+    const { data: startupData } = useStartupData();
+    const { data: rounds } = useInvestmentRounds();
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [amount, setAmount] = useState(0);
+    const incubators = startupData?.incubators || [];
+    const currentRound = rounds?.find(r => r.id === roundId);
+
+    const [incubatorId, setIncubatorId] = useState<number | ''>('');
+    const [amount, setAmount] = useState<string>('');
     const [status, setStatus] = useState('CONTACTED');
+    const [isPending, setIsPending] = useState(false);
 
     const statusOptions = [
         { value: 'CONTACTED', label: t('stage_contacted') },
@@ -31,44 +39,87 @@ const NewInvestorModal: React.FC<NewInvestorModalProps> = ({ roundId }) => {
         { value: 'COMMITTED', label: t('stage_committed') },
     ];
 
-    const handleSubmit = () => {
-        if (!name || !email || amount <= 0) {
+    const incubatorOptions = useMemo(() => {
+        return incubators.map(inc => ({
+            value: inc.id.toString(),
+            label: inc.name
+        }));
+    }, [incubators]);
+
+    const handleSubmit = async () => {
+        if (!incubatorId || !amount || Number(amount) <= 0) {
             toast.error(t('fill_all_fields'));
             return;
         }
 
-        addInvestor({ roundId, investor: { name, email, amount, status } }, {
-            onSuccess: () => {
-                toast.success(t('investor_added_successfully'));
-                closeModal();
-            },
-            onError: () => {
-                toast.error(t('error_adding_investor'));
-            }
-        });
+        if (!currentRound) {
+            toast.error(t('error_round_not_found'));
+            return;
+        }
+
+        const targetAmount = Number(currentRound.target_amount);
+        const newAmount = Number(amount);
+
+        if (newAmount > targetAmount) {
+            toast.error(t('ticket_cannot_exceed_target'));
+            return;
+        }
+
+        // Calculate current total committed amount
+        const currentTotal = currentRound.investors?.reduce((acc, inv) => acc + Number(inv.amount), 0) || 0;
+
+        if (currentTotal + newAmount > targetAmount) {
+            toast.error(t('total_tickets_cannot_exceed_target'));
+            return;
+        }
+
+        setIsPending(true);
+
+        // Construct the new investor object
+        const newInvestor = {
+            incubator_id: Number(incubatorId),
+            amount: amount,
+            status: status as any
+        };
+
+        // Prepare the payload with existing investors + new investor
+        // We need to map existing investors to the DTO structure
+        const existingInvestors = currentRound.investors?.map(inv => ({
+            id: inv.id,
+            incubator_id: inv.incubator_id || inv.incubator_details?.id,
+            amount: inv.amount, // Already string in DTO
+            status: inv.status
+        })) || [];
+
+        const payload: RoundNestedUpdateDTO = {
+            investors: [...existingInvestors, newInvestor]
+        };
+
+        try {
+            await updateRound(roundId, payload);
+            await queryClient.invalidateQueries({ queryKey: ['investment-rounds'] });
+            toast.success(t('investor_added_successfully'));
+            closeModal();
+        } catch (error) {
+            console.error(error);
+            toast.error(t('error_adding_investor'));
+        } finally {
+            setIsPending(false);
+        }
     };
 
     return (
         <div className="new-investor-modal">
             <h2 className="text-black">{t('add_new_investor')}</h2>
             <div className="wizard-form-group">
-                <Input
-                    name="name"
-                    label={t('investor_name')}
-                    value={name}
-                    setValue={setName}
-                    placeholder="Angel Investor"
-                    required
-                />
-            </div>
-            <div className="wizard-form-group">
-                <Input
-                    name="email"
-                    label={t('email')}
-                    type="email"
-                    value={email}
-                    setValue={setEmail}
-                    placeholder="investor@example.com"
+                <Select
+                    label={t('investor_name')} // Using investor_name label for incubator selection
+                    value={incubatorId.toString()}
+                    onChange={(e) => setIncubatorId(Number(e.target.value))}
+                    options={[
+                        { value: '', label: t('select_investor') },
+                        ...incubatorOptions
+                    ]}
                     required
                 />
             </div>
@@ -77,8 +128,8 @@ const NewInvestorModal: React.FC<NewInvestorModalProps> = ({ roundId }) => {
                     name="amount"
                     label={t('amount')}
                     type="number"
-                    value={String(amount)}
-                    setValue={(value) => setAmount(Number(value))}
+                    value={amount}
+                    setValue={setAmount}
                     placeholder="50000"
                     required
                 />

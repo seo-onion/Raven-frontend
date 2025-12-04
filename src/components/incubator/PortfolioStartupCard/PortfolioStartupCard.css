@@ -1,0 +1,60 @@
+.portfolio-startup-card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease;
+}
+
+.portfolio-startup-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.portfolio-startup-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.portfolio-startup-logo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+}
+
+.portfolio-startup-initial {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: var(--main-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.portfolio-startup-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.portfolio-startup-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.portfolio-startup-industry {
+    font-size: 0.75rem;
+    color: #6b7280;
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    width: fit-content;
+}

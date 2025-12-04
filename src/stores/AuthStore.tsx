@@ -32,6 +32,7 @@ export interface UserDetails {
     user_type?: 'startup' | 'incubator';
     onboarding_complete?: boolean;
     company_name?: string;
+    name?: string; // For incubators
 }
 
 /**
@@ -239,6 +240,7 @@ interface AuthStore {
     resendConfirmationCode: (token: string) => Promise<boolean>; // Called by logIn
     verifyConfirmationCode: (code: string) => Promise<boolean>;
     setOnboardingComplete: (isComplete: boolean) => void;
+    updateUser: (data: Partial<UserDetails>) => void;
 
     // Password management
     sendResetPasswordRequest: (data: ResetPasswordRequest) => Promise<boolean>;
@@ -297,6 +299,16 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 const res = await axiosInstance.post(LOGIN_PATH, credentials);
                 const res_payload: LoginSuccessResponse = res.data;
 
+                if (!res_payload.user) {
+                    console.error("Login response missing user details:", res_payload);
+                    throw new Error("Invalid login response: missing user details");
+                }
+
+                // Normalize user_type if needed (backend might return 'incubadora')
+                if (res_payload.user.user_type === 'incubadora' as any) {
+                    res_payload.user.user_type = 'incubator';
+                }
+
                 localStorage.setItem(ACCESS_TOKEN_KEY, res_payload.access);
                 localStorage.setItem(REFRESH_TOKEN_KEY, res_payload.refresh);
                 localStorage.setItem(USER_KEY, JSON.stringify(res_payload.user));
@@ -343,21 +355,19 @@ const useAuthStore = create<AuthStore>()((set, get) => {
             set({ isLoading: true });
             toast.dismiss();
             try {
-                const res = await axiosInstance.post(LOGOUT_PATH);
-                const res_payload: LogoutSuccessResponse = res.data;
-                if ('detail' in res_payload) console.log("Logout Success")
+                await axiosInstance.post(LOGOUT_PATH);
+                console.log("Logout Success");
             } catch (error: any) {
                 const res_payload: LogoutErrorResponse = error?.response?.data;
                 console.error("Logout Failed", res_payload?.detail);
+            } finally {
+                // Always clear local storage and state, even if API fails
+                localStorage.clear();
+                setSidebarPosition(false);
+                set({ isLogged: false, isLoading: false, user: undefined }); // Clear user state
+                // Redirect to login page
+                window.location.href = '/login';
             }
-
-            // Clear ALL localStorage data
-            localStorage.clear();
-
-            setSidebarPosition(false);
-            set({ isLogged: false, isLoading: false, user: undefined }); // Clear user state
-            // Redirect to home page
-            window.location.href = '/';
         },
 
         /**
@@ -417,6 +427,18 @@ const useAuthStore = create<AuthStore>()((set, get) => {
                 const updatedUserDetails = { ...userDetails, onboarding_complete: isComplete };
                 localStorage.setItem(USER_KEY, JSON.stringify(updatedUserDetails));
                 set({ user: updatedUserDetails }); // Update user state in Zustand
+            }
+        },
+
+        /**
+         * Update user details in state and local storage
+         */
+        updateUser: (data: Partial<UserDetails>) => {
+            const userDetails = get().user;
+            if (userDetails) {
+                const updatedUserDetails = { ...userDetails, ...data };
+                localStorage.setItem(USER_KEY, JSON.stringify(updatedUserDetails));
+                set({ user: updatedUserDetails });
             }
         },
 

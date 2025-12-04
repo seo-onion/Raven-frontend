@@ -1,0 +1,405 @@
+/* =============================================================================
+   Incubator Metrics Page Styles
+   Uses CSS variables from theme.css and follows naming convention
+   ============================================================================= */
+
+.incubatormetrics_container {
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+}
+
+/* Loading & Error States */
+.incubatormetrics_loading,
+.incubatormetrics_error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+    color: var(--text-secondary);
+}
+
+.incubatormetrics_error h2 {
+    color: var(--error-color, #dc2626);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Header */
+.incubatormetrics_header {
+    margin-bottom: 2rem;
+}
+
+.incubatormetrics_title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.incubatormetrics_subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* KPI Grid */
+.incubatormetrics_kpigrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 1200px) {
+    .incubatormetrics_kpigrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .incubatormetrics_kpigrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Table Card */
+.incubatormetrics_tablecard {
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.incubatormetrics_tableheader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.incubatormetrics_tableheader h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.incubatormetrics_count {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+}
+
+.incubatormetrics_tablecontainer {
+    overflow-x: auto;
+}
+
+.incubatormetrics_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.incubatormetrics_table thead {
+    background: var(--bg-tertiary);
+}
+
+.incubatormetrics_table th {
+    padding: 0.875rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.incubatormetrics_table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.incubatormetrics_table tbody tr:hover {
+    background: var(--bg-hover, rgba(124, 58, 237, 0.04));
+}
+
+.incubatormetrics_table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Startup Cell */
+.incubatormetrics_startup {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.incubatormetrics_logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--main-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.incubatormetrics_logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.incubatormetrics_logo_placeholder {
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.incubatormetrics_startupname {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Industry Badge */
+.incubatormetrics_industry {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* Level Indicators */
+.incubatormetrics_level {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.incubatormetrics_level.active {
+    background: linear-gradient(135deg, var(--main-primary) 0%, var(--main-secondary) 100%);
+    color: white;
+}
+
+.incubatormetrics_level.inactive {
+    background: var(--bg-tertiary);
+    color: var(--text-muted, #9ca3af);
+}
+
+/* N/A Styling */
+.incubatormetrics_na {
+    background: var(--bg-tertiary);
+}
+
+.incubatormetrics_natext {
+    color: var(--text-muted, #9ca3af);
+    font-style: italic;
+}
+
+/* Action Button */
+.incubatormetrics_actionbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem !important;
+    padding: 0.375rem 0.75rem !important;
+}
+
+.incubatormetrics_actionbtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Empty State */
+.incubatormetrics_empty {
+    text-align: center;
+    padding: 3rem 1rem !important;
+    color: var(--text-secondary);
+}
+
+/* Summary Section */
+.incubatormetrics_summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .incubatormetrics_summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .incubatormetrics_summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+.incubatormetrics_summaryitem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.incubatormetrics_summaryitem:hover {
+    border-color: var(--main-primary);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.incubatormetrics_summaryicon {
+    width: 40px;
+    height: 40px;
+    color: var(--main-primary);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    padding: 0.5rem;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.incubatormetrics_summaryitem>div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.incubatormetrics_summarylabel {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.incubatormetrics_summaryvalue {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .incubatormetrics_container {
+        padding: 1rem;
+    }
+
+    .incubatormetrics_title {
+        font-size: 1.5rem;
+    }
+
+    .incubatormetrics_tableheader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* =============================================================================
+   Startup Financial Detail View Styles
+   ============================================================================= */
+
+/* Detail Header with Back Button */
+.incubatormetrics_detailheader {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.incubatormetrics_backbtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem !important;
+    flex-shrink: 0;
+}
+
+.incubatormetrics_backbtn:hover {
+    background: var(--main-primary) !important;
+    color: white !important;
+}
+
+/* Demo Banner */
+.incubatormetrics_demobanner {
+    padding: 0.75rem 1rem;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    color: #92400e;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Financial Metrics Grid (for detail view) */
+.incubatormetrics_financegrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.incubatormetrics_financegrid_secondary {
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 1200px) {
+    .incubatormetrics_financegrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .incubatormetrics_financegrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Charts Grid */
+.incubatormetrics_chartsgrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .incubatormetrics_chartsgrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Detail Header Responsive */
+@media (max-width: 768px) {
+    .incubatormetrics_detailheader {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

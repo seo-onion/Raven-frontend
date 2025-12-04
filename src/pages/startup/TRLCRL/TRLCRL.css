@@ -67,5 +67,21 @@
 
 /* Levels List */
 .trl-crl-levels-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.trl-crl-add-level-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
     padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.add-level-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
 }

@@ -2,22 +2,26 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CrowdfundingBar from '../../../components/dashboard/CrowdfundingBar/CrowdfundingBar';
 import FundingRoundCard from '../../../components/dashboard/FundingRoundCard/FundingRoundCard';
-import InvestorPipelineCard from '../../../components/dashboard/InvestorPipelineCard/InvestorPipelineCard';
-import { useInvestors, useInvestmentRounds } from '../../../hooks/useStartupData';
+import { useInvestmentRounds, useStartupData } from '../../../hooks/useStartupData';
+import useStartupValidation from '@/hooks/useStartupValidation';
 import Button from '@/components/common/Button/Button';
 import useModalStore from '@/stores/ModalStore';
 import NewRoundModal from '@/modals/NewRoundModal/NewRoundModal';
 import NewInvestorModal from '@/modals/NewInvestorModal/NewInvestorModal';
+import AssociateIncubatorModal from '@/modals/AssociateIncubatorModal/AssociateIncubatorModal';
+import Spinner from '@/components/common/Spinner/Spinner';
 import './Inversores.css';
-
-// Definir el tipo para el stage del pipeline
-type PipelineStage = 'in-progress' | 'active' | 'discarded';
 
 const Inversores: React.FC = () => {
     const { t } = useTranslation('common');
-    const { data: investors, isLoading: isLoadingInvestors, error: errorInvestors } = useInvestors();
+
     const { data: rounds, isLoading: isLoadingRounds, error: errorRounds } = useInvestmentRounds();
+    const { data: startupData, isLoading: isLoadingStartupData } = useStartupData();
+    const associatedIncubators = startupData?.incubators;
     const { setModalContent } = useModalStore();
+
+    // Validate startup has company_name, redirect to wizard if not
+    useStartupValidation();
 
     const handleNewRound = () => {
         setModalContent(<NewRoundModal />);
@@ -27,12 +31,13 @@ const Inversores: React.FC = () => {
         setModalContent(<NewInvestorModal roundId={roundId} />);
     };
 
-    const totalGoal = (rounds || []).reduce((acc, round) => acc + (round.target || 0), 0);
-    const totalCurrent = (rounds || []).reduce((acc, round) => {
-        const investors = round.investors || [];
-        const roundTotal = investors.reduce((iAcc, i) => iAcc + (i.amount || 0), 0);
-        return acc + roundTotal;
-    }, 0);
+    const handleAssociateIncubators = () => {
+        setModalContent(<AssociateIncubatorModal />);
+    };
+
+    const currentRound = rounds?.find(r => r.is_current);
+    const totalGoal = currentRound ? Number(currentRound.target_amount || 0) : 0;
+    const totalCurrent = currentRound?.investors?.reduce((acc, inv) => acc + Number(inv.amount || 0), 0) || 0;
     const totalPercentage = totalGoal > 0 ? (totalCurrent / totalGoal) * 100 : 0;
 
     return (
@@ -69,19 +74,25 @@ const Inversores: React.FC = () => {
                 {errorRounds && <p className="text-black">{t('error')}: {(errorRounds as Error).message}</p>}
                 {rounds?.map((round) => {
                     const investors = round.investors || [];
-                    const roundCurrent = investors.reduce((acc, investor) => acc + (investor.amount || 0), 0);
-                    const roundPercentage = (round.target || 0) > 0 ? (roundCurrent / round.target) * 100 : 0;
+                    const roundTarget = Number(round.target_amount || 0);
+                    const roundCurrent = investors.reduce((acc, investor) => acc + Number(investor.amount || 0), 0);
+                    const roundPercentage = roundTarget > 0 ? (roundCurrent / roundTarget) * 100 : 0;
+
+                    let cardStatus: 'pending' | 'in-progress' | 'completed' = 'pending';
+                    if (round.status === 'OPEN') cardStatus = 'in-progress';
+                    if (round.status === 'CLOSED') cardStatus = 'completed';
+
                     return (
                         <div key={round.id} className="funding-round-with-button">
                             <FundingRoundCard
                                 name={round.name}
-                                value={`$${(round.target || 0).toLocaleString()}`}
-                                closeDate="N/A"
-                                status="in-progress"
-                                percentage={roundPercentage}
-                                investors={investors.map(i => i.name || 'Unknown')}
+                                value={`$${roundTarget.toLocaleString()}`}
+                                closeDate={round.target_close_date || 'N/A'}
+                                status={cardStatus}
+                                percentage={Math.round(roundPercentage)}
+                                investors={investors.map(i => i.incubator_details?.name || 'Unknown')}
                             />
-                            <Button variant="secondary" onClick={() => handleNewInvestor(round.id!)}>
+                            <Button variant="secondary" onClick={() => handleNewInvestor(round.id)}>
                                 + {t('add_investor')}
                             </Button>
                         </div>
@@ -89,58 +100,38 @@ const Inversores: React.FC = () => {
                 })}
             </div>
 
-            {/* Investor Pipeline */}
+            {/* Associated Incubators */}
             <div className="inversores-section">
-                <h2 className="inversores-section-title">
-                    {t('investor_pipeline')}
-                </h2>
+                <div className="inversores-section-header">
+                    <h2 className="inversores-section-title">
+                        {t('associated_incubators')}
+                    </h2>
+                    <Button variant="primary" onClick={handleAssociateIncubators}>
+                        + {t('associate_incubators')}
+                    </Button>
+                </div>
 
-                {isLoadingInvestors && <p className="text-black">{t('loading')}</p>}
-                {errorInvestors && <p className="text-black">{t('error')}: {(errorInvestors as Error).message}</p>}
-
-                {investors && investors.length === 0 && (
-                    <p className="text-black">{t('no_investors_yet')}</p>
+                {isLoadingStartupData && (
+                    <div className="inversores-loading">
+                        <Spinner variant="primary" size="lg" />
+                        <p className="text-black">{t('loading_data')}</p>
+                    </div>
                 )}
 
-                {investors && investors.map((investor) => {
-                    const initials = investor.investor_name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .toUpperCase()
-                        .slice(0, 2);
+                {associatedIncubators && associatedIncubators.length === 0 && (
+                    <p className="text-black">{t('no_associated_incubators')}</p>
+                )}
 
-                    // Mapeo con tipo explícito
-                    const stageMap: Record<string, PipelineStage> = {
-                        'CONTACTED': 'in-progress',
-                        'PITCH_SENT': 'in-progress',
-                        'MEETING_SCHEDULED': 'in-progress',
-                        'DUE_DILIGENCE': 'in-progress',
-                        'TERM_SHEET': 'active',
-                        'COMMITTED': 'active',
-                        'DECLINED': 'discarded'
-                    };
-
-                    // Asegurar el tipo con aserción
-                    const pipelineStage: PipelineStage = stageMap[investor.stage] || 'in-progress';
-
-                    return (
-                        <InvestorPipelineCard
-                            key={investor.id}
-                            name={investor.investor_name}
-                            initials={initials}
-                            description={investor.notes || t('no_description')}
-                            avatarColor="var(--main-secondary)"
-                            stage={pipelineStage}
-                            valuation="N/A"
-                            softInvestment={investor.ticket_size ? `$${investor.ticket_size.toLocaleString()}` : 'N/A'}
-                            expectedClose={investor.next_action_date || t('pending')}
-                            email={investor.investor_email || ''}
-                            phone=""
-                            isComplete={investor.stage === 'COMMITTED'}
-                        />
-                    );
-                })}
+                {associatedIncubators && associatedIncubators.map((incubator) => (
+                    <div key={incubator.id} className="incubator-card">
+                        <div className="incubator-header">
+                            <h3 className="incubator-name text-black">{incubator.name}</h3>
+                            <p className="incubator-meta text-black">
+                                {t('created')}: {new Date(incubator.created).toLocaleDateString()}
+                            </p>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

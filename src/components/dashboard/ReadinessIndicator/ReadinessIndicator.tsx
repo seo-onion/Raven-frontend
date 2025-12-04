@@ -8,7 +8,7 @@ interface ReadinessIndicatorProps {
 }
 
 const ReadinessIndicator = ({ type, currentLevel, totalLevels, label }: ReadinessIndicatorProps) => {
-    const percentage = Math.round((currentLevel / totalLevels) * 100);
+    const percentage = totalLevels > 0 ? Math.round((currentLevel / totalLevels) * 100) : 0;
     const isTRL = type === 'TRL';
 
     return (

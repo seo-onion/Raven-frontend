@@ -1,0 +1,97 @@
+Modifica el backend para aceptar payloads de onboarding con campos opcionales.
+
+PROBLEMA:
+El frontend ahora envía solo los datos completados por el usuario (sin arrays vacíos), pero el backend falla con KeyError: 'financial_data' cuando intenta acceder a campos que no están presentes.
+
+ARCHIVOS A MODIFICAR:
+
+1. users/serializers.py - OnboardingWizardSerializer:
+
+```python
+class OnboardingWizardSerializer(serializers.Serializer):
+    # Required
+    company_name = serializers.CharField(max_length=255)
+    industry = serializers.CharField(max_length=100)
+    current_trl = serializers.IntegerField(min_value=1, max_value=9)
+    current_crl = serializers.IntegerField(min_value=1, max_value=9, allow_null=True, required=False)
+
+    # Optional - AGREGAR required=False a TODOS estos campos
+    target_funding_amount = serializers.DecimalField(max_digits=12, decimal_places=2, required=False, allow_null=True)
+    financial_projections = FinancialProjectionsSerializer(required=False, allow_null=True)
+    evidences = EvidenceSerializer(many=True, required=False, allow_empty=True)
+    financial_data = FinancialDataSerializer(many=True, required=False, allow_empty=True)
+    investors = InvestorSerializer(many=True, required=False, allow_empty=True)
+    incubator_ids = serializers.ListField(child=serializers.IntegerField(), required=False, allow_empty=True)
+```
+
+2. users/views.py - CompleteOnboardingView método post() (líneas ~280-320):
+
+```python
+# Inicializar result con valores por defecto
+result = {
+    'evidences': [],
+    'financial_data': [],
+    'investors': [],
+}
+
+# Actualizar startup con campos opcionales
+if 'target_funding_amount' in validated_data:
+    startup.target_funding_amount = validated_data['target_funding_amount']
+
+# Procesar SOLO si existen en el payload
+if 'evidences' in validated_data and validated_data['evidences']:
+    evidences_objects = []
+    for evidence_data in validated_data['evidences']:
+        evidence_obj = Evidence.objects.create(startup=startup, **evidence_data)
+        evidences_objects.append(evidence_obj)
+    result['evidences'] = evidences_objects
+
+if 'financial_data' in validated_data and validated_data['financial_data']:
+    financial_data_objects = []
+    for fd_data in validated_data['financial_data']:
+        fd_obj = FinancialData.objects.create(startup=startup, **fd_data)
+        financial_data_objects.append(fd_obj)
+    result['financial_data'] = financial_data_objects
+
+if 'investors' in validated_data and validated_data['investors']:
+    investors_objects = []
+    for investor_data in validated_data['investors']:
+        investor_obj = Investor.objects.create(startup=startup, **investor_data)
+        investors_objects.append(investor_obj)
+    result['investors'] = investors_objects
+
+if 'incubator_ids' in validated_data and validated_data['incubator_ids']:
+    startup.incubators.set(validated_data['incubator_ids'])
+
+# Mensaje - usar .get() para evitar KeyError
+detail_message = (
+    f"Onboarding completed successfully. "
+    f"Created {len(result.get('evidences', []))} evidences, "
+    f"{len(result.get('financial_data', []))} financial periods, "
+    f"{len(result.get('investors', []))} investors."
+)
+
+return Response({
+    'detail': detail_message,
+    'startup_id': startup.id,
+    'is_mock_data': False,
+    'current_trl': startup.current_trl,
+    'target_funding_amount': str(startup.target_funding_amount) if startup.target_funding_amount else "0",
+    'evidences_count': len(result.get('evidences', [])),
+    'financial_periods_count': len(result.get('financial_data', [])),
+    'investors_count': len(result.get('investors', [])),
+    'current_crl': startup.current_crl,
+}, status=status.HTTP_200_OK)
+```
+
+PAYLOAD DE PRUEBA MÍNIMO:
+```json
+{
+  "company_name": "Test Startup",
+  "industry": "technology",
+  "current_trl": 1,
+  "current_crl": null
+}
+```
+
+Este payload debe ser aceptado sin errores.

@@ -55,20 +55,22 @@ const VerifyEmail = () => {
             if (success) {
                 toast.success(t('email_verified_success'))
 
-                // Get user data from localStorage to check onboarding status
-                const userStr = localStorage.getItem('user')
-                if (userStr) {
-                    const user = JSON.parse(userStr)
+                // Get the updated user data from AuthStore after verification
+                const user = useAuthStore.getState().user
 
-                    // If startup user hasn't completed onboarding, redirect to wizard
-                    if (user.user_type === 'startup' && !user.onboarding_complete) {
+                // Redirect based on user type and company_name status
+                if (user?.user_type === 'startup') {
+                    if (!user.company_name) {
+                        // Startup without company_name -> onboarding wizard
                         navigate(routes.onboardingWizard)
-                        return
+                    } else {
+                        // Startup with company_name -> Mi Progreso
+                        navigate(routes.dashboardMiProgreso)
                     }
+                } else {
+                    // Incubator -> Overview
+                    navigate(routes.dashboardOverview)
                 }
-
-                // Otherwise, redirect to dashboard
-                navigate(routes.dashboard)
             }
         } catch (error) {
             toast.error(t('verification_failed'))

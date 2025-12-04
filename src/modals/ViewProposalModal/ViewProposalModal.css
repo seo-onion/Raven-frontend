@@ -1,0 +1,38 @@
+.view-proposal-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 500px;
+}
+
+.view-proposal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.view-proposal-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.view-proposal-value {
+    font-size: 1rem;
+    color: #1f2937;
+    background-color: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+    white-space: pre-wrap;
+}
+
+.view-proposal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}

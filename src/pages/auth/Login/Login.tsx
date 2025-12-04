@@ -77,10 +77,25 @@ const IncubatorLogin = () => {
                 toast.success(t('success'))
                 const user = useAuthStore.getState().user;
 
-                if (user?.user_type === 'startup' && !user.company_name) {
-                    navigate(routes.onboardingWizard)
+                // Redirect based on user type and onboarding status
+                if (user?.user_type === 'startup') {
+                    if (!user.company_name) {
+                        // Startup without company_name -> onboarding wizard
+                        navigate(routes.onboardingWizard)
+                    } else {
+                        // Startup with company_name -> Mi Progreso
+                        navigate(routes.dashboardMiProgreso)
+                    }
                 } else {
-                    navigate(routes.dashboardOverview)
+                    // Incubator
+                    // Always validate name and onboarding status
+                    if (!user?.name || !user?.onboarding_complete) {
+                        // Incubator without name or incomplete onboarding -> onboarding wizard
+                        navigate(routes.incubatorOnboardingWizard)
+                    } else {
+                        // Incubator with name and complete onboarding -> Overview
+                        navigate(routes.dashboardOverview)
+                    }
                 }
             }
 
@@ -103,9 +118,6 @@ const IncubatorLogin = () => {
                     <MdFactory size={40} color='var(--main-primary)' />
                 </div>
                 <h1 className="text-white">{t('raven_crm_title')}</h1>
-                <p className="text-white incubatorlogin-subtitle">
-                    {t('login_as_incubator')}
-                </p>
             </div>
 
             <div className="incubatorlogin-content-container">

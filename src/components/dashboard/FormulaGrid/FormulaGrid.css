@@ -1,0 +1,269 @@
+.formulagrid-container {
+    background: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.formulagrid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.formulagrid-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+}
+
+.formulagrid-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.formulagrid-hint {
+    background: var(--info-background);
+    border-left: 4px solid var(--main-primary);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+}
+
+.formulagrid-hint p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+.formulagrid-wrapper {
+    overflow-x: auto;
+    margin-bottom: var(--spacing-md);
+}
+
+.formulagrid-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+}
+
+.formulagrid-corner-cell {
+    background: var(--surface-secondary);
+    border-bottom: 2px solid var(--border-color);
+    border-right: 2px solid var(--border-color);
+    padding: var(--spacing-md);
+    font-weight: var(--font-weight-bold);
+    text-align: left;
+    position: sticky;
+    left: 0;
+    z-index: 3;
+}
+
+.formulagrid-column-header {
+    background: var(--surface-secondary);
+    border-bottom: 2px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.formulagrid-column-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    position: relative;
+}
+
+.formulagrid-column-label {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--main-primary);
+    background: var(--primary-background);
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm);
+}
+
+.formulagrid-row-header {
+    background: var(--surface-secondary);
+    border-right: 2px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-sm);
+    font-weight: var(--font-weight-semibold);
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.formulagrid-row-header-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.formulagrid-row-number {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--main-primary);
+    background: var(--primary-background);
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm);
+    min-width: 24px;
+    text-align: center;
+}
+
+.formulagrid-rowname {
+    cursor: pointer;
+    flex: 1;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s;
+}
+
+.formulagrid-rowname:hover {
+    background: var(--hover-background);
+}
+
+.formulagrid-rowname-input {
+    flex: 1;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--main-primary);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    outline: none;
+}
+
+.formulagrid-cell {
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0;
+    text-align: right;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    min-width: 120px;
+}
+
+.formulagrid-cell:hover {
+    background: var(--hover-background);
+}
+
+.formulagrid-cell-formula {
+    background: var(--formula-background, rgba(59, 130, 246, 0.05));
+}
+
+.formulagrid-cell-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    min-height: 40px;
+}
+
+.formulagrid-cell-value {
+    font-weight: var(--font-weight-medium);
+}
+
+.formulagrid-cell-formula-indicator {
+    color: var(--main-primary);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    background: var(--primary-background);
+    padding: 2px 6px;
+    border-radius: var(--border-radius-sm);
+}
+
+.formulagrid-cell-input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid var(--main-primary);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    outline: none;
+    text-align: right;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.formulagrid-delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-danger, #ef4444);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s;
+    opacity: 0.6;
+}
+
+.formulagrid-delete-btn:hover {
+    background: var(--danger-background, rgba(239, 68, 68, 0.1));
+    opacity: 1;
+}
+
+.formulagrid-info {
+    background: var(--surface-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.formulagrid-info p {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-sm);
+}
+
+.formulagrid-examples {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.formulagrid-examples li {
+    font-size: var(--font-size-sm);
+    font-family: 'Courier New', monospace;
+    background: var(--code-background, #f3f4f6);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .formulagrid-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .formulagrid-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .formulagrid-cell {
+        min-width: 100px;
+    }
+
+    .formulagrid-examples {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,7 @@
+.confirm-commit-modal {
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    max-width: 500px;
+    width: 100%;
+}

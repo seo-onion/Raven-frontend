@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReadinessIndicator from '../../../components/dashboard/ReadinessIndicator/ReadinessIndicator';
 import { LevelItem, type LevelStatus } from '../../../components/dashboard/LevelItem/LevelItem';
-import { useEvidences, useStartupData, useCreateEvidence, useDeleteEvidence } from '../../../hooks/useStartupData'; // Import useStartupData
+import { useEvidences, useStartupData, useCreateEvidence, useDeleteEvidence, useReadinessLevels, useUpdateReadinessLevel } from '../../../hooks/useStartupData'; // Import useStartupData
+import useStartupValidation from '@/hooks/useStartupValidation';
+import useModalStore from '@/stores/ModalStore';
+import AddReadinessLevelModal from '@/modals/AddReadinessLevelModal/AddReadinessLevelModal';
 import './TRLCRL.css';
 import Spinner from '@/components/common/Spinner/Spinner';
-import type { Evidence } from '@/types/startup';
+import Button from '@/components/common/Button/Button';
+import type { Evidence, ReadinessLevel } from '@/types/startup';
 import toast from 'react-hot-toast';
-import { TRL_LEVEL_DESCRIPTIONS, CRL_LEVEL_DESCRIPTIONS } from '@/constants';
 
 interface LevelData {
     level: number;
@@ -19,48 +22,53 @@ interface LevelData {
     evidenceId?: number; // Store evidence ID for removal
     evidenceFileUrl?: string; // Store file_url
     evidenceDescription?: string; // Store evidence description
+    readinessLevelId?: number; // Store readiness level ID for deletion
 }
 
 
-
-
-// Helper to generate dynamic levels
+// Helper to generate dynamic levels from ReadinessLevels and Evidence
 const generateLevels = (
     type: 'TRL' | 'CRL',
-    totalLevels: number,
-    currentLevelFromStartupData: number | null, // The current highest level according to backend startup data
-    evidences: Evidence[],
-    t: (key: string) => string,
-    descriptions: ((t: (key: string) => string) => string)[]
+    readinessLevels: ReadinessLevel[],
+    evidences: Evidence[]
 ): LevelData[] => {
-    const levels: LevelData[] = [];
-    const declaredLevel = currentLevelFromStartupData || 0; // Use startupData's declared level
+    // Filter readiness levels for the given type and sort by level
+    const typeReadinessLevels = readinessLevels.filter(rl => rl.type === type).sort((a, b) => a.level - b.level);
 
-    for (let i = 1; i <= totalLevels; i++) {
-        const matchingEvidence = evidences.find(e => e.type === type && e.level === i);
+    const levels: LevelData[] = [];
+
+    // Process only the readiness levels from the backend
+    for (const readinessLevel of typeReadinessLevels) {
+        const matchingEvidence = evidences.find(e => e.type === type && e.level === readinessLevel.level);
         let status: LevelStatus = 'pending';
 
-        if (i <= declaredLevel) {
-            // If level is <= declared level, it's considered completed (with or without evidence)
-            status = 'completed';
-        } else if (i === declaredLevel + 1 && declaredLevel < totalLevels) {
-            // The next level after the declared one is 'in-progress'
-            status = 'in-progress';
-        } else {
-            // All other levels are pending
-            status = 'pending';
+        if (matchingEvidence) {
+            switch (matchingEvidence.status) {
+                case 'APPROVED':
+                    status = 'completed';
+                    break;
+                case 'PENDING':
+                    status = 'in-progress';
+                    break;
+                case 'REJECTED':
+                    status = 'pending';
+                    break;
+                default:
+                    status = 'pending';
+            }
         }
 
         levels.push({
-            level: i,
-            title: descriptions[i - 1](t),
-            description: t(`${type.toLowerCase()}_level_${i}_description`),
+            level: readinessLevel.level,
+            title: readinessLevel.title,
+            description: readinessLevel.subtitle || '',
             status: status,
             lastUpdate: matchingEvidence ? new Date(matchingEvidence.updated).toLocaleDateString() : undefined,
-            updatedBy: matchingEvidence ? matchingEvidence.reviewer_notes || t('system') : undefined,
+            updatedBy: matchingEvidence ? matchingEvidence.reviewer_notes || 'Sistema' : undefined,
             evidenceId: matchingEvidence?.id,
             evidenceFileUrl: matchingEvidence?.file_url,
             evidenceDescription: matchingEvidence?.description,
+            readinessLevelId: readinessLevel.id,
         });
     }
 
@@ -70,28 +78,39 @@ const generateLevels = (
 
 const TRLCRL: React.FC = () => {
     const { t } = useTranslation('common');
+    const { setModalContent } = useModalStore();
     const [activeTab, setActiveTab] = useState<'trl' | 'crl'>('trl');
     const [openLevelIndex, setOpenLevelIndex] = useState<number | null>(null);
 
-    // Fetch startup data and evidences
+    // Validate startup has company_name, redirect to wizard if not
+    useStartupValidation();
+
+    // Fetch startup data, evidences, and readiness levels
     const { data: startupData, isLoading: isLoadingStartup } = useStartupData();
     const { data: evidences, isLoading: isLoadingEvidences } = useEvidences();
+    const { data: readinessLevels, isLoading: isLoadingReadinessLevels } = useReadinessLevels();
 
-    // Mutation hooks for evidence
+    // Mutation hooks for evidence and readiness levels
     const createEvidenceMutation = useCreateEvidence();
     const deleteEvidenceMutation = useDeleteEvidence();
+    const updateReadinessLevelMutation = useUpdateReadinessLevel();
 
-    const isLoading = isLoadingStartup || isLoadingEvidences || createEvidenceMutation.isPending || deleteEvidenceMutation.isPending;
-    const error = !startupData || !evidences; // More robust error handling needed
-
-    const currentTRLLevelFromStartup = startupData?.current_trl || 0;
-    const currentCRLLevelFromStartup = startupData?.current_crl || 0;
+    const isLoading = isLoadingStartup || isLoadingEvidences || isLoadingReadinessLevels || createEvidenceMutation.isPending || deleteEvidenceMutation.isPending || updateReadinessLevelMutation.isPending;
+    const error = !startupData || !evidences || !readinessLevels; // More robust error handling needed
 
     // Calculate currentHighestCompletedLevel based on APPROVED evidences
     const currentHighestCompletedTRL = Math.max(0, ...(evidences || []).filter(e => e.type === 'TRL' && e.status === 'APPROVED').map(e => e.level));
     const currentHighestCompletedCRL = Math.max(0, ...(evidences || []).filter(e => e.type === 'CRL' && e.status === 'APPROVED').map(e => e.level));
 
     const currentHighestCompletedLevel = activeTab === 'trl' ? currentHighestCompletedTRL : currentHighestCompletedCRL;
+
+    // Calculate total created evidences for each type
+    const totalCreatedTRL = (evidences || []).filter(e => e.type === 'TRL').length;
+    const totalCreatedCRL = (evidences || []).filter(e => e.type === 'CRL').length;
+
+    // Calculate approved evidences for each type
+    const approvedTRL = (evidences || []).filter(e => e.type === 'TRL' && e.status === 'APPROVED').length;
+    const approvedCRL = (evidences || []).filter(e => e.type === 'CRL' && e.status === 'APPROVED').length;
 
 
     const handleAddEvidence = async (level: number, type: 'TRL' | 'CRL', description: string, fileUrl: string, evidenceId?: number) => {
@@ -123,23 +142,55 @@ const TRLCRL: React.FC = () => {
         }
     };
 
+    const handleUpdateLevel = async (readinessLevelId: number, level: number, type: 'TRL' | 'CRL', title: string, subtitle: string) => {
+        console.log('Updating level:', { readinessLevelId, level, type, title, subtitle });
+        try {
+            await updateReadinessLevelMutation.mutateAsync({
+                readinessLevelId,
+                levelData: {
+                    level,
+                    type,
+                    title,
+                    subtitle
+                }
+            });
+            toast.success(t('level_updated_successfully'));
+        } catch (err) {
+            toast.error(t('error_updating_level'));
+            console.error('Error updating level:', err);
+        }
+    };
+
+    const handleAddReadinessLevel = () => {
+        // Calculate the next level based on current levels
+        const levelsList = activeTab === 'trl' ? trlLevels : crlLevels;
+        const maxLevel = levelsList.length > 0
+            ? Math.max(...levelsList.map(l => l.level))
+            : 0;
+        const nextLevel = maxLevel + 1;
+
+        setModalContent(
+            <AddReadinessLevelModal
+                type={activeTab.toUpperCase() as 'TRL' | 'CRL'}
+                defaultLevel={nextLevel}
+                onSuccess={() => {
+                    // Modal will close automatically after success
+                }}
+            />
+        );
+    };
+
 
     const trlLevels = generateLevels(
         'TRL',
-        9,
-        currentTRLLevelFromStartup, // Pass current level from startup data
-        evidences || [],
-        t,
-        TRL_LEVEL_DESCRIPTIONS
+        readinessLevels || [],
+        evidences || []
     );
 
     const crlLevels = generateLevels(
         'CRL',
-        6, // Assuming CRL has 6 levels based on previous hardcoded data
-        currentCRLLevelFromStartup, // Pass current level from startup data
-        evidences || [],
-        t,
-        CRL_LEVEL_DESCRIPTIONS
+        readinessLevels || [],
+        evidences || []
     );
 
     const currentLevels = activeTab === 'trl' ? trlLevels : crlLevels;
@@ -174,14 +225,14 @@ const TRLCRL: React.FC = () => {
             <div className="trl-crl-indicators-grid">
                 <ReadinessIndicator
                     type="TRL"
-                    currentLevel={currentTRLLevelFromStartup}
-                    totalLevels={9}
+                    currentLevel={approvedTRL}
+                    totalLevels={totalCreatedTRL}
                     label={t('technology_readiness_level')}
                 />
                 <ReadinessIndicator
                     type="CRL"
-                    currentLevel={currentCRLLevelFromStartup}
-                    totalLevels={6} // Assuming CRL has 6 levels
+                    currentLevel={approvedCRL}
+                    totalLevels={totalCreatedCRL}
                     label={t('commercial_readiness_level')}
                 />
             </div>
@@ -216,14 +267,27 @@ const TRLCRL: React.FC = () => {
                         evidenceFileUrl={levelItem.evidenceFileUrl}
                         evidenceDescription={levelItem.evidenceDescription}
                         evidenceId={levelItem.evidenceId}
+                        readinessLevelId={levelItem.readinessLevelId}
                         isOpen={openLevelIndex === levelItem.level} // Use level for open/close state
                         onToggle={() => setOpenLevelIndex(openLevelIndex === levelItem.level ? null : levelItem.level)}
                         currentHighestCompletedLevel={currentHighestCompletedLevel} // Pass the new prop
                         type={activeTab.toUpperCase() as 'TRL' | 'CRL'}
                         onAddEvidence={handleAddEvidence}
                         onRemoveEvidence={handleRemoveEvidence}
+                        onUpdateLevel={(id, title, subtitle) => handleUpdateLevel(id, levelItem.level, activeTab.toUpperCase() as 'TRL' | 'CRL', title, subtitle)}
                     />
                 ))}
+
+                {/* Button to add new ReadinessLevel */}
+                <div className="trl-crl-add-level-button">
+                    <Button
+                        variant="secondary"
+                        onClick={handleAddReadinessLevel}
+                        disabled={isLoading}
+                    >
+                        {t('add_readiness_level')}
+                    </Button>
+                </div>
             </div>
         </div>
     );

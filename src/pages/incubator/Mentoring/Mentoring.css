@@ -1,0 +1,143 @@
+/* =============================================================================
+   Incubator Mentoring Page Styles - Following ChallengeCard pattern
+   ============================================================================= */
+
+.mentoring_container {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.mentoring_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.mentoring_title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.mentoring_subtitle {
+    color: #6b7280;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.mentoring_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .mentoring_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mentoring_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mentor Card - Following ChallengeCard pattern */
+.mentoring_card {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    background: white;
+}
+
+.mentoring_card:hover {
+    border-color: var(--main-primary);
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.1);
+}
+
+.mentoring_avatar {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(147, 51, 234, 0.15));
+    color: var(--main-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.mentoring_content {
+    flex-grow: 1;
+}
+
+.mentoring_name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 0.25rem 0;
+}
+
+.mentoring_role {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--main-primary);
+    background-color: rgba(124, 58, 237, 0.1);
+}
+
+.mentoring_details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.mentoring_detail_item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.mentoring_detail_icon {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+.mentoring_empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6b7280;
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px dashed #e5e7eb;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mentoring_container {
+        padding: 1rem;
+    }
+
+    .mentoring_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

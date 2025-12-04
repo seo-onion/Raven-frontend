@@ -11,6 +11,8 @@ export interface EvidenceData {
     type: 'TRL' | 'CRL'; // New field to indicate evidence type
     level: number; // Combined TRL/CRL level based on 'type'
     description: string;
+    title?: string;
+    subtitle?: string;
     file?: File; // For file upload
     file_url?: string; // For cloud storage URL
 }
@@ -89,22 +91,24 @@ export interface FinancialProjections {
 // =============================================================================
 
 export interface OnboardingWizardPayload {
-    // Step 0: Company basics
+    // Step 0: Company basics (always required)
     company_name: string;
     industry: string;
 
-    // Step 1: TRL/CRL
+    // Step 1: TRL/CRL (always required)
     current_trl: number;
     current_crl: number | null;
 
-    // Step 2: Finances
-    target_funding_amount: number;
-    financial_projections: FinancialProjections;
+    // Step 2: Finances (optional - only sent if filled)
+    target_funding_amount?: number;
+    financial_projections?: FinancialProjections;
 
-    // Data arrays
-    evidences: EvidenceData[];
-    financial_data: FinancialData[];
-    investors: InvestorData[];
+    // Data arrays (optional - only sent if exist)
+    evidences?: EvidenceData[];
+    financial_data?: FinancialData[];
+    investors?: InvestorData[];
+    incubator_ids?: string[];
+    readiness_levels?: any[]; // For custom levels defined in wizard
 }
 
 // =============================================================================
@@ -144,6 +148,14 @@ export interface OnboardingFormState {
 
     // Step 3: Investors
     investors: InvestorData[];
+
+    // Incubators
+    incubator_ids: string[];
+}
+
+export interface Incubator {
+    id: number;
+    name: string;
 }
 
 // Initial empty state
@@ -152,14 +164,7 @@ export const initialOnboardingState: OnboardingFormState = {
     industry: '',
     current_trl: 1,
     current_crl: null,
-    evidences: [
-        {
-            type: 'TRL',
-            level: 1, // Default level, will be updated by wizard logic
-            description: '',
-            file_url: '',
-        },
-    ],
+    evidences: [],
     target_funding_amount: 0,
     financial_projections: { // Added initial structure for financial_projections
         q1: { revenue: 0, cogs: 0, opex: 0 },
@@ -177,6 +182,7 @@ export const initialOnboardingState: OnboardingFormState = {
         },
     ],
     investors: [],
+    incubator_ids: [],
 };
 
 // =============================================================================

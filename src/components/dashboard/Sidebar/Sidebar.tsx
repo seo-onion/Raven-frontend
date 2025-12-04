@@ -10,6 +10,7 @@ import { LuUsers } from "react-icons/lu";
 import { FiTarget } from "react-icons/fi";
 import { LuBrain } from "react-icons/lu";
 import { RxExit } from "react-icons/rx";
+import { MdDashboard, MdFactory } from "react-icons/md";
 import Spinner from '@/components/common/Spinner/Spinner';
 
 // Definición de la interfaz (buena práctica, aunque opcional)
@@ -23,7 +24,7 @@ const Sidebar: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
     const navigate = useNavigate();
-    const { logOut } = useAuthStore();
+    const { logOut, user } = useAuthStore();
 
     const handleLogout = async () => {
         setIsLoggingOut(true);
@@ -32,14 +33,28 @@ const Sidebar: React.FC = () => {
         navigate(routes.login);
     };
 
-    const menuItems: MenuItem[] = [
+    const startupMenuItems: MenuItem[] = [
         { icon: <GrDeploy size={24} />, label: 'Mi Progreso', path: '/dashboard/mi-progreso' },
-        { icon: <GoGraph size={24}/>, label: 'TRL/CRL', path: '/dashboard/trl-crl' },
-        { icon: <LuDollarSign size={24}/>, label: 'Finanzas', path: '/dashboard/finanzas' },
-        { icon: <LuUsers size={24}/>, label: 'Inversores', path: '/dashboard/inversores' },
-        { icon: <FiTarget size={24}/>, label: 'Desafíos', path: '/dashboard/desafios' },
-        { icon: <LuBrain size={24}/>, label: 'Mentoring', path: '/dashboard/mentoring' },
+        { icon: <GoGraph size={24} />, label: 'TRL/CRL', path: '/dashboard/trl-crl' },
+        { icon: <LuDollarSign size={24} />, label: 'Finanzas', path: '/dashboard/finanzas' },
+        { icon: <LuUsers size={24} />, label: 'Inversores', path: '/dashboard/inversores' },
+        { icon: <FiTarget size={24} />, label: 'Desafíos', path: routes.dashboardDesafios },
+        { icon: <LuBrain size={24} />, label: 'Mentoring', path: '/dashboard/mentoring' },
     ];
+
+    const incubatorMenuItems: MenuItem[] = [
+        { icon: <MdDashboard size={24} />, label: 'Overview', path: '/dashboard/overview' },
+        { icon: <MdFactory size={24} />, label: 'Pipeline', path: '/dashboard/pipeline' },
+        { icon: <GoGraph size={24} />, label: 'TRL/CRL', path: routes.dashboardTRLCRL },
+        { icon: <LuDollarSign size={24} />, label: 'Finanzas', path: '/dashboard/finanzas' },
+        { icon: <LuUsers size={24} />, label: 'Inversores', path: '/dashboard/inversores' },
+        { icon: <LuBrain size={24} />, label: 'Mentoring', path: '/dashboard/mentoring' },
+        { icon: <FiTarget size={24} />, label: 'Challenges', path: routes.dashboardDesafios },
+        { icon: <GoGraph size={24} />, label: 'Métricas', path: routes.dashboardMetrics },
+    ];
+
+    const isIncubator = user?.user_type === 'incubator';
+    const menuItems = isIncubator ? incubatorMenuItems : startupMenuItems;
 
     return (
         <>
@@ -53,14 +68,16 @@ const Sidebar: React.FC = () => {
             </button>
 
             {/* Sidebar */}
-            <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+            <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''} ${isIncubator ? 'sidebar-incubator' : ''}`}>
                 <div className="sidebar-top">
                     <div className='logo-container'>
-                        <GrDeploy size={24} color='white' />
+                        {isIncubator ? <MdFactory size={24} color='white' /> : <GrDeploy size={24} color='white' />}
                     </div>
                     <div>
                         <h2 className="sidebar-logo">Raven CRM</h2>
-                        <p className="sidebar-subtitle text-black">TechVision AI</p>
+                        <p className="sidebar-subtitle text-black">
+                            {isIncubator ? 'BioHub Accelerator' : 'TechVision AI'}
+                        </p>
                     </div>
                 </div>
 

@@ -69,6 +69,9 @@ const initialState: OnboardingState = {
     // Investors
     investors: [],
 
+    // Incubators
+    incubator_ids: [],
+
     // UI State
     currentStep: 0,
     isLoading: true,
@@ -84,13 +87,8 @@ const useOnboardingStore = create<OnboardingState & OnboardingActions>()((set, g
         try {
             // For now, we initialize with default data to pass backend validation
             set(produce((state: OnboardingState) => {
-                if (!state.evidences || state.evidences.length === 0) {
-                    state.evidences = [{
-                        type: 'TRL',
-                        level: state.current_trl,
-                        description: '',
-                        file_url: '',
-                    }];
+                if (!state.evidences) {
+                    state.evidences = [];
                 }
                 if (!state.financial_data || state.financial_data.length === 0) {
                     state.financial_data = [{
@@ -273,20 +271,52 @@ const useOnboardingStore = create<OnboardingState & OnboardingActions>()((set, g
         set({ isSaving: true });
 
         try {
-            // The payload matches backend OnboardingWizardSerializer expectations
-            const payload: OnboardingWizardPayload = {
+            // Build payload with only non-empty/relevant data
+            const payload: any = {
+                // Step 0: Company basics (always required)
                 company_name: state.company_name,
                 industry: state.industry,
+
+                // Step 1: TRL/CRL (always required)
                 current_trl: state.current_trl,
                 current_crl: state.current_crl,
-                target_funding_amount: state.target_funding_amount,
-                financial_projections: state.financial_projections,
-                evidences: state.evidences,
-                financial_data: state.financial_data,
-                investors: state.investors,
             };
 
-            const response = await completeOnboarding(payload);
+            // Transform evidences into readiness_levels
+            if (state.evidences && state.evidences.length > 0) {
+                const readinessLevelsMap = new Map<string, any>();
+
+                state.evidences.forEach(evidence => {
+                    const key = `${evidence.type}-${evidence.level}`;
+                    if (!readinessLevelsMap.has(key)) {
+                        readinessLevelsMap.set(key, {
+                            type: evidence.type,
+                            level: evidence.level,
+                            title: evidence.title || `${evidence.type} Level ${evidence.level}`,
+                            subtitle: evidence.subtitle || '',
+                            evidences: []
+                        });
+                    }
+
+                    const levelObj = readinessLevelsMap.get(key);
+                    levelObj.evidences.push({
+                        description: evidence.description,
+                        file_url: evidence.file_url
+                    });
+                });
+
+                payload.readiness_levels = Array.from(readinessLevelsMap.values());
+            }
+
+            // Only include incubator_ids if they exist
+            if (state.incubator_ids && state.incubator_ids.length > 0) {
+                // Convert to numbers as the backend likely expects IDs
+                payload.incubator_ids = state.incubator_ids.map(id => Number(id));
+            }
+
+            console.log('Submitting onboarding payload:', JSON.stringify(payload, null, 2));
+
+            const response = await completeOnboarding(payload as OnboardingWizardPayload);
 
             set({ isSaving: false });
             toast.success('Onboarding completed successfully!');

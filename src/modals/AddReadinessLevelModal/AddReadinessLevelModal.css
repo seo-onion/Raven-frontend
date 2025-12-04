@@ -1,0 +1,15 @@
+.add-readiness-level-modal {
+    padding: 24px;
+    background-color: var(--background-color);
+}
+
+.add-readiness-level-modal h2 {
+    margin-bottom: 24px;
+}
+
+.add-readiness-level-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}

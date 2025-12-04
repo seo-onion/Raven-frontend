@@ -30,7 +30,7 @@
     margin: 0 0 5px 0;
 }
 
-.logo-container{
+.logo-container {
     background-color: var(--main-secondary);
     width: 40px;
     height: 40px;
@@ -82,7 +82,7 @@
 
 .sidebar-nav-item.active .sidebar-nav-label {
     color: white;
-    
+
 }
 
 .sidebar-nav-icon {
@@ -218,6 +218,25 @@
     }
 }
 
-.aside-text-active{
+.aside-text-active {
     color: white !important;
+}
+
+/* Incubator-specific sidebar styles */
+.sidebar-incubator .logo-container {
+    background-color: var(--main-primary);
+}
+
+.sidebar-incubator .sidebar-nav-item.active {
+    background-color: var(--main-primary);
+}
+
+.sidebar-incubator .sidebar-toggle {
+    background-color: var(--main-primary);
+}
+
+@media (max-width: 1024px) {
+    .sidebar-incubator .sidebar-nav-item.active {
+        background-color: rgba(124, 58, 237, 0.1);
+    }
 }

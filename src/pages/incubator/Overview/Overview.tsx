@@ -11,8 +11,11 @@ import {
     Legend,
     ArcElement,
 } from 'chart.js';
+import { useQuery } from '@tanstack/react-query';
 import MetricCard from '../../../components/incubator/MetricCard/MetricCard';
 import './Overview.css';
+import { fetchMyIncubatorData } from '../../../api/incubator';
+
 
 ChartJS.register(
     CategoryScale,
@@ -26,34 +29,74 @@ ChartJS.register(
 );
 
 const Overview: React.FC = () => {
-    const startups = [
-        { name: 'EduPlay', stage: 'Incubación', trl: '4/9', revenue: '$5K', runway: '6 meses', status: 'critical' },
-        { name: 'HealthHub', stage: 'Incubación', trl: '6/9', revenue: '$12K', runway: '10 meses', status: 'warning' },
-        { name: 'TechVision AI', stage: 'Incubación', trl: '5/9', revenue: '$45K', runway: '9 meses', status: 'healthy' },
-        { name: 'EcoDelivery', stage: 'Aceleración', trl: '7/9', revenue: '$89K', runway: '14 meses', status: 'excellent' },
-        { name: 'SmartFarm', stage: 'Graduado', trl: '9/9', revenue: '$250K', runway: '18 meses', status: 'graduated' },
-    ];
+    const { data: incubatorData, isLoading } = useQuery({
+        queryKey: ['incubatorData'],
+        queryFn: fetchMyIncubatorData,
+    });
 
-    const activities = [
-        { startup: 'HealthHub', action: 'Cerró proyecto con Clínica San Felipe', time: 'Hace 2 horas', color: '#2ec1ac' },
-        { startup: 'TechVision AI', action: 'Subió evidencias de TRL 4', time: 'Hace 5 horas', color: '#4b89ff' },
-        { startup: 'EcoDelivery', action: 'Alcanzó $89K en revenue', time: 'Hace 1 día', color: '#ffaa33' },
-        { startup: 'EduPlay', action: 'Solicitó mentoría en Legal', time: 'Hace 2 días', color: 'var(--main-primary)' },
-    ];
+    const portfolio = incubatorData?.portfolio_startups || [];
 
-    const lineChartData = {
-        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+    // Calculate Metrics
+    const totalStartups = portfolio.length;
+    const totalRevenue = portfolio.reduce((sum, s) => sum + (s.actual_revenue || 0), 0);
+    // Mocking capital raised and success rate as they are not in the current data model
+    const capitalRaised = 0;
+    const successRate = 0;
+
+    // Calculate Distribution (Doughnut Chart)
+    const distribution = {
+        incubation: 0,
+        preIncubation: 0,
+        acceleration: 0,
+        graduated: 0
+    };
+
+    portfolio.forEach(s => {
+        const trl = s.current_trl || 0;
+        if (trl >= 1 && trl <= 3) distribution.preIncubation++;
+        else if (trl >= 4 && trl <= 6) distribution.incubation++;
+        else if (trl >= 7 && trl <= 9) distribution.acceleration++;
+        // No explicit 'graduated' status in StartupData yet, assuming TRL 9+ or manual status
+    });
+
+    const doughnutChartData = {
+        labels: ['Incubación', 'Pre-incubación', 'Aceleración', 'Graduadas'],
         datasets: [
             {
-                label: 'Revenue Total ($K)',
-                data: [250, 280, 320, 350, 380, 401],
+                label: 'Startups',
+                data: [distribution.incubation, distribution.preIncubation, distribution.acceleration, distribution.graduated],
+                backgroundColor: ['#7c3aed', '#4b89ff', '#2ec1ac', '#ffaa33'],
+                borderColor: ['#7c3aed', '#4b89ff', '#2ec1ac', '#ffaa33'],
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const doughnutChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+    };
+
+    // Line Chart - No historical data available in current API
+    // Showing empty or static for now to avoid broken UI
+    const lineChartData = {
+        labels: ['Actual'],
+        datasets: [
+            {
+                label: 'Revenue Total ($)',
+                data: [totalRevenue],
                 borderColor: '#7c3aed',
                 backgroundColor: 'rgba(124, 58, 237, 0.1)',
                 tension: 0.4,
             },
             {
                 label: 'Startups Activas',
-                data: [3, 4, 4, 5, 5, 5],
+                data: [totalStartups],
                 borderColor: '#2ec1ac',
                 backgroundColor: 'rgba(46, 193, 172, 0.1)',
                 tension: 0.4,
@@ -76,38 +119,9 @@ const Overview: React.FC = () => {
         },
     };
 
-    const doughnutChartData = {
-        labels: ['Incubación', 'Pre-incubación', 'Aceleración', 'Graduadas'],
-        datasets: [
-            {
-                label: 'Startups',
-                data: [2, 1, 1, 1],
-                backgroundColor: [
-                    '#7c3aed',
-                    '#4b89ff',
-                    '#2ec1ac',
-                    '#ffaa33',
-                ],
-                borderColor: [
-                    '#7c3aed',
-                    '#4b89ff',
-                    '#2ec1ac',
-                    '#ffaa33',
-                ],
-                borderWidth: 1,
-            },
-        ],
-    };
-
-    const doughnutChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
-    };
+    if (isLoading) {
+        return <div className="p-8 text-center">Cargando dashboard...</div>;
+    }
 
     return (
         <div className="incubator-overview">
@@ -120,29 +134,29 @@ const Overview: React.FC = () => {
             <div className="incubator-metrics-grid">
                 <MetricCard
                     title="Total Startups"
-                    value="5"
-                    detail="2 en incubación activa"
+                    value={totalStartups.toString()}
+                    detail={`${distribution.incubation} en incubación activa`}
                     icon="📦"
                     type="startup"
                 />
                 <MetricCard
                     title="Revenue Total"
-                    value="$401K"
-                    detail="↑ +15% vs mes anterior"
+                    value={`$${(totalRevenue / 1000).toFixed(1)}K`}
+                    detail="Total acumulado"
                     icon="💲"
                     type="revenue"
                 />
                 <MetricCard
                     title="Capital Levantado"
-                    value="$850K"
-                    detail="3 rondas activas"
+                    value={`$${capitalRaised}K`}
+                    detail="Dato no disponible"
                     icon="🤝"
                     type="capital"
                 />
                 <MetricCard
                     title="Tasa de Éxito"
-                    value="85%"
-                    detail="107h de mentoría total"
+                    value={`${successRate}%`}
+                    detail="Dato no disponible"
                     icon="🎯"
                     type="success"
                 />
@@ -162,44 +176,21 @@ const Overview: React.FC = () => {
                         <Doughnut data={doughnutChartData} options={doughnutChartOptions} />
                     </div>
                     <div className="incubator-legend">
-                        <p className="text-black"><span className="incubator-color-dot incubation"></span> Incubación: 40%</p>
-                        <p className="text-black"><span className="incubator-color-dot pre-incubation"></span> Pre-incubación: 20%</p>
-                        <p className="text-black"><span className="incubator-color-dot acceleration"></span> Aceleración: 20%</p>
-                        <p className="text-black"><span className="incubator-color-dot graduated"></span> Graduadas: 20%</p>
+                        <p className="text-black"><span className="incubator-color-dot incubation"></span> Incubación: {totalStartups ? Math.round((distribution.incubation / totalStartups) * 100) : 0}%</p>
+                        <p className="text-black"><span className="incubator-color-dot pre-incubation"></span> Pre-incubación: {totalStartups ? Math.round((distribution.preIncubation / totalStartups) * 100) : 0}%</p>
+                        <p className="text-black"><span className="incubator-color-dot acceleration"></span> Aceleración: {totalStartups ? Math.round((distribution.acceleration / totalStartups) * 100) : 0}%</p>
+                        <p className="text-black"><span className="incubator-color-dot graduated"></span> Graduadas: {totalStartups ? Math.round((distribution.graduated / totalStartups) * 100) : 0}%</p>
                     </div>
                 </div>
             </div>
 
-            {/* Alerts Section */}
+            {/* Alerts Section - Static for now as API doesn't provide alerts */}
             <div className="incubator-alerts-section">
                 <div className="incubator-alerts-header-wrapper">
                     <h2 className="text-black">Alertas del Portafolio</h2>
-                    <button className="incubator-alerts-count text-white">3 alertas</button>
+                    <button className="incubator-alerts-count text-white">0 alertas</button>
                 </div>
-
-                <div className="incubator-alert-item incubator-alert-critical">
-                    <div className="incubator-alert-info">
-                        <div className="incubator-alert-title text-black">EduPlay</div>
-                        <div className="incubator-alert-detail text-black">Runway crítico (&lt;6 meses)</div>
-                    </div>
-                    <button className="incubator-alert-detail-btn text-black">Ver Detalles</button>
-                </div>
-
-                <div className="incubator-alert-item incubator-alert-warning">
-                    <div className="incubator-alert-info">
-                        <div className="incubator-alert-title text-black">TechVision AI</div>
-                        <div className="incubator-alert-detail text-black">Sin actualizaciones en TRL 5 por 25 días.</div>
-                    </div>
-                    <button className="incubator-alert-detail-btn text-black">Ver Detalles</button>
-                </div>
-
-                <div className="incubator-alert-item incubator-alert-success">
-                    <div className="incubator-alert-info">
-                        <div className="incubator-alert-title text-black">EcoDelivery</div>
-                        <div className="incubator-alert-detail text-black">Completó TRL 7 exitosamente</div>
-                    </div>
-                    <button className="incubator-alert-detail-btn text-black">Ver Detalles</button>
-                </div>
+                <div className="p-4 text-center text-gray-500">No hay alertas activas</div>
             </div>
 
             {/* Bottom Section: Activity and Quick Actions */}
@@ -207,15 +198,7 @@ const Overview: React.FC = () => {
                 <div className="incubator-activity-card">
                     <h2 className="text-black">Actividad Reciente</h2>
                     <ul className="incubator-activity-list">
-                        {activities.map((activity, index) => (
-                            <li key={index} className="incubator-activity-item">
-                                <span className="incubator-activity-startup text-black" style={{ color: activity.color }}>
-                                    {activity.startup}
-                                </span>
-                                <span className="text-black">{activity.action}</span>
-                                <span className="incubator-activity-time text-black">{activity.time}</span>
-                            </li>
-                        ))}
+                        <div className="p-4 text-center text-gray-500">No hay actividad reciente</div>
                     </ul>
                 </div>
 
@@ -233,12 +216,6 @@ const Overview: React.FC = () => {
                     <button className="incubator-quick-action-btn text-black">
                         <span>📄</span> Exportar Reporte
                     </button>
-
-                    <div className="incubator-graduation-block">
-                        <p className="text-black">Próxima Graduación</p>
-                        <p className="text-black"><strong>EcoDelivery</strong> está lista para graduarse. Programa el evento de cierre.</p>
-                        <button className="incubator-grad-btn text-white">Programar Graduación</button>
-                    </div>
                 </div>
             </div>
 
@@ -258,28 +235,32 @@ const Overview: React.FC = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {startups.map((startup, index) => (
-                                <tr key={index}>
-                                    <td className="text-black">{startup.name}</td>
-                                    <td>
-                                        <span className={`incubator-badge incubator-${startup.stage.toLowerCase()}-stage text-black`}>
-                                            {startup.stage}
-                                        </span>
-                                    </td>
-                                    <td className="text-black">{startup.trl}</td>
-                                    <td className="text-black">{startup.revenue}</td>
-                                    <td className="text-black">{startup.runway}</td>
-                                    <td>
-                                        <span className={`incubator-badge incubator-${startup.status}-status text-black`}>
-                                            {startup.status === 'critical' && '🚨 Crítico'}
-                                            {startup.status === 'warning' && '⚠️ Alerta'}
-                                            {startup.status === 'healthy' && '✅ Saludable'}
-                                            {startup.status === 'excellent' && '⭐ Excelente'}
-                                            {startup.status === 'graduated' && '🎓 Graduado'}
-                                        </span>
-                                    </td>
-                                </tr>
-                            ))}
+                            {portfolio.map((startup, index) => {
+                                const trl = startup.current_trl || 0;
+                                let stage = 'Desconocido';
+                                if (trl >= 1 && trl <= 3) stage = 'Pre-incubación';
+                                else if (trl >= 4 && trl <= 6) stage = 'Incubación';
+                                else if (trl >= 7 && trl <= 9) stage = 'Aceleración';
+
+                                return (
+                                    <tr key={startup.id || index}>
+                                        <td className="text-black">{startup.company_name}</td>
+                                        <td>
+                                            <span className={`incubator-badge incubator-incubation-stage text-black`}>
+                                                {stage}
+                                            </span>
+                                        </td>
+                                        <td className="text-black">{startup.current_trl || 'N/A'}</td>
+                                        <td className="text-black">${startup.actual_revenue || 0}</td>
+                                        <td className="text-black">N/A</td>
+                                        <td>
+                                            <span className={`incubator-badge incubator-healthy-status text-black`}>
+                                                Activo
+                                            </span>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>

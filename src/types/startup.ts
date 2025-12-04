@@ -19,6 +19,7 @@ export interface StartupData {
     current_trl: number | null;
     actual_revenue: number | null;
     current_crl: number | null; // Assuming current_crl might also be exposed
+    incubators?: Incubator[];
 }
 
 // =============================================================================
@@ -78,6 +79,44 @@ export interface InvestorPipeline {
     ticket_size?: number;
     notes?: string;
     next_action_date?: string; // ISO date format
+    phone?: string;
+    valuation?: number;
+    created: string;
+    updated: string;
+}
+
+// =============================================================================
+// Readiness Level Data
+// =============================================================================
+
+export interface ReadinessLevel {
+    id: number;
+    type: 'TRL' | 'CRL';
+    level: number;
+    title: string;
+    subtitle?: string;
+    created: string;
+    updated: string;
+}
+
+// =============================================================================
+// Incubator Data
+// =============================================================================
+
+export interface IncubatorMember {
+    id: number;
+    full_name: string;
+    email: string;
+    phone?: string;
+    role: 'INVESTOR' | 'MENTOR' | 'BOTH';
+    created: string;
+    updated: string;
+}
+
+export interface Incubator {
+    id: number;
+    name: string;
+    members?: IncubatorMember[];
     created: string;
     updated: string;
 }

@@ -1,95 +1,84 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { FaPlus, FaAward, FaCalendar, FaCheckCircle } from 'react-icons/fa';
 import MetricItem from '../../../components/dashboard/MetricItem/MetricItem';
 import SessionCard from '../../../components/dashboard/SessionCard/SessionCard';
 import MentorCard from '../../../components/dashboard/MentorCard/MentorCard';
 import useModalStore from '../../../stores/ModalStore';
+import useStartupValidation from '@/hooks/useStartupValidation';
 import ScheduleMentorModal from '../../../modals/ScheduleMentorModal/ScheduleMentorModal';
+import { useMentors } from '@/hooks/useStartupData';
+import Spinner from '@/components/common/Spinner/Spinner';
 import './Mentoring.css';
 
 const Mentoring: React.FC = () => {
     const { t } = useTranslation('common');
     const { setModalContent } = useModalStore();
-    const [activeTab, setActiveTab] = useState<'all' | 'fundraising' | 'marketing' | 'tech' | 'legal' | 'product'>('all');
 
-    // Mock mentors data
-    const mentorsData = [
-        {
-            name: "Dr. María González",
-            initials: "M",
-            avatarColor: "var(--main-secondary)",
-            role: "CEO & Co-Founder @ TechInnovations",
-            bio: "Ex-VP de Producto en Google. Fundadora de 3 startups exitosas con perfil combinado de $100M+.",
-            expertise: ['Tech', 'Product Marketing', 'Data & Analytics'],
-            expertiseColor: 'var(--main-secondary)',
+    // Validate startup has company_name, redirect to wizard if not
+    useStartupValidation();
+
+    // Fetch mentors from associated incubators
+    const { data: mentorsList = [], isLoading, error } = useMentors();
+
+    // Transform backend mentors to card format
+    const mentorsData = mentorsList.map((mentor) => {
+        // Generate initials from name
+        const initials = mentor.full_name
+            .split(' ')
+            .slice(0, 2)
+            .map((namePart: string) => namePart[0])
+            .join('')
+            .toUpperCase();
+
+        // Generate a consistent avatar color based on name hash
+        const colors = [
+            'var(--main-secondary)',
+            '#4f46e5',
+            '#10b981',
+            '#f59e0b',
+            '#ef4444',
+            '#8b5cf6',
+            '#ec4899',
+            '#14b8a6',
+        ];
+        const colorIndex = mentor.id % colors.length;
+        const avatarColor = colors[colorIndex];
+
+        return {
+            id: mentor.id,
+            name: mentor.full_name,
+            initials: initials,
+            avatarColor: avatarColor,
+            role: mentor.role === 'BOTH' ? 'Mentor / Inversor' : 'Mentor',
+            email: mentor.email,
+            phone: mentor.phone || '',
+            bio: '', // Backend doesn't provide bio
+            expertise: [], // Backend doesn't provide expertise
+            expertiseColor: avatarColor,
             expertiseBgColor: '#ede9fe',
-            experience: `15 ${t('years')}`,
-            rating: 4.9,
-            ratingCount: 156,
-            sessions: 385,
-            isCertified: true,
-        },
-        {
-            name: "Carlos Ruiz",
-            initials: "C",
-            avatarColor: "#4f46e5",
-            role: "CTO @ Perfect Solutions",
-            bio: "Arquitecto de sistemas escalables. Ha liderado equipos técnicos de 50+ ingenieros alrededor del mundo.",
-            expertise: ['Tech Architecture', 'Team Building', 'Agile'],
-            expertiseColor: "#4f46e5",
-            expertiseBgColor: "#e0f2fe",
-            experience: `12 ${t('years')}`,
-            rating: 4.6,
-            ratingCount: 92,
-            sessions: 101,
-            isCertified: true,
-        },
-        {
-            name: "Ana Martínez",
-            initials: "A",
-            avatarColor: "#10b981",
-            role: "Growth Marketing Agent",
-            bio: "Especialista en Growth Marketing. Ha escalado 3 startups de 0 a 100K usuarios.",
-            expertise: ['Marketing', 'Growth Hacking', 'Brand Strategy'],
-            expertiseColor: "#10b981",
-            expertiseBgColor: "#d1fae5",
-            experience: `10 ${t('years')}`,
-            rating: 4.7,
-            ratingCount: 78,
-            sessions: 203,
-            isCertified: true,
-        },
-        {
-            name: "Roberto Díaz",
-            initials: "R",
-            avatarColor: "#9ca3af",
-            role: "Legal & Corporate Advisor",
-            bio: "Abogado corporativo especializado en startups y venture capital.",
-            expertise: ['Legal', 'Compliance', 'Corporate Finance'],
-            expertiseColor: "#9ca3af",
-            expertiseBgColor: "#f3f4f6",
-            experience: `5 ${t('years')}`,
-            rating: 4.5,
-            ratingCount: 24,
-            sessions: 58,
+            experience: '', // Backend doesn't provide experience
+            rating: 0, // Backend doesn't provide rating
+            ratingCount: 0,
+            sessions: 0, // Backend doesn't provide sessions count
             isCertified: false,
-        },
-    ];
+        };
+    });
 
     const handleRequestMentoring = () => {
-        // Open modal with the first mentor (default)
-        const defaultMentor = mentorsData[0];
-        setModalContent(
-            <ScheduleMentorModal
-                mentor={{
-                    name: defaultMentor.name,
-                    role: defaultMentor.role,
-                    initials: defaultMentor.initials,
-                    avatarColor: defaultMentor.avatarColor,
-                }}
-            />
-        );
+        if (mentorsData.length > 0) {
+            const defaultMentor = mentorsData[0];
+            setModalContent(
+                <ScheduleMentorModal
+                    mentor={{
+                        name: defaultMentor.name,
+                        role: defaultMentor.role,
+                        initials: defaultMentor.initials,
+                        avatarColor: defaultMentor.avatarColor,
+                    }}
+                />
+            );
+        }
     };
 
     const handleScheduleMentor = (mentor: typeof mentorsData[0]) => {
@@ -104,6 +93,23 @@ const Mentoring: React.FC = () => {
             />
         );
     };
+
+    if (isLoading) {
+        return (
+            <div className="mentoring-loading">
+                <Spinner variant="primary" size="lg" />
+                <p>{t('loading_mentors')}</p>
+            </div>
+        );
+    }
+
+    if (error || mentorsData.length === 0) {
+        return (
+            <div className="mentoring-empty">
+                <p>{t('no_mentors_available')}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="mentoring-container">
@@ -122,22 +128,22 @@ const Mentoring: React.FC = () => {
             <div className="mentoring-metrics-grid">
                 <MetricItem
                     icon={<FaAward style={{ color: '#6b7280' }} />}
-                    label={t('certified_mentors')}
-                    value="3"
+                    label={t('available_mentors')}
+                    value={String(mentorsData.length)}
                     valueColor="var(--main-secondary)"
                     iconBgColor="white"
                 />
                 <MetricItem
                     icon={<FaCalendar style={{ color: '#6b7280' }} />}
                     label={t('scheduled_sessions')}
-                    value="1"
+                    value="0"
                     valueColor="var(--main-secondary)"
                     iconBgColor="white"
                 />
                 <MetricItem
                     icon={<FaCheckCircle style={{ color: '#6b7280' }} />}
                     label={t('completed_sessions')}
-                    value="1"
+                    value="0"
                     valueColor="var(--main-secondary)"
                     iconBgColor="white"
                 />
@@ -162,51 +168,11 @@ const Mentoring: React.FC = () => {
                     {t('mentors_directory')}
                 </h2>
 
-                {/* Filter Tabs */}
-                <div className="mentoring-tabs">
-                    <button
-                        className={`mentoring-tab ${activeTab === 'all' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('all')}
-                    >
-                        {t('all')}
-                    </button>
-                    <button
-                        className={`mentoring-tab ${activeTab === 'fundraising' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('fundraising')}
-                    >
-                        {t('fundraising')}
-                    </button>
-                    <button
-                        className={`mentoring-tab ${activeTab === 'marketing' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('marketing')}
-                    >
-                        {t('marketing')}
-                    </button>
-                    <button
-                        className={`mentoring-tab ${activeTab === 'tech' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('tech')}
-                    >
-                        {t('tech')}
-                    </button>
-                    <button
-                        className={`mentoring-tab ${activeTab === 'legal' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('legal')}
-                    >
-                        {t('legal')}
-                    </button>
-                    <button
-                        className={`mentoring-tab ${activeTab === 'product' ? 'mentoring-tab-active' : ''}`}
-                        onClick={() => setActiveTab('product')}
-                    >
-                        {t('product')}
-                    </button>
-                </div>
-
                 {/* Mentor List */}
                 <div className="mentoring-list">
-                    {mentorsData.map((mentor, index) => (
+                    {mentorsData.map((mentor) => (
                         <MentorCard
-                            key={index}
+                            key={mentor.id}
                             name={mentor.name}
                             initials={mentor.initials}
                             avatarColor={mentor.avatarColor}

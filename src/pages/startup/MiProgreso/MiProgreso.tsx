@@ -9,14 +9,22 @@ import MentoringSessions from '../../../components/dashboard/MentoringSessions/M
 import FundingProgress from '../../../components/dashboard/FundingProgress/FundingProgress';
 import QuickActions from '../../../components/dashboard/QuickActions/QuickActions';
 import { useNavigate } from 'react-router-dom';
+import useStartupValidation from '@/hooks/useStartupValidation';
+import { useInvestmentRounds } from '@/hooks/useStartupData';
 import './MiProgreso.css';
 
 const MiProgreso: React.FC = () => {
     const { t } = useTranslation('common');
+    const navigate = useNavigate();
+    const { data: rounds } = useInvestmentRounds();
 
+    const currentRound = rounds?.find(r => r.is_current);
+    const targetAmount = currentRound ? Number(currentRound.target_amount || 0) : 0;
+    const currentAmount = currentRound?.investors?.reduce((acc, inv) => acc + Number(inv.amount || 0), 0) || 0;
 
-        const navigate = useNavigate()
-    
+    // Validate startup has company_name, redirect to wizard if not
+    useStartupValidation();
+
     const [requirements] = useState([
         {
             id: 1,
@@ -139,7 +147,7 @@ const MiProgreso: React.FC = () => {
             <div className="mi-progreso-full-width">
                 <div className="timeline-section">
                     <h2 className="section-subtitle text-black">Timeline de etapas</h2>
-                    <Timeline currentStageKey="incubation"/>
+                    <Timeline currentStageKey="incubation" />
                 </div>
 
                 {/* Grid for Alerts and Mentoring Sessions */}
@@ -152,12 +160,14 @@ const MiProgreso: React.FC = () => {
                 </div>
 
                 {/* Funding Progress */}
-                <FundingProgress
-                    currentAmount={45000}
-                    targetAmount={150000}
-                    roundName="Ronda Seed"
-                    onSearchInvestors={() => navigate("/dashboard/inversores")}
-                />
+                {currentRound && (
+                    <FundingProgress
+                        currentAmount={currentAmount}
+                        targetAmount={targetAmount}
+                        roundName={currentRound.name}
+                        onSearchInvestors={() => navigate("/dashboard/inversores")}
+                    />
+                )}
 
                 {/* Quick Actions */}
                 <QuickActions actions={quickActions} />

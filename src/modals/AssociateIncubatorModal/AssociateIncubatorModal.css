@@ -1,0 +1,73 @@
+.associate-incubator-modal-content {
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.associate-incubator-modal-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.associate-incubator-description {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+.associate-incubator-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    gap: 1rem;
+}
+
+.associate-incubator-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.associate-incubator-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #e5e7eb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.associate-incubator-item:hover {
+    background-color: #f9fafb;
+    border-color: var(--main-secondary);
+}
+
+.associate-incubator-checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+    accent-color: var(--main-secondary);
+}
+
+.associate-incubator-label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.associate-incubator-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.associate-incubator-actions button {
+    min-width: 100px;
+}

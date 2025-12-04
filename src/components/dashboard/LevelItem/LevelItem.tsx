@@ -36,9 +36,13 @@ interface LevelItemProps {
 
     evidenceDescription?: string; // New prop
 
+    readinessLevelId?: number; // New prop for updating title/subtitle
+
     onAddEvidence: (level: number, type: 'TRL' | 'CRL', description: string, fileUrl: string, evidenceId?: number) => void; // Modified prop to include evidenceId for updates
 
     onRemoveEvidence: (evidenceId: number) => void; // New prop
+
+    onUpdateLevel?: (readinessLevelId: number, title: string, subtitle: string) => void; // New prop for updating title/subtitle
 
 }
 
@@ -72,9 +76,13 @@ export const LevelItem = ({
 
     evidenceDescription,
 
+    readinessLevelId,
+
     onAddEvidence,
 
     onRemoveEvidence,
+
+    onUpdateLevel,
 
 }: LevelItemProps) => {
 
@@ -84,13 +92,19 @@ export const LevelItem = ({
 
                 const [fileUrl, setFileUrl] = useState<string>(evidenceFileUrl || '');
 
-        
+                const [editTitle, setEditTitle] = useState<string>(title);
+
+                const [editSubtitle, setEditSubtitle] = useState<string>(description);
+
+                const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+
+
 
                 const trimmedNotes = notes.trim();
 
                 const trimmedFileUrl = fileUrl.trim();
 
-    
+
 
         // Reset form state when level or evidence changes
 
@@ -100,7 +114,11 @@ export const LevelItem = ({
 
             setFileUrl(evidenceFileUrl || '');
 
-        }, [evidenceDescription, evidenceFileUrl, level]);
+            setEditTitle(title);
+
+            setEditSubtitle(description);
+
+        }, [evidenceDescription, evidenceFileUrl, level, title, description]);
 
 
 
@@ -280,6 +298,20 @@ export const LevelItem = ({
 
 
 
+    const handleSaveTitle = () => {
+
+        if (readinessLevelId && onUpdateLevel && editTitle.trim()) {
+
+            onUpdateLevel(readinessLevelId, editTitle.trim(), editSubtitle.trim());
+
+            setIsEditingTitle(false);
+
+        }
+
+    };
+
+
+
     return (
 
         <div className={`levelitem-container levelitem-${status}`}>
@@ -300,25 +332,153 @@ export const LevelItem = ({
 
                     <div className="levelitem-text-content">
 
-                        <h3 className="levelitem-title">
+                        {isEditingTitle ? (
 
-                            {type} {level}: {title}
+                            <div className="levelitem-edit-form">
 
-                        </h3>
+                                <div className="levelitem-edit-group">
 
-                        <p className="levelitem-description">
+                                    <Input
 
-                            {description}
+                                        name="edit-title"
 
-                        </p>
+                                        label={t('title')}
 
-                        {lastUpdate && updatedBy && (
+                                        value={editTitle}
 
-                            <span className="levelitem-last-update">
+                                        setValue={setEditTitle}
 
-                                {t('last_update')}: {lastUpdate} {t('by')} {updatedBy}
+                                        placeholder={t('enter_title')}
 
-                            </span>
+                                        classNames="basic-input-field"
+
+                                    />
+
+                                </div>
+
+                                <div className="levelitem-edit-group">
+
+                                    <label className="text-black wizard-label">
+
+                                        {t('subtitle')} {t('optional')}
+
+                                    </label>
+
+                                    <textarea
+
+                                        className="basic-input-field multiline-textarea"
+
+                                        rows={2}
+
+                                        value={editSubtitle}
+
+                                        onChange={(e) => setEditSubtitle(e.target.value)}
+
+                                        placeholder={t('enter_subtitle')}
+
+                                    />
+
+                                </div>
+
+                                <div className="levelitem-edit-actions">
+
+                                    <Button
+
+                                        variant="secondary"
+
+                                        onClick={(e) => {
+
+                                            e.stopPropagation();
+
+                                            setIsEditingTitle(false);
+
+                                            setEditTitle(title);
+
+                                            setEditSubtitle(description);
+
+                                        }}
+
+                                    >
+
+                                        {t('cancel')}
+
+                                    </Button>
+
+                                    <Button
+
+                                        variant="primary"
+
+                                        onClick={(e) => {
+
+                                            e.stopPropagation();
+
+                                            handleSaveTitle();
+
+                                        }}
+
+                                        disabled={!editTitle.trim()}
+
+                                    >
+
+                                        {t('save')}
+
+                                    </Button>
+
+                                </div>
+
+                            </div>
+
+                        ) : (
+
+                            <>
+
+                                <div className="levelitem-title-edit-wrapper">
+
+                                    <h3 className="levelitem-title">
+
+                                        {type} {level}: {title}
+
+                                    </h3>
+
+                                    <button
+
+                                        className="levelitem-edit-btn"
+
+                                        onClick={(e) => {
+
+                                            e.stopPropagation();
+
+                                            setIsEditingTitle(true);
+
+                                        }}
+
+                                        title={t('edit')}
+
+                                    >
+
+                                        ✎
+
+                                    </button>
+
+                                </div>
+
+                                <p className="levelitem-description">
+
+                                    {description}
+
+                                </p>
+
+                                {lastUpdate && updatedBy && (
+
+                                    <span className="levelitem-last-update">
+
+                                        {t('last_update')}: {lastUpdate} {t('by')} {updatedBy}
+
+                                    </span>
+
+                                )}
+
+                            </>
 
                         )}
 
