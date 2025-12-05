@@ -292,6 +292,7 @@ const common = {
         kpi_ebitda: "EBITDA",
         kpi_ebitda_description: "Ganancias antes de Intereses, Impuestos, Depreciación y Amortización",
         select_investor: "Seleccionar Inversor",
+        title: "Titulo",
         // Inversores Components
         investments: "Inversiones",
         funding_rounds_classification: "Clasificación de rondas de financiamiento",
@@ -684,7 +685,8 @@ const common = {
         home_toggle_loading: "Activar Carga",
         home_table_components: "Tablas",
         home_paginator_components: "Paginadores",
-
+        email: "Correo",
+        not_available: "No disponible",
         // Login Page
         login_welcome: "Bienvenido",
         login_back_to_profile_button: "Volver al perfil",
@@ -840,7 +842,7 @@ const common = {
         missing_fields: "Please complete all fields",
         passwords_do_not_match: "Passwords do not match",
         change_password: "Change password",
-
+        title: "Title",
         // Onboarding
         welcome_to_raven: "Welcome to Raven CRM",
         complete_your_profile: "Complete your profile to get started",
@@ -863,8 +865,9 @@ const common = {
         continue: "Continue",
         onboarding_success: "Profile completed successfully!",
         onboarding_error: "Error completing profile",
-
+        email: "Email",
         // Forms
+        not_available: "Not available",
         add: "Add",
         cancel: "Cancel",
         save: "Save",
