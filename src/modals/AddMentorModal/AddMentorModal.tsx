@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@/components/common/Button/Button';
+import Input from '@/components/forms/Input/Input';
 import useModalStore from '@/stores/ModalStore';
 import { useCreateIncubatorMember } from '@/hooks/useIncubatorData';
 import toast from 'react-hot-toast';
@@ -22,11 +23,6 @@ const AddMentorModal: React.FC<AddMentorModalProps> = ({ handleClose: _handleClo
         role: 'MENTOR' as const
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         createMember(formData, {
@@ -42,42 +38,38 @@ const AddMentorModal: React.FC<AddMentorModalProps> = ({ handleClose: _handleClo
 
     return (
         <div className="add-mentor-modal">
-            <h2 className="text-xl font-bold mb-4">{t('add_new_mentor')}</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('full_name')}</label>
-                    <input
-                        type="text"
+            <h2 className="modal-title">{t('add_new_mentor')}</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="wizard-form-group">
+                    <Input
                         name="full_name"
+                        label={t('full_name')}
                         value={formData.full_name}
-                        onChange={handleChange}
+                        setValue={(val) => setFormData(prev => ({ ...prev, full_name: val }))}
                         required
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('email')}</label>
-                    <input
-                        type="email"
+                <div className="wizard-form-group">
+                    <Input
                         name="email"
+                        label={t('email')}
+                        type="email"
                         value={formData.email}
-                        onChange={handleChange}
+                        setValue={(val) => setFormData(prev => ({ ...prev, email: val }))}
                         required
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('phone')}</label>
-                    <input
-                        type="tel"
+                <div className="wizard-form-group">
+                    <Input
                         name="phone"
+                        label={t('phone')}
+                        type="tel"
                         value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        setValue={(val) => setFormData(prev => ({ ...prev, phone: val }))}
                     />
                 </div>
 
-                <div className="flex justify-end gap-4 mt-4">
+                <div className="add-mentor-modal-actions">
                     <Button variant="secondary" onClick={closeModal} type="button">
                         {t('cancel')}
                     </Button>

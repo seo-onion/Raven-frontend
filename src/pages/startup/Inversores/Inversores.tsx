@@ -114,7 +114,6 @@ const Inversores: React.FC = () => {
                 {isLoadingStartupData && (
                     <div className="inversores-loading">
                         <Spinner variant="primary" size="lg" />
-                        <p className="text-black">{t('loading_data')}</p>
                     </div>
                 )}
 

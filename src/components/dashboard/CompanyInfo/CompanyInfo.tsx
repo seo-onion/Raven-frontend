@@ -42,7 +42,6 @@ const CompanyInfo: React.FC = () => {
         return (
             <div className="company-info loading-state">
                 <Spinner variant="primary" size="md" />
-                <p>{t('loading_startup_data')}</p>
             </div>
         );
     }

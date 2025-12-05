@@ -14,7 +14,7 @@ import { fetchCampaignFinancials, updateCampaignFinancials } from '@/api/campaig
 import { applySensitivityAndCalculateQuarterlyMetrics, calculateAllKPIs } from '@/utils/financialMath';
 import type { CampaignFinancials, FinancialsUpdateDTO, InvestmentRound, Investor } from '@/types/campaigns';
 import './Finanzas.css';
-import { FiDownload, FiSave } from "react-icons/fi";
+import { FiDownload, FiSave, FiCpu } from "react-icons/fi";
 import * as XLSX from 'xlsx';
 import Spinner from '@/components/common/Spinner/Spinner';
 
@@ -285,6 +285,27 @@ const Finanzas: React.FC = () => {
         return { adjustedProjections: adjusted, kpis: calculatedKpis, chartData: monthlyChartData };
     }, [activeFinancials]);
 
+    // Handler for generating dynamic financials (first time)
+    const handleGenerateFinancials = useCallback(async () => {
+        if (!campaignData?.id) return;
+
+        // Use default projections as the "dynamic" initial data
+        // In a real scenario, this could be randomized or calculated based on industry
+        const payload: FinancialsUpdateDTO = {
+            current_cash_balance: 10000,
+            monthly_burn_rate: 5000,
+            financial_projections: defaultFinancialProjections
+        };
+
+        try {
+            await updateFinancialsMutation.mutateAsync(payload);
+            toast.success(t('financials_generated') || 'Finanzas generadas correctamente');
+        } catch (error) {
+            console.error('Error generating financials:', error);
+            toast.error(t('error_generating_financials') || 'Error al generar finanzas');
+        }
+    }, [campaignData?.id, updateFinancialsMutation, t]);
+
     // Handler for updating financial data
     const handleUpdateDatos = useCallback(async () => {
         if (!activeFinancials || !campaignData?.id) {
@@ -432,6 +453,26 @@ const Finanzas: React.FC = () => {
                 </div>
 
                 <div className='button-container'>
+                    {!hasRealProjections && (activeFinancials?.funding_goal || 0) > 0 && (
+                        <Button
+                            variant={'primary'}
+                            size="lg"
+                            onClick={handleGenerateFinancials}
+                            disabled={updateFinancialsMutation.isPending}
+                            className="typeselectioncard-button mr-2"
+                        >
+                            {updateFinancialsMutation.isPending ? (
+                                <>
+                                    <Spinner variant="secondary" size="sm" /> {t('saving') || 'Guardando...'}
+                                </>
+                            ) : (
+                                <>
+                                    <FiCpu size={16} /> {t('generate_financials') || 'Generar Finanzas'}
+                                </>
+                            )}
+                        </Button>
+                    )}
+
                     <Button
                         variant={'primary'}
                         size="lg"

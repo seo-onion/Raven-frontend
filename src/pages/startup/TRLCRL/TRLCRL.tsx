@@ -199,7 +199,6 @@ const TRLCRL: React.FC = () => {
         return (
             <div className="trl-crl-loading">
                 <Spinner variant="primary" size="lg" />
-                <p>{t('loading_data')}</p>
             </div>
         );
     }

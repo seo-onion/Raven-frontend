@@ -1,11 +1,27 @@
 .apply-challenge-modal {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    min-width: 400px;
+    padding: 1.5rem;
+    background-color: white;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-.apply-challenge-modal textarea {
-    min-height: 150px;
-    resize: vertical;
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.wizard-form-group {
+    margin-bottom: 1rem;
+}
+
+.apply-challenge-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
 }

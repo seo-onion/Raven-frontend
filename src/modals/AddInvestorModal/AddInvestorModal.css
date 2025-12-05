@@ -1,7 +1,27 @@
 .add-investor-modal {
     padding: 1.5rem;
     background-color: white;
-    border-radius: 0.5rem;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
+    margin: 0 auto;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.wizard-form-group {
+    margin-bottom: 1rem;
+}
+
+.add-investor-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e5e7eb;
 }

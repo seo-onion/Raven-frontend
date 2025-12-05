@@ -31,7 +31,7 @@ const OnboardingWizard: React.FC = () => {
         loadCampaign();
     }, [loadCampaign]);
 
-    const totalSteps = 3;
+    const totalSteps = 2;
 
     // =============================================================================
     // Validation
@@ -135,8 +135,6 @@ const OnboardingWizard: React.FC = () => {
             case 0:
                 return <Step0CompanyBasics />;
             case 1:
-                return <Step1TRLCRL />;
-            case 2:
                 return <Step2Incubators />;
             default:
                 return <Step0CompanyBasics />;
@@ -248,140 +246,7 @@ const Step0CompanyBasics: React.FC = () => {
     );
 };
 
-const Step1TRLCRL: React.FC = () => {
-    const { t } = useTranslation('common');
-    const { evidences, addEvidence, updateEvidence, removeEvidence } = useOnboardingStore();
 
-    const [activeTab, setActiveTab] = React.useState<'TRL' | 'CRL'>('TRL');
-
-    // Filter evidences by active tab
-    const activeEvidences = evidences.filter(e => e.type === activeTab);
-
-    // Effect to ensure levels are sequential?
-    // Or just trust the display?
-    // The prompt says "quita el trl_level como botón plegable... debe empezar en uno y ir subiendo".
-
-    return (
-        <div className="wizard-step">
-            <h2 className="text-black wizard-step-title">{t('onboarding_step1_title')}</h2>
-            <p className="text-black wizard-step-description">{t('onboarding_step1_description')}</p>
-
-            <div className="wizard-tabs">
-                <button
-                    className={`wizard-tab-btn ${activeTab === 'TRL' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('TRL')}
-                >
-                    {t('trl_levels')}
-                </button>
-                <button
-                    className={`wizard-tab-btn ${activeTab === 'CRL' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('CRL')}
-                >
-                    {t('crl_levels')}
-                </button>
-            </div>
-
-            <h3 className="text-black wizard-subsection-title">{t('define_levels_and_evidence')}</h3>
-            <p className="text-black wizard-hint" style={{ fontSize: '1rem' }}>
-                {activeTab === 'TRL'
-                    ? t('trl_explanation_hint')
-                    : t('crl_explanation_hint')}
-            </p>
-
-            {
-                activeEvidences.map((evidence, index) => {
-                    // Find the original index in the main evidences array
-                    const originalIndex = evidences.findIndex(e => e === evidence);
-
-                    // Auto-assign level based on index + 1 for display and potentially update data
-                    const displayLevel = index + 1;
-
-                    // If the stored level doesn't match the display level (sequential), update it
-                    // This is a bit of a side-effect in render, but React might handle it or we should use useEffect.
-                    // Better to just display it correctly and rely on submit to clean it up or update on change.
-                    if (evidence.level !== displayLevel) {
-                        // We can't call updateEvidence inside render safely.
-                        // Let's just display the correct level title.
-                    }
-
-                    return (
-                        <div key={originalIndex} className="wizard-investor-card">
-                            <div className="wizard-investor-header">
-                                <h4 className="text-black">
-                                    {activeTab} {t('level')} {displayLevel}
-                                </h4>
-                                {activeEvidences.length > 1 && (
-                                    <button
-                                        type="button"
-                                        className="wizard-btn-remove"
-                                        onClick={() => removeEvidence(originalIndex)}
-                                    >
-                                        {t('delete')}
-                                    </button>
-                                )}
-                            </div>
-
-                            {/* Removed Level Select - Now auto-assigned/displayed in header */}
-
-                            <div className="wizard-form-group">
-                                <Input
-                                    name={`evidence_title_${originalIndex}`}
-                                    label={t('level_title')}
-                                    value={evidence.title || ''}
-                                    setValue={(value) => updateEvidence(originalIndex, { title: value, level: displayLevel })}
-                                    placeholder={t('level_title_placeholder')}
-                                    required
-                                />
-                            </div>
-
-                            <div className="wizard-form-group">
-                                <Input
-                                    name={`evidence_subtitle_${originalIndex}`}
-                                    label={t('level_subtitle')}
-                                    value={evidence.subtitle || ''}
-                                    setValue={(value) => updateEvidence(originalIndex, { subtitle: value, level: displayLevel })}
-                                    placeholder={t('level_subtitle_placeholder')}
-                                />
-                            </div>
-
-                            <div className="wizard-form-group">
-                                <label className="text-black wizard-label">
-                                    {t('evidence_description')} *
-                                </label>
-                                <textarea
-                                    className="wizard-textarea"
-                                    rows={3}
-                                    value={evidence.description}
-                                    onChange={(e) => updateEvidence(originalIndex, { description: e.target.value, level: displayLevel })}
-                                    placeholder={t('evidence_description_placeholder')}
-                                />
-                            </div>
-
-                            <div className="wizard-form-group">
-                                <Input
-                                    name={`evidence_file_url_${originalIndex}`}
-                                    label={t('evidence_file_url')}
-                                    value={evidence.file_url || ''}
-                                    setValue={(value) => updateEvidence(originalIndex, { file_url: value, level: displayLevel })}
-                                    placeholder="https://..."
-                                />
-                                <span className="text-black wizard-hint">{t('evidence_file_url_hint')}</span>
-                            </div>
-                        </div>
-                    )
-                })
-            }
-
-            <button
-                type="button"
-                className="wizard-btn-add"
-                onClick={() => addEvidence(activeTab)}
-            >
-                + {t(`add_${activeTab.toLowerCase()}_level`)}
-            </button>
-        </div >
-    );
-};
 
 const Step2Incubators: React.FC = () => {
     const { t } = useTranslation('common');

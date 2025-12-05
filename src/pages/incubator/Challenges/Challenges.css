@@ -1,2 +1,123 @@
-/* Styles for Incubator Challenges page */
-/* Mostly using Tailwind utility classes in the TSX, but adding specific overrides here if needed */
+/* =============================================================================
+   Incubator Challenges Page Styles
+   ============================================================================= */
+
+.incubator-challenges-container {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+}
+
+.incubator-challenges-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.incubator-challenges-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin: 0 0 0.25rem 0;
+}
+
+.incubator-challenges-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Tabs */
+.incubator-challenges-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.incubator-challenges-tab {
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.incubator-challenges-tab:hover {
+    color: var(--main-primary);
+}
+
+.incubator-challenges-tab.active {
+    color: var(--main-primary);
+    border-bottom-color: var(--main-primary);
+}
+
+/* Grid Layout */
+.incubator-challenges-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* Empty State */
+.incubator-challenges-empty {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-secondary);
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+/* Filter Section */
+.incubator-challenges-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.incubator-challenges-filter-icon {
+    color: var(--text-secondary);
+}
+
+.incubator-challenges-select {
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    background-color: white;
+    outline: none;
+    min-width: 200px;
+}
+
+.incubator-challenges-select:focus {
+    border-color: var(--main-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Loading & Error */
+.incubator-challenges-loading,
+.incubator-challenges-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 16rem;
+    color: var(--text-secondary);
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.incubator-challenges-error h2 {
+    color: var(--error-color, #dc2626);
+    font-size: 1.25rem;
+    font-weight: 600;
+}

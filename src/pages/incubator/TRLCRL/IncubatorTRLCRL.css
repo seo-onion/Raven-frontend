@@ -3,7 +3,7 @@
    ============================================================================= */
 
 .incubatortrlcrl_container {
-    padding: 2rem;
+    padding: 1.5rem;
     max-width: 1400px;
     margin: 0 auto;
     min-height: 100vh;
@@ -14,11 +14,9 @@
 .incubatortrlcrl_loading,
 .incubatortrlcrl_error {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 400px;
-    gap: 1rem;
+    align-items: center;
+    height: 16rem;
     color: var(--text-secondary);
 }
 
@@ -34,10 +32,11 @@
 }
 
 .incubatortrlcrl_title {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-primary);
-    margin: 0 0 0.5rem 0;
+    margin-bottom: 1.5rem;
+    color: #000000;
+    margin: 0 0 1.5rem 0;
 }
 
 .incubatortrlcrl_subtitle {
@@ -165,16 +164,19 @@
 }
 
 .incubatortrlcrl_empty {
+    text-align: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: #6b7280;
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    height: 20rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
-    background: var(--bg-secondary);
-    border: 1px dashed var(--border-color);
-    border-radius: 12px;
-    text-align: center;
-    color: var(--text-secondary);
 }
 
 .incubatortrlcrl_empty h3 {

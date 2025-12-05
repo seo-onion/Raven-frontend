@@ -98,7 +98,6 @@ const Mentoring: React.FC = () => {
         return (
             <div className="mentoring-loading">
                 <Spinner variant="primary" size="lg" />
-                <p>{t('loading_mentors')}</p>
             </div>
         );
     }

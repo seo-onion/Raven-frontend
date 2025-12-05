@@ -1,21 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useChallenges, useChallengeApplications } from '@/hooks/useIncubatorData';
-import { type ChallengeDTO, type ChallengeApplicationDTO } from '@/api/incubator';
-
-
+import { useQuery } from '@tanstack/react-query';
+import { FiFilter, FiPlus } from 'react-icons/fi';
 import ChallengeCard from '@/components/dashboard/ChallengeCard/ChallengeCard';
 import Spinner from '@/components/common/Spinner/Spinner';
+import Button from '@/components/common/Button/Button';
 import useModalStore from '@/stores/ModalStore';
 import CreateChallengeModal from '@/modals/CreateChallengeModal/CreateChallengeModal';
-import CreateChallengeSection from '@/components/dashboard/CreateChallengeSection/CreateChallengeSection';
-import { FiFilter } from 'react-icons/fi';
+import { fetchChallenges, fetchChallengeApplications, type ChallengeDTO, type ChallengeApplicationDTO } from '@/api/incubator';
 import './Challenges.css';
 
 const IncubatorChallenges: React.FC = () => {
     const { t } = useTranslation('common');
-    const { data: challenges, isLoading: isLoadingChallenges } = useChallenges();
-    const { data: applications, isLoading: isLoadingApplications } = useChallengeApplications();
+    const { data: challenges, isLoading: isLoadingChallenges } = useQuery({
+        queryKey: ['challenges'],
+        queryFn: fetchChallenges,
+    });
+    const { data: applications, isLoading: isLoadingApplications } = useQuery({
+        queryKey: ['challengeApplications'],
+        queryFn: fetchChallengeApplications,
+    });
     const { setModalContent } = useModalStore();
 
     const [activeTab, setActiveTab] = useState<'challenges' | 'applications'>('challenges');
@@ -32,29 +36,32 @@ const IncubatorChallenges: React.FC = () => {
     }, [applications, selectedChallengeFilter]);
 
     if (isLoadingChallenges || isLoadingApplications) {
-        return <div className="flex justify-center items-center h-64"><Spinner variant="primary" size="lg" /></div>;
+        return <div className="incubator-challenges-loading"><Spinner variant="primary" size="lg" /></div>;
     }
 
     return (
-        <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
+        <div className="incubator-challenges-container">
+            <div className="incubator-challenges-header">
                 <div>
-                    <h1 className="text-2xl font-bold text-black">{t('challenges')}</h1>
-                    <p className="text-gray-500">{t('manage_challenges_and_applications')}</p>
+                    <h1 className="incubator-challenges-title">{t('challenges')}</h1>
+                    <p className="incubator-challenges-subtitle">{t('manage_challenges_and_applications')}</p>
                 </div>
-                <CreateChallengeSection onCreateClick={openCreateChallengeModal} />
+                <Button variant="primary" onClick={openCreateChallengeModal}>
+                    <FiPlus size={18} style={{ marginRight: '0.5rem' }} />
+                    {t('create_new_challenge')}
+                </Button>
             </div>
 
             {/* Tabs */}
-            <div className="desafios-tabs">
+            <div className="incubator-challenges-tabs">
                 <button
-                    className={`desafios-tab ${activeTab === 'challenges' ? 'desafios-tab-active' : ''}`}
+                    className={`incubator-challenges-tab ${activeTab === 'challenges' ? 'active' : ''}`}
                     onClick={() => setActiveTab('challenges')}
                 >
                     {t('my_challenges')}
                 </button>
                 <button
-                    className={`desafios-tab ${activeTab === 'applications' ? 'desafios-tab-active' : ''}`}
+                    className={`incubator-challenges-tab ${activeTab === 'applications' ? 'active' : ''}`}
                     onClick={() => setActiveTab('applications')}
                 >
                     {t('applications')}
@@ -63,7 +70,7 @@ const IncubatorChallenges: React.FC = () => {
 
             {/* Content */}
             {activeTab === 'challenges' ? (
-                <div className="grid grid-cols-1 gap-4">
+                <div className="incubator-challenges-grid">
                     {challenges && challenges.length > 0 ? (
                         challenges.map((challenge: ChallengeDTO) => (
                             <ChallengeCard
@@ -86,7 +93,7 @@ const IncubatorChallenges: React.FC = () => {
                             />
                         ))
                     ) : (
-                        <div className="text-center py-12 text-gray-500 bg-white rounded-lg border border-gray-200">
+                        <div className="incubator-challenges-empty">
                             {t('no_challenges_found')}
                         </div>
                     )}
@@ -94,10 +101,10 @@ const IncubatorChallenges: React.FC = () => {
             ) : (
                 <div>
                     {/* Filter */}
-                    <div className="flex items-center gap-2 mb-4">
-                        <FiFilter className="text-gray-500" />
+                    <div className="incubator-challenges-filter">
+                        <FiFilter className="incubator-challenges-filter-icon" />
                         <select
-                            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="incubator-challenges-select"
                             value={selectedChallengeFilter}
                             onChange={(e) => setSelectedChallengeFilter(e.target.value)}
                         >
@@ -108,7 +115,7 @@ const IncubatorChallenges: React.FC = () => {
                         </select>
                     </div>
 
-                    <div className="grid grid-cols-1 gap-4">
+                    <div className="incubator-challenges-grid">
                         {filteredApplications.length > 0 ? (
                             filteredApplications.map((app: ChallengeApplicationDTO) => {
                                 const challenge = challenges?.find((c: ChallengeDTO) => c.id === app.challenge);
@@ -134,7 +141,7 @@ const IncubatorChallenges: React.FC = () => {
                                 );
                             })
                         ) : (
-                            <div className="text-center py-12 text-gray-500 bg-white rounded-lg border border-gray-200">
+                            <div className="incubator-challenges-empty">
                                 {t('no_applications_found')}
                             </div>
                         )}

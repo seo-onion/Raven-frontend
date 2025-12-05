@@ -297,7 +297,14 @@ const NewRoundModal: React.FC<NewRoundModalProps> = ({ roundId, initialData }) =
                 </div>
 
                 <div className="wizard-form-group checkbox-group">
-                    <label className="checkbox-label">
+                    <label className="checkbox-label" style={{
+                        "fontSize": "1rem", /* text-base */
+                        "fontWeight": "500", /* font-medium */
+                        "color": "#000000", /* text-black */
+                        display: "flex", /* flex */
+                        alignItems: "center", /* items-center */
+                        gap: "0.5rem", /* gap-2 */
+                    }}>
                         <input
                             type="checkbox"
                             checked={isCurrent}
@@ -319,7 +326,6 @@ const NewRoundModal: React.FC<NewRoundModalProps> = ({ roundId, initialData }) =
                             value={newInvestor.incubator_id?.toString() || ''}
                             onChange={handleInvestorSelect}
                             options={[
-                                { value: '', label: t('select_investor') },
                                 ...investorOptions.map(opt => ({ value: opt.value.toString(), label: opt.label }))
                             ]}
                         />

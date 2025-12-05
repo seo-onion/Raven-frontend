@@ -145,3 +145,13 @@
         margin-left: 0;
     }
 }
+
+/* Static label override for date inputs in NewRoundModal */
+.new-round-modal .wizard-form-group .input-container input[type="date"]+label {
+    transform: translateY(-1.5rem) scale(0.85) !important;
+    color: var(--main-secondary);
+    background-color: white;
+    padding: 0 0.25rem;
+    transition: none !important;
+    animation: none !important;
+}

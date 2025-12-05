@@ -100,6 +100,7 @@ const NewInvestorModal: React.FC<NewInvestorModalProps> = ({ roundId }) => {
             await queryClient.invalidateQueries({ queryKey: ['investment-rounds'] });
             toast.success(t('investor_added_successfully'));
             closeModal();
+            window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error(t('error_adding_investor'));

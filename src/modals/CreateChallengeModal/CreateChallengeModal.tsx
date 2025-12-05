@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from '@/components/common/Button/Button';
+import Input from '@/components/forms/Input/Input';
 import useModalStore from '@/stores/ModalStore';
 import { useCreateChallenge } from '@/hooks/useIncubatorData';
 import toast from 'react-hot-toast';
@@ -25,11 +26,6 @@ const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({ handleClose
         status: 'OPEN' as const
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         createChallenge(formData, {
@@ -45,76 +41,68 @@ const CreateChallengeModal: React.FC<CreateChallengeModalProps> = ({ handleClose
 
     return (
         <div className="create-challenge-modal">
-            <h2 className="text-xl font-bold mb-4">{t('create_new_challenge')}</h2>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('title')}</label>
-                    <input
-                        type="text"
+            <h2 className="modal-title">{t('create_new_challenge')}</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="wizard-form-group">
+                    <Input
                         name="title"
+                        label={t('title')}
                         value={formData.title}
-                        onChange={handleChange}
+                        setValue={(val) => setFormData(prev => ({ ...prev, title: val }))}
                         required
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('subtitle')}</label>
-                    <input
-                        type="text"
+                <div className="wizard-form-group">
+                    <Input
                         name="subtitle"
+                        label={t('subtitle')}
                         value={formData.subtitle}
-                        onChange={handleChange}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        setValue={(val) => setFormData(prev => ({ ...prev, subtitle: val }))}
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('description')}</label>
-                    <textarea
+                <div className="wizard-form-group">
+                    <Input
                         name="description"
+                        label={t('description')}
                         value={formData.description}
-                        onChange={handleChange}
+                        setValue={(val) => setFormData(prev => ({ ...prev, description: val }))}
                         required
+                        multiline
                         rows={3}
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('budget')}</label>
-                        <input
-                            type="number"
+                <div className="form-row">
+                    <div className="wizard-form-group">
+                        <Input
                             name="budget"
+                            label={t('budget')}
+                            type="number"
                             value={formData.budget}
-                            onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            setValue={(val) => setFormData(prev => ({ ...prev, budget: val }))}
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">{t('deadline')}</label>
-                        <input
-                            type="date"
+                    <div className="wizard-form-group">
+                        <Input
                             name="deadline"
+                            label={t('deadline')}
+                            type="date"
                             value={formData.deadline}
-                            onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            setValue={(val) => setFormData(prev => ({ ...prev, deadline: val }))}
                         />
                     </div>
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('required_technologies')}</label>
-                    <input
-                        type="text"
+                <div className="wizard-form-group">
+                    <Input
                         name="required_technologies"
+                        label={t('required_technologies')}
                         value={formData.required_technologies}
-                        onChange={handleChange}
+                        setValue={(val) => setFormData(prev => ({ ...prev, required_technologies: val }))}
                         required
                         placeholder="Python, AI, Blockchain..."
-                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
 
-                <div className="flex justify-end gap-4 mt-4">
+                <div className="create-challenge-modal-actions">
                     <Button variant="secondary" onClick={closeModal} type="button">
                         {t('cancel')}
                     </Button>
