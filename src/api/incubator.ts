@@ -6,7 +6,8 @@ import axiosInstance, {
     CHALLENGE_APPLICATIONS_PATH,
     INCUBATOR_INVESTMENTS_PATH,
     INCUBATOR_PORTFOLIO_CAMPAIGNS_PATH,
-    INCUBATOR_PORTFOLIO_EVIDENCES_PATH
+    INCUBATOR_PORTFOLIO_EVIDENCES_PATH,
+    MENTORING_SESSIONS_PATH
 } from './axiosInstance';
 
 // =============================================================================
@@ -74,6 +75,16 @@ export interface ChallengeDTO {
 // =============================================================================
 // API Functions
 // =============================================================================
+
+export interface MentoringSessionDTO {
+    id: number;
+    title: string;
+    mentor_name: string;
+    start_time: string; // ISO string
+    end_time: string; // ISO string
+    status: 'SCHEDULED' | 'COMPLETED' | 'CANCELLED';
+    meeting_link?: string;
+}
 
 /**
  * Fetch data for the authenticated incubator
@@ -165,6 +176,14 @@ export const fetchIncubatorInvestments = async (): Promise<InvestmentDTO[]> => {
 export const commitInvestment = async (id: number): Promise<InvestmentDTO> => {
     const response = await axiosInstance.post<InvestmentDTO>(`${INCUBATOR_INVESTMENTS_PATH}${id}/commit/`);
     return response.data;
+};
+
+/**
+ * Fetch mentoring sessions
+ */
+export const fetchMentoringSessions = async (): Promise<MentoringSessionDTO[]> => {
+    const response = await axiosInstance.get<any>(MENTORING_SESSIONS_PATH);
+    return response.data.results || response.data;
 };
 
 // =============================================================================

@@ -20,6 +20,7 @@ export interface StartupData {
     actual_revenue: number | null;
     current_crl: number | null; // Assuming current_crl might also be exposed
     incubators?: Incubator[];
+
 }
 
 // =============================================================================
@@ -119,4 +120,5 @@ export interface Incubator {
     members?: IncubatorMember[];
     created: string;
     updated: string;
+    description?: string;
 }

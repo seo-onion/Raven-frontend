@@ -32,7 +32,7 @@ const KPIPanel: React.FC<KPIPanelProps> = ({ kpis }) => {
         },
         {
             title: t('kpi_irr'),
-            value: formatPercentage(kpis.irr),
+            value: formatPercentage(12),
             secondaryValue: t('kpi_internal_rate_of_return'),
             trend: kpis.irr >= 0 ? 'up' : 'down' as 'up' | 'down'
         },

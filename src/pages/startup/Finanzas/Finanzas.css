@@ -3,10 +3,10 @@
     max-width: 80rem;
     max-width: 100%;
     margin: 20px;
-    margin-top: 4px;
+    padding-top: 24px;
 }
 
-.finanzas-container > * + * {
+.finanzas-container>*+* {
     margin-top: 1.5rem;
 }
 
@@ -88,17 +88,17 @@
     }
 }
 
-.finanzas-header-container{
+.finanzas-header-container {
     display: flex;
     justify-content: space-between;
 }
 
-.typeselectioncard-button{
+.typeselectioncard-button {
     height: 40px;
 }
 
-.button-container{
-    
+.button-container {
+
     display: flex;
     gap: 12px;
     align-items: center;

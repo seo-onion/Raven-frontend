@@ -28,9 +28,8 @@ const MentoringSessions = ({ sessions, onViewAll }: MentoringSessionsProps) => {
                 {sessions.map((session, index) => (
                     <div
                         key={session.id}
-                        className={`mentoringsessions-item ${
-                            index < sessions.length - 1 ? 'mentoringsessions-item-border' : ''
-                        }`}
+                        className={`mentoringsessions-item ${index < sessions.length - 1 ? 'mentoringsessions-item-border' : ''
+                            }`}
                     >
                         <p className="mentoringsessions-item-title text-black">
                             {session.title}

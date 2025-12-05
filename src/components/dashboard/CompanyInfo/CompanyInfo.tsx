@@ -62,9 +62,9 @@ const CompanyInfo: React.FC = () => {
         );
     }
 
-    const foundedDate = startupInfo.created ? new Date(startupInfo.created).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : t('not_available');
+    const foundedDate = startupInfo.created ? new Date(startupInfo.created).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : t('not_available');
     const formattedRevenue = startupInfo.actual_revenue !== null ? `$${startupInfo.actual_revenue.toLocaleString()}` : t('not_available');
-    const formattedTrl = startupInfo.current_trl !== null ? `${startupInfo.current_trl}/9` : t('not_available');
+    const formattedTrl = (startupInfo.current_trl || 0) !== 0 ? `${startupInfo.current_trl}/9` : t('not_available');
     const teamMembersCount = startupInfo.team_members_count || 1; // Default to 1 if not provided
 
     return (

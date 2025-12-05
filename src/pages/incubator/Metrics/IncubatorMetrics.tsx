@@ -223,11 +223,9 @@ const StartupFinancialView: React.FC<StartupFinancialViewProps> = ({ startupId, 
             </div>
 
             {/* Data source indicator */}
-            {/* {!hasRealProjections && (
-                <div className="incubatormetrics_demobanner">
-                    <strong>⚠️ Modo Demo:</strong> Esta startup no tiene proyecciones financieras configuradas.
-                </div>
-            )} */}
+            <div className="incubatormetrics_demobanner">
+                <strong>⚠️ Modo Demo:</strong> Esta startup no tiene proyecciones financieras configuradas.
+            </div>
 
             {/* KPI Metrics Grid */}
             <div className="incubatormetrics_financegrid">

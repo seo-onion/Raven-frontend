@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import useModalStore from '@/stores/ModalStore';
 import { useTranslation } from 'react-i18next';
 import { FaCheckCircle } from 'react-icons/fa';
+import Button from '@/components/common/Button/Button';
 import './ScheduleMentorModal.css';
 
 interface Mentor {
+    id: number;
     name: string;
     role: string;
     initials: string;
@@ -12,20 +14,37 @@ interface Mentor {
 }
 
 interface ScheduleMentorModalProps {
-    mentor: Mentor;
+    mentor?: Mentor;
+    mentors?: Mentor[];
     handleClose?: () => void;
 }
 
-const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => {
+const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor: initialMentor, mentors }) => {
     const { t } = useTranslation('common');
     const { closeModal } = useModalStore();
     const [isScheduled, setIsScheduled] = useState(false);
+    const [selectedMentor, setSelectedMentor] = useState<Mentor | undefined>(initialMentor);
     const [formData, setFormData] = useState({
         topic: '',
         date: '',
         time: '',
         notes: ''
     });
+
+    // If mentors are provided but no initial mentor, select the first one by default
+    React.useEffect(() => {
+        if (!selectedMentor && mentors && mentors.length > 0) {
+            setSelectedMentor(mentors[0]);
+        }
+    }, [mentors, selectedMentor]);
+
+    const handleMentorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const mentorId = Number(e.target.value);
+        const mentor = mentors?.find(m => m.id === mentorId);
+        if (mentor) {
+            setSelectedMentor(mentor);
+        }
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -37,6 +56,8 @@ const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => 
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!selectedMentor) return;
 
         // Simulate scheduling
         setIsScheduled(true);
@@ -57,7 +78,7 @@ const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => 
                     {t('scheduled_successfully')}
                 </h3>
                 <p className="schedulementormodal-success-message text-black">
-                    {t('mentor_scheduled_message', { mentorName: mentor.name })}
+                    {t('mentor_scheduled_message', { mentorName: selectedMentor?.name })}
                 </p>
             </div>
         );
@@ -69,18 +90,39 @@ const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => 
                 <h3 className="schedulementormodal-title text-black">
                     {t('schedule_mentoring_session')}
                 </h3>
-                <div className="schedulementormodal-mentor-info">
-                    <div
-                        className="schedulementormodal-avatar"
-                        style={{ backgroundColor: mentor.avatarColor }}
-                    >
-                        {mentor.initials}
+
+                {mentors && mentors.length > 0 ? (
+                    <div className="schedulementormodal-mentor-select-container">
+                        <label htmlFor="mentor-select" className="schedulementormodal-label text-black">
+                            {t('select_mentor')}
+                        </label>
+                        <select
+                            id="mentor-select"
+                            className="schedulementormodal-select"
+                            value={selectedMentor?.id || ''}
+                            onChange={handleMentorChange}
+                        >
+                            {mentors.map(m => (
+                                <option key={m.id} value={m.id}>
+                                    {m.name} - {m.role}
+                                </option>
+                            ))}
+                        </select>
                     </div>
-                    <div>
-                        <p className="schedulementormodal-mentor-name text-black">{mentor.name}</p>
-                        <p className="schedulementormodal-mentor-role">{mentor.role}</p>
+                ) : selectedMentor ? (
+                    <div className="schedulementormodal-mentor-info">
+                        <div
+                            className="schedulementormodal-avatar"
+                            style={{ backgroundColor: selectedMentor.avatarColor }}
+                        >
+                            {selectedMentor.initials}
+                        </div>
+                        <div>
+                            <p className="schedulementormodal-mentor-name text-black">{selectedMentor.name}</p>
+                            <p className="schedulementormodal-mentor-role">{selectedMentor.role}</p>
+                        </div>
                     </div>
-                </div>
+                ) : null}
             </div>
 
             <form className="schedulementormodal-form" onSubmit={handleSubmit}>
@@ -148,19 +190,20 @@ const ScheduleMentorModal: React.FC<ScheduleMentorModalProps> = ({ mentor }) => 
                 </div>
 
                 <div className="schedulementormodal-actions">
-                    <button
-                        type="button"
-                        className="schedulementormodal-btn-secondary"
+                    <Button
+                        variant="secondary"
                         onClick={closeModal}
+                        className="schedulementormodal-btn-secondary"
                     >
                         {t('cancel')}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                        variant="primary"
                         type="submit"
                         className="schedulementormodal-btn-primary"
                     >
                         {t('schedule')}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

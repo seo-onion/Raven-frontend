@@ -116,7 +116,7 @@ const common = {
 
         // Dashboard Components
         alerts_notifications: "Alertas y Notificaciones",
-        upcoming_mentoring_sessions: "Próximas Sesiones de Mentoría",
+        upcoming_mentoring_sessions: "Sesiones de mentoría disponibles",
         with: "con",
         view_all_sessions: "Ver todas las sesiones",
         of: "de",
@@ -793,12 +793,14 @@ const common = {
         undefined: "0",
         current_revenue: "Ingresos actuales",
         current_trl: "Actual TRL",
-        email_confirmed_and_login: "Email confirmado"
+        email_confirmed_and_login: "Email confirmado",
+        email_confirmed_and_login_in: "Email confirmado",
 
     },
     en: {
         // General
         email_confirmed_and_login: "Email confirmed",
+        email_confirmed_and_login_in: "Email confirmed",
         backToHome: "Back to Home",
         days: "Days",
         country: "Country",
@@ -925,7 +927,7 @@ const common = {
 
         // Dashboard Components
         alerts_notifications: "Alerts and Notifications",
-        upcoming_mentoring_sessions: "Upcoming Mentoring Sessions",
+        upcoming_mentoring_sessions: "Mentoring sessions available",
         with: "with",
         view_all_sessions: "View all sessions",
         of: "of",

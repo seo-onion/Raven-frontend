@@ -9,11 +9,11 @@
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
+    background-color: var(--gray-700);
 }
 
 .wizard-card {
-    background: white;
+    background-color: white;
     border-radius: 1rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 800px;

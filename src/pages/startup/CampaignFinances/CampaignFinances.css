@@ -1,4 +1,3 @@
-
 /*
  * FinanzasDashboard.css
  *
@@ -11,6 +10,7 @@
     background-color: var(--background-color);
     color: var(--text-primary);
     font-family: var(--font-family-primary);
+    padding-top: 1rem;
 }
 
 .finanzas-dashboard_loading,
@@ -68,13 +68,15 @@
 .finanzas-dashboard_kpi-value {
     font-size: var(--font-size-h3);
     font-weight: var(--font-weight-bold);
-    color: var(--main-primary); /* Use primary color for values */
+    color: var(--main-primary);
+    /* Use primary color for values */
 }
 
 /* Charts Section */
 .finanzas-dashboard_charts {
     display: grid;
-    grid-template-columns: 1fr; /* Stack on smaller screens */
+    grid-template-columns: 1fr;
+    /* Stack on smaller screens */
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-2xl);
     background-color: var(--component-background);
@@ -85,13 +87,15 @@
 
 @media (min-width: 768px) {
     .finanzas-dashboard_charts {
-        grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+        grid-template-columns: 1fr 1fr;
+        /* Two columns on larger screens */
     }
 }
 
 
 .finanzas-dashboard_chart-placeholder {
-    background-color: var(--background-color); /* Lighter background for the mock chart area */
+    background-color: var(--background-color);
+    /* Lighter background for the mock chart area */
     padding: var(--spacing-md);
     border-radius: var(--border-radius-sm);
     border: 1px dashed var(--border-color);
@@ -161,7 +165,8 @@
 
 /* Table */
 .finanzas-dashboard_table-container {
-    overflow-x: auto; /* Enable horizontal scrolling for table on small screens */
+    overflow-x: auto;
+    /* Enable horizontal scrolling for table on small screens */
 }
 
 .finanzas-dashboard_table {
@@ -176,7 +181,8 @@
     border: 1px solid var(--border-color);
     padding: var(--spacing-sm) var(--spacing-md);
     text-align: right;
-    white-space: nowrap; /* Prevent text wrapping in table cells */
+    white-space: nowrap;
+    /* Prevent text wrapping in table cells */
 }
 
 .finanzas-dashboard_table th {

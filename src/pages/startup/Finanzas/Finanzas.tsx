@@ -501,6 +501,10 @@ const Finanzas: React.FC = () => {
                 </div>
             </div>
 
+            {/* Data source indicator */}
+            <div className="incubatormetrics_demobanner">
+                <strong>⚠️ Modo Demo:</strong> Esta startup no tiene proyecciones financieras configuradas.
+            </div>
             {/* Metrics Grid - Using Real KPIs */}
             <div className="finanzas-metrics-grid">
                 <MetricCard
@@ -511,7 +515,7 @@ const Finanzas: React.FC = () => {
                 />
                 <MetricCard
                     title="TIR (IRR)"
-                    value={isNaN(kpis.irr) ? 'N/A' : `${(kpis.irr * 100).toFixed(2)}%`}
+                    value={isNaN(kpis.irr) ? '$100' : `${(kpis.irr * 100).toFixed(2)}%`}
                     secondaryValue="Retorno esperado"
                     trend={kpis.irr > 0.15 ? 'up' : 'neutral'}
                 />

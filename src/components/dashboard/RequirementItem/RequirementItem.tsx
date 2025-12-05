@@ -6,15 +6,21 @@ interface RequirementItemProps {
     description?: string;
     completed: boolean;
     category: string;
+    onClick?: () => void;
 }
 
 const RequirementItem: React.FC<RequirementItemProps> = ({
     title,
     description,
     completed,
+    onClick
 }) => {
     return (
-        <div className={`requirement-item ${completed ? 'completed' : ''}`}>
+        <div
+            className={`requirement-item ${completed ? 'completed' : ''}`}
+            onClick={onClick}
+            style={{ cursor: onClick ? 'pointer' : 'default' }}
+        >
             <div className="requirement-checkbox">
                 {completed ? '✓' : ''}
             </div>

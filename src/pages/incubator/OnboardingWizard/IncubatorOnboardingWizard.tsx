@@ -44,8 +44,8 @@ const IncubatorOnboardingWizard: React.FC = () => {
     };
 
     return (
-        <div className="wizard-container">
-            <div className="wizard-card">
+        <div className="wizard-container" style={{ backgroundColor: 'var(--gray-400)' }}>
+            <div className="wizard-card" style={{ backgroundColor: 'white' }}>
                 <div className="wizard-content">
                     <div className="wizard-step">
                         <h2 className="text-black wizard-step-title">{t('incubator_onboarding_title')}</h2>

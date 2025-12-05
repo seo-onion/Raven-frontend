@@ -126,7 +126,7 @@ const Inversores: React.FC = () => {
                         <div className="incubator-header">
                             <h3 className="incubator-name text-black">{incubator.name}</h3>
                             <p className="incubator-meta text-black">
-                                {t('created')}: {new Date(incubator.created).toLocaleDateString()}
+                                {incubator.description}
                             </p>
                         </div>
                     </div>

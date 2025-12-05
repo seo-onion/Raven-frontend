@@ -28,6 +28,7 @@ export const INCUBATOR_ONBOARDING_PATH = "/api/users/incubator/complete-onboardi
 export const INCUBATOR_INVESTMENTS_PATH = "/api/users/incubator/investments/"
 export const INCUBATOR_PORTFOLIO_CAMPAIGNS_PATH = "/api/users/incubator/portfolio/campaigns/"
 export const INCUBATOR_PORTFOLIO_EVIDENCES_PATH = "/api/users/incubator/portfolio/evidences/"
+export const MENTORING_SESSIONS_PATH = "/api/users/incubator/mentoring-sessions/"
 
 // Challenge Paths
 export const CHALLENGES_PATH = "/api/users/challenges/"

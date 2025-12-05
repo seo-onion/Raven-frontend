@@ -67,15 +67,15 @@ const Mentoring: React.FC = () => {
 
     const handleRequestMentoring = () => {
         if (mentorsData.length > 0) {
-            const defaultMentor = mentorsData[0];
             setModalContent(
                 <ScheduleMentorModal
-                    mentor={{
-                        name: defaultMentor.name,
-                        role: defaultMentor.role,
-                        initials: defaultMentor.initials,
-                        avatarColor: defaultMentor.avatarColor,
-                    }}
+                    mentors={mentorsData.map(m => ({
+                        id: m.id,
+                        name: m.name,
+                        role: m.role,
+                        initials: m.initials,
+                        avatarColor: m.avatarColor
+                    }))}
                 />
             );
         }
@@ -85,6 +85,7 @@ const Mentoring: React.FC = () => {
         setModalContent(
             <ScheduleMentorModal
                 mentor={{
+                    id: mentor.id,
                     name: mentor.name,
                     role: mentor.role,
                     initials: mentor.initials,

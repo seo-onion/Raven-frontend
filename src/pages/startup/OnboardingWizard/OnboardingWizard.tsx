@@ -142,8 +142,8 @@ const OnboardingWizard: React.FC = () => {
     };
 
     return (
-        <div className="wizard-container">
-            <div className="wizard-card">
+        <div className="wizard-container" style={{ backgroundColor: 'var(--gray-400)' }}>
+            <div className="wizard-card" style={{ backgroundColor: 'white' }}>
                 <div className="wizard-progress">
                     <p className="text-black">
                         {t('Paso')} {currentStep + 1} {t('of')} {totalSteps}

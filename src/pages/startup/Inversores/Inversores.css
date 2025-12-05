@@ -3,7 +3,8 @@
     max-width: 80rem;
     max-width: 100%;
     margin: 20px;
-    margin-top: 4px;
+    margin-top: 24px;
+
 }
 
 .inversores-container>*+* {
@@ -102,6 +103,10 @@
 
 .incubator-header {
     margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .incubator-name {
@@ -111,9 +116,10 @@
 }
 
 .incubator-meta {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #6b7280;
     margin: 0;
+    line-height: 2.2;
 }
 
 .incubator-members {

@@ -11,6 +11,7 @@ import QuickActions from '../../../components/dashboard/QuickActions/QuickAction
 import { useNavigate } from 'react-router-dom';
 import useStartupValidation from '@/hooks/useStartupValidation';
 import { useInvestmentRounds } from '@/hooks/useStartupData';
+import { useMentoringSessions } from '@/hooks/useIncubatorData';
 import './MiProgreso.css';
 
 const MiProgreso: React.FC = () => {
@@ -25,7 +26,7 @@ const MiProgreso: React.FC = () => {
     // Validate startup has company_name, redirect to wizard if not
     useStartupValidation();
 
-    const [requirements] = useState([
+    const [requirements, setRequirements] = useState([
         {
             id: 1,
             title: 'Completar perfil de empresa',
@@ -35,42 +36,30 @@ const MiProgreso: React.FC = () => {
         },
     ]);
 
-    // Alerts data
-    const alerts = [
-        {
-            id: '1',
-            type: 'warning' as const,
-            message: 'Burn rate actual: $8K/mes - Runway: 9 meses',
-        },
-        {
-            id: '2',
-            type: 'info' as const,
-            message: 'Tienes 2 sesiones de mentoría programadas esta semana',
-        },
-        {
-            id: '3',
-            type: 'success' as const,
-            message: "Nuevo desafío compatible: 'Sistema de detección de fraude con IA'",
-        },
-    ];
+    const handleToggleRequirement = (id: number) => {
+        setRequirements(prev => prev.map(req =>
+            req.id === id ? { ...req, completed: !req.completed } : req
+        ));
+    };
+
+    // // Alerts data
+    // const alerts = [
+
+    // ];
 
     // Mentoring sessions data
-    const mentoringSessions = [
-        {
-            id: '1',
-            title: 'Modelado financiero para Series A',
-            mentorName: 'Carlos Mendoza',
-            date: '28 oct 2024',
-            time: '3:00 PM',
-        },
-        {
-            id: '2',
-            title: 'Estrategia Go-to-Market',
-            mentorName: 'Ana Gutiérrez',
-            date: '30 oct 2024',
-            time: '10:00 AM',
-        },
-    ];
+    const { data: sessionsData } = useMentoringSessions();
+
+    const mentoringSessions = sessionsData?.map(session => {
+        const startDate = new Date(session.start_time);
+        return {
+            id: String(session.id),
+            title: session.title,
+            mentorName: session.mentor_name,
+            date: startDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }),
+            time: startDate.toLocaleTimeString('es-ES', { hour: 'numeric', minute: '2-digit', hour12: true }),
+        };
+    }) || [];
 
     // Quick actions data
     const quickActions = [
@@ -131,6 +120,7 @@ const MiProgreso: React.FC = () => {
                                         description={requirement.description}
                                         completed={requirement.completed}
                                         category={requirement.category}
+                                        onClick={() => handleToggleRequirement(requirement.id)}
                                     />
                                 ))}
                             </div>
@@ -147,12 +137,12 @@ const MiProgreso: React.FC = () => {
             <div className="mi-progreso-full-width">
                 <div className="timeline-section">
                     <h2 className="section-subtitle text-black">Timeline de etapas</h2>
-                    <Timeline currentStageKey="incubation" />
+                    <Timeline currentStageKey="pre-incubation" />
                 </div>
 
                 {/* Grid for Alerts and Mentoring Sessions */}
                 <div className="mi-progreso-grid-two">
-                    <AlertsNotifications alerts={alerts} />
+                    <AlertsNotifications alerts={[]} />
                     <MentoringSessions
                         sessions={mentoringSessions}
                         onViewAll={() => navigate("/dashboard/mentoring")}

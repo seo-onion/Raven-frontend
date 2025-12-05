@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchMyIncubatorData, completeIncubatorOnboarding, fetchIncubatorInvestments, commitInvestment, fetchIncubatorMembers, createIncubatorMember, fetchChallenges, createChallenge, updateChallengeStatus, fetchChallengeApplications, type IncubatorOnboardingDTO } from '@/api/incubator';
+import { fetchMyIncubatorData, completeIncubatorOnboarding, fetchIncubatorInvestments, commitInvestment, fetchIncubatorMembers, createIncubatorMember, fetchChallenges, createChallenge, updateChallengeStatus, fetchChallengeApplications, fetchMentoringSessions, type IncubatorOnboardingDTO } from '@/api/incubator';
 import useAuthStore from '@/stores/AuthStore';
 
 // =============================================================================
@@ -141,5 +141,15 @@ export const useChallengeApplications = () => {
     return useQuery({
         queryKey: ['challenge-applications'],
         queryFn: fetchChallengeApplications,
+    });
+};
+
+/**
+ * Hook to fetch mentoring sessions
+ */
+export const useMentoringSessions = () => {
+    return useQuery({
+        queryKey: ['mentoring-sessions'],
+        queryFn: fetchMentoringSessions,
     });
 };

@@ -13,9 +13,9 @@ const CrowdfundingBar: React.FC<CrowdfundingBarProps> = ({ goal, current, percen
 
     return (
         <div className="crowdfundingbar-container">
-            <h2 className="crowdfundingbar-title">{t('crowdfunding_kutralpay')}</h2>
-            <p className="crowdfundingbar-subtitle">
-                {t('crowdfunding_description')}
+            <h2 className="crowdfundingbar-title">Objetivo de la ronda principal</h2>
+            <p className="crowdfundingbar-subtitle" style={{ fontWeight: 'bold', margin: '15px 0 25px 0' }}>
+                Capital Comprometido vs. Objetivo Total de la Ronda.
             </p>
             <div className="crowdfundingbar-info">
                 <span className="crowdfundingbar-status">
