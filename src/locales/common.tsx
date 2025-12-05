@@ -791,6 +791,8 @@ const common = {
         maxSize: "Tamaño máximo",
         removeFile: "Eliminar archivo",
         undefined: "0",
+        current_revenue: "Ingresos actuales",
+        current_trl: "Actual TRL",
 
     },
     en: {
@@ -807,6 +809,8 @@ const common = {
         share: "Share",
         created: "Created",
         loading: "Loading...",
+        current_revenue: "Current Revenue",
+        current_trl: "Current TRL",
 
         // Home Gateway
         homegateway_title: "Raven CRM",
