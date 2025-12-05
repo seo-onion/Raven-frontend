@@ -790,6 +790,7 @@ const common = {
         supportedFormats: "Formatos soportados",
         maxSize: "Tamaño máximo",
         removeFile: "Eliminar archivo",
+        undefined: "0",
 
     },
     en: {
@@ -867,6 +868,7 @@ const common = {
         onboarding_error: "Error completing profile",
         email: "Email",
         // Forms
+        undefined: "0",
         not_available: "Not available",
         add: "Add",
         cancel: "Cancel",
