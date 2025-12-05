@@ -793,10 +793,12 @@ const common = {
         undefined: "0",
         current_revenue: "Ingresos actuales",
         current_trl: "Actual TRL",
+        email_confirmed_and_login: "Email confirmado"
 
     },
     en: {
         // General
+        email_confirmed_and_login: "Email confirmed",
         backToHome: "Back to Home",
         days: "Days",
         country: "Country",
