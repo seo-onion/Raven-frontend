@@ -10,7 +10,7 @@
     background-color: var(--background-color);
     color: var(--text-primary);
     font-family: var(--font-family-primary);
-    padding-top: 1rem;
+
 }
 
 .finanzas-dashboard_loading,

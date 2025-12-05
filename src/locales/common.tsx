@@ -794,13 +794,13 @@ const common = {
         current_revenue: "Ingresos actuales",
         current_trl: "Actual TRL",
         email_confirmed_and_login: "Email confirmado",
-        email_confirmed_and_login_in: "Email confirmado",
+        email_confirmed_and_logged_in: "Email confirmado",
 
     },
     en: {
         // General
         email_confirmed_and_login: "Email confirmed",
-        email_confirmed_and_login_in: "Email confirmed",
+        email_confirmed_and_logged_in: "Email confirmed",
         backToHome: "Back to Home",
         days: "Days",
         country: "Country",
